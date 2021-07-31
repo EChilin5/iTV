@@ -5,4 +5,7 @@
     <string name="sample_image">sample image</string>
     <string name="capture">Capture</string>
     <string name="ivTextSample">Image Text</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="age">Age</string>
 </resources>
