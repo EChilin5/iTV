@@ -32,7 +32,7 @@ class CameraFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCameraBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,8 +47,8 @@ class CameraFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnCapture.setOnClickListener{
-            var intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, 123);
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, 123)
 
         }
 
@@ -58,10 +58,10 @@ class CameraFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 123){
             if(resultCode== Activity.RESULT_OK){
-                var photo = data?.extras?.get("data") as Bitmap
-                binding.ivImageText.setImageBitmap(photo);
+                val photo = data?.extras?.get("data") as Bitmap
+                binding.ivImageText.setImageBitmap(photo)
                 val image = FirebaseVisionImage.fromBitmap(photo)
-                getImageText(image);
+                getImageText(image)
 
 //                photo = scaleBitmapDown(photo, 640)
 //                //convert bitmap to base64 encoded string
@@ -78,15 +78,15 @@ class CameraFragment : Fragment() {
         val textRecognizer = FirebaseVision.getInstance().cloudTextRecognizer
         textRecognizer.processImage(image)
             .addOnSuccessListener {
-                var it = it.text
+                val it = it.text
                 binding.tvImageText.text = it
-                Toast.makeText(context, it, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
                 // ...
             }
             .addOnFailureListener {
                 // Task failed with an exception
                 // ...
-                Toast.makeText(context, "failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "failed", Toast.LENGTH_LONG).show()
 
             }
     }
@@ -114,18 +114,8 @@ class CameraFragment : Fragment() {
     }
 
     companion object {
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CameraFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             CameraFragment().apply {
 
             }
