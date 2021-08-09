@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_food"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/ivUserFoodImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/sample_food_image"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="28dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvFoodName"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_toEndOf="@+id/ivUserFoodImage"
+        android:text="@string/salad" />
+
+    <TextView
+        android:id="@+id/tvTotalCCalories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFoodName"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@+id/ivUserFoodImage"
+        android:text="@string/calories" />
+
+    <TextView
+        android:id="@+id/tvFoodItemDescription"
+        android:layout_width="202dp"
+        android:layout_height="42dp"
+        android:layout_below="@+id/tvTotalCCalories"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="30dp"
+        android:layout_toEndOf="@+id/ivUserFoodImage"
+        android:text="@string/description" />
+
+    <TextView
+        android:id="@+id/tvCalorieCount"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFoodName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="30dp"
+        android:layout_toEndOf="@+id/tvTotalCCalories"
+        android:text="@string/_1000" />
+</RelativeLayout>

@@ -8,4 +8,18 @@
     <string name="last_name">Last Name</string>
     <string name="age">Age</string>
     <string name="test">Test</string>
+    <string name="date">Date</string>
+    <string name="sample_date">August 9, 2020</string>
+    <string name="current_calorie_count">Current Calorie Count</string>
+    <string name="remaining_calorie_count">Remaining Calorie Count</string>
+    <string name="_3000">3000</string>
+    <string name="_1000">1000</string>
+    <string name="sample_food_image">Sample Food Image</string>
+    <string name="salad">Salad</string>
+    <string name="item">Item</string>
+    <string name="description">Description</string>
+    <string name="tacos">Tacos</string>
+    <string name="calories">Calories</string>
+    <string name="save">Save</string>
+    <string name="today_s_food_log">Today\'s Food Log</string>
 </resources>
