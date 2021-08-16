@@ -22,4 +22,7 @@
     <string name="calories">Calories</string>
     <string name="save">Save</string>
     <string name="today_s_food_log">Today\'s Food Log</string>
+    <string name="home">Home</string>
+    <string name="daily_meal">Daily Meal</string>
+    <string name="record">Record</string>
 </resources>

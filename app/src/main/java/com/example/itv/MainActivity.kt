@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.example.itv.databinding.ActivityMainBinding
 import com.example.itv.fragment.CameraFragment
 import com.example.itv.fragment.HomeFragment
-import com.example.itv.fragment.SettingFragment
+import com.example.itv.fragment.DailyMealFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         val homeFragment = HomeFragment()
         val cameraFragment = CameraFragment()
-        val settingFragment = SettingFragment()
+        val settingFragment = DailyMealFragment()
 
         binding.bottomNavBar.setOnItemSelectedListener { it->
             when(it.itemId){

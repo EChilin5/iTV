@@ -2,7 +2,9 @@ package com.example.itv.user
 
 
 data class UserData(
-    var firstName: String? = "",
-    var lastName:String? = "",
-    var age:Int? =0
+    var name: String? = "",
+    var description:String? = "",
+    var calories:Int? = 0,
+    var imageAdress:String? = "",
+    var date:String? = ""
     )

@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getUserData(){
-        val ref = database.getReference("Users")
+        val ref = database.getReference("Food")
         ref.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 

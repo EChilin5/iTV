@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.SettingFragment">
+    tools:context=".fragment.DailyMealFragment">
 
     <TextView
         android:id="@+id/tvDateTitle"
@@ -94,7 +94,7 @@
         android:padding="8dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvHome"
+            android:id="@+id/rvDailyFood"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="8dp"

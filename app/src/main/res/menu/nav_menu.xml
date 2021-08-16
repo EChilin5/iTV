@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/ic_home"
-        android:title="Home"/>
+        android:title="@string/home"/>
     <item
         android:id="@+id/ic_Info"
-        android:title="Info"/>
+        android:title="@string/daily_meal"/>
     <item
         android:id="@+id/ic_camera"
-        android:title="Camera"/>
+        android:title="@string/record"/>
 </menu>
