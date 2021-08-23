@@ -38,7 +38,7 @@ class CameraFragment : Fragment() {
     }
 
 
-    //prevent memory leaks from occuring
+    //prevent memory leaks from occurring
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -9,4 +9,8 @@
     <item
         android:id="@+id/ic_camera"
         android:title="@string/record"/>
+    <item
+        android:id="@+id/ic_imageTutorial"
+        android:title="Upload Image"/>
+
 </menu>

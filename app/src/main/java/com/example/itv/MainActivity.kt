@@ -7,6 +7,7 @@ import com.example.itv.databinding.ActivityMainBinding
 import com.example.itv.fragment.CameraFragment
 import com.example.itv.fragment.HomeFragment
 import com.example.itv.fragment.DailyMealFragment
+import com.example.itv.image.ImageUploadFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,12 +22,14 @@ class MainActivity : AppCompatActivity() {
         val homeFragment = HomeFragment()
         val cameraFragment = CameraFragment()
         val settingFragment = DailyMealFragment()
+        val imageFragment = ImageUploadFragment()
 
         binding.bottomNavBar.setOnItemSelectedListener { it->
             when(it.itemId){
                 R.id.ic_home->openFragment(homeFragment)
                 R.id.ic_Info->openFragment(settingFragment)
                 R.id.ic_camera->openFragment(cameraFragment)
+                R.id.ic_imageTutorial->openFragment(imageFragment)
             }
             true
         }
