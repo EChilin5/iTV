@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FoodItemDetailActivity">
+
+    <ImageView
+        android:id="@+id/ivBackArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_arrow"
+        android:contentDescription="tempImage" />
+
+    <TextView
+        android:id="@+id/tvFoodItemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="90dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        tools:text="Orange" />
+
+    <View
+        android:id="@+id/vLiine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tvFoodItemTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/underline" />
+
+    <ImageView
+        android:id="@+id/ivFoodImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/vLiine"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        app:srcCompat="@drawable/bacground_myfood"
+        android:contentDescription="tempImage"/>
+
+    <TextView
+        android:id="@+id/tvCalories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vLiine"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="23dp"
+        android:layout_toEndOf="@+id/ivFoodImage"
+        android:text="@string/calories"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vLiine"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="62dp"
+        android:layout_toEndOf="@+id/tvCalories"
+        android:text="@string/protein"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tvCaloriePercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCalories"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/ivFoodImage"
+        android:text="@string/_31g" />
+
+    <TextView
+        android:id="@+id/tvProteinCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="75dp"
+        android:text="@string/_2_5g" />
+
+    <TextView
+        android:id="@+id/tvFiber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCaloriePercentage"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@+id/ivFoodImage"
+        android:text="@string/fiber"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tvFiberCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFiber"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/ivFoodImage"
+        android:text="@string/_2_4g" />
+
+    <TextView
+        android:id="@+id/tvFat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProteinCount"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="83dp"
+        android:text="@string/fat"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tvFatCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFat"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="79dp"
+        android:text="@string/_0_4g" />
+
+    <View
+        android:id="@+id/vLiine2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tvFatCount"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/underline" />
+
+    <TextView
+        android:id="@+id/tvDetailsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vLiine2"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/details"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDetailsInfo"
+        android:layout_width="320dp"
+        android:layout_height="283dp"
+        android:layout_below="@+id/tvDetailsTitle"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="35dp"
+        android:text="@string/lorem_ipsum" />
+
+    <ImageView
+        android:id="@+id/ivFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="28dp"
+        app:srcCompat="@drawable/heart"
+        android:contentDescription="tempImage"/>
+
+</RelativeLayout>

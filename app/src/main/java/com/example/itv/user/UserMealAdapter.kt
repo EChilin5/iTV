@@ -1,8 +1,10 @@
 package com.example.itv.user
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.itv.FoodItemDetailActivity
 import com.example.itv.databinding.UserFoodItemBinding
 
 class UserMealAdapter(private val userList:ArrayList<UserData>): RecyclerView.Adapter<UserMealAdapter.UserMealAdapterHolder>() {
@@ -24,6 +26,12 @@ class UserMealAdapter(private val userList:ArrayList<UserData>): RecyclerView.Ad
         binding.tvFoodName.text = currentItem.name
         binding.tvCalorieCount.text = currentItem.calories.toString()
         binding.tvFoodItemDescription.text = currentItem.description
+        binding.itemFood.setOnClickListener { v -> v.context
+            val intent = Intent(v.context, FoodItemDetailActivity::class.java)
+            intent.putExtra("foodName", currentItem.name)
+            v.context.startActivity(intent)
+
+        }
     }
 
     override fun getItemCount(): Int {
