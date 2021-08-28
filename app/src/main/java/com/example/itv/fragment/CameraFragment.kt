@@ -78,9 +78,9 @@ class CameraFragment : Fragment() {
         val textRecognizer = FirebaseVision.getInstance().cloudTextRecognizer
         textRecognizer.processImage(image)
             .addOnSuccessListener {
-                val it = it.text
-                binding.tvImageText.text = it
-                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+//                val it = it.text
+//                binding.tvImageText.text = it
+//                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
                 // ...
             }
             .addOnFailureListener {
