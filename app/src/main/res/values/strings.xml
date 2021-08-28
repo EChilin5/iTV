@@ -25,4 +25,6 @@
     <string name="home">Home</string>
     <string name="daily_meal">Daily Meal</string>
     <string name="record">Record</string>
+    <string name="take_image">Take Image</string>
+    <string name="today_s_food_log_title">Today\'s Food Log</string>
 </resources>
