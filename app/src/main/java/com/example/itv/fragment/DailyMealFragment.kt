@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,10 +31,10 @@ class DailyMealFragment : Fragment() {
 
     private var _binding: FragmentDailyMealBinding? = null
     private val binding get() = _binding!!
-    private var calories = 3000
+    private var calories = 10000
     private var total = 0
     private var totalCalorieProgress = 0
-    private val remainingCalorie = 9000
+    private val remainingCalorie = 10000
 
     private val database = Firebase.database
     private lateinit var userRecylerView: RecyclerView
@@ -89,9 +90,12 @@ class DailyMealFragment : Fragment() {
                 if(snapshot.exists()){
                     for(userSnapShot in snapshot.children){
                         val user = userSnapShot.getValue(UserData::class.java)
-                        calories -= user?.calories!!
-                        total += user.calories!!
-                        userArrayList.add(user)
+                        if(user?.date!!.contains("August 9 2021")) {
+                            calories -= user.calories!!
+                            total += user.calories!!
+                                userArrayList.add(user)
+                            }
+
                     }
 
                     userRecylerView.adapter = UserMealAdapter(userArrayList)
@@ -99,12 +103,13 @@ class DailyMealFragment : Fragment() {
                 binding.tvCurrentCalorieCounter.text = "$total"
                 binding.tvRemainingCaloriesCounter.text = "$calories"
 
-                var progress1 = (total / 10000) * 100
-                var progress2 = ((remainingCalorie - calories) /remainingCalorie) *100
+                var progress1 = ((total).toDouble() / 10000) *100
+                var progress2 = ((remainingCalorie - calories).toDouble() /remainingCalorie) *100
+                progress2 = 100 - progress2
 
-                Toast.makeText(context, " "+total+" "+progress1 + "  " + progress2, Toast.LENGTH_LONG).show()
-                binding.progressBar.progress = progress1
-                binding.progressBar2.progress = progress2
+                Toast.makeText(context, " "+progress1 + "  " + progress2, Toast.LENGTH_LONG).show()
+                binding.progressBar.progress = progress1.toInt()
+                binding.progressBar2.progress = progress2.toInt()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -114,9 +119,6 @@ class DailyMealFragment : Fragment() {
         })
     }
 
-    private fun getUserNutritionInfo(){
-
-    }
 
 
     private fun getCurrentDateTime():Date {
@@ -155,3 +157,6 @@ class DailyMealFragment : Fragment() {
             }
     }
 }
+
+
+

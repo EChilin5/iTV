@@ -4,5 +4,10 @@
         <item name="android:indeterminateOnly">false</item>
         <item name="android:progressDrawable">@drawable/circle_graph</item>
     </style>
+
+    <style name="CircularDeterminateProgressBarRev">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/circle_graph_rev</item>
+    </style>
     
 </resources>
