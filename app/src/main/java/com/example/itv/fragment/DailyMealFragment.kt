@@ -32,6 +32,8 @@ class DailyMealFragment : Fragment() {
     private val binding get() = _binding!!
     private var calories = 3000
     private var total = 0
+    private var totalCalorieProgress = 0
+    private val remainingCalorie = 9000
 
     private val database = Firebase.database
     private lateinit var userRecylerView: RecyclerView
@@ -94,8 +96,15 @@ class DailyMealFragment : Fragment() {
 
                     userRecylerView.adapter = UserMealAdapter(userArrayList)
                 }
-                binding.tvTotalCalories.text = "$total"
-                binding.tvRemaingCalorie.text = "$calories"
+                binding.tvCurrentCalorieCounter.text = "$total"
+                binding.tvRemainingCaloriesCounter.text = "$calories"
+
+                var progress1 = (total / 10000) * 100
+                var progress2 = ((remainingCalorie - calories) /remainingCalorie) *100
+
+                Toast.makeText(context, " "+total+" "+progress1 + "  " + progress2, Toast.LENGTH_LONG).show()
+                binding.progressBar.progress = progress1
+                binding.progressBar2.progress = progress2
             }
 
             override fun onCancelled(error: DatabaseError) {
