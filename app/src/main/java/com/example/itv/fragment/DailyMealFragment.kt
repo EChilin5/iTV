@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.itv.databinding.FragmentSettingBinding
+import com.example.itv.databinding.FragmentDailyMealBinding
 import com.example.itv.user.UserData
 import com.example.itv.user.UserMealAdapter
 import com.google.firebase.database.DataSnapshot
@@ -28,7 +28,7 @@ import java.util.*
  */
 class DailyMealFragment : Fragment() {
 
-    private var _binding: FragmentSettingBinding? = null
+    private var _binding: FragmentDailyMealBinding? = null
     private val binding get() = _binding!!
     private var calories = 3000
     private var total = 0
@@ -51,7 +51,7 @@ class DailyMealFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        _binding = FragmentDailyMealBinding.inflate(inflater, container, false)
         return binding.root
     }
 
