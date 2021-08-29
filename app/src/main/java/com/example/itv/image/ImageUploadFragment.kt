@@ -37,6 +37,8 @@ class ImageUploadFragment : Fragment() {
     private val binding get() = _binding!!
     lateinit var imageUri : Uri
 
+    private var progress = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,17 +51,37 @@ class ImageUploadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var btnSelectImage:Button = binding.btnSelectImage;
-        var btnUploadImage:Button = binding.btnUploadImage;
-
-        btnSelectImage.setOnClickListener {
-            selectImage()
+        updateProgress()
+        binding.btnAdd.setOnClickListener {
+            if(progress <= 90){
+                progress+=10
+                updateProgress()
+            }
         }
 
-        btnUploadImage.setOnClickListener {
-            uploadImage();
+        binding.btnSub.setOnClickListener {
+            if(progress>=10){
+                progress-=10
+                updateProgress()
+            }
         }
 
+//        var btnSelectImage:Button = binding.btnSelectImage;
+//        var btnUploadImage:Button = binding.btnUploadImage;
+
+//        btnSelectImage.setOnClickListener {
+//            selectImage()
+//        }
+//
+//        btnUploadImage.setOnClickListener {
+//            uploadImage();
+//        }
+
+    }
+
+    private fun updateProgress(){
+        binding.progressBar.progress = progress
+        binding.tvPercentage.text = "$progress%"
     }
 
     private fun uploadImage() {
@@ -77,7 +99,7 @@ class ImageUploadFragment : Fragment() {
 
         storageReference.putFile(imageUri).addOnSuccessListener {
 
-            binding.imageView.setImageURI(null)
+//            binding.imageView.setImageURI(null)
             Toast.makeText(context, "Success uploaded", Toast.LENGTH_LONG).show()
 
             if(progrssDialog.isShowing) progrssDialog.dismiss()
@@ -100,7 +122,7 @@ class ImageUploadFragment : Fragment() {
 
         if(requestCode === 100 && resultCode == Activity.RESULT_OK){
             imageUri = data?.data!!
-            binding.imageView.setImageURI(imageUri)
+//            binding.imageView.setImageURI(imageUri)
 
         }
     }
