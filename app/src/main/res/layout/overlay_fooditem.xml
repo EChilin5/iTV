@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rvOverlayItem"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:padding="10dp">
+
+
+    <ImageView
+        android:id="@+id/tvSaveImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="1dp"
+        android:contentDescription="@string/save_image_to_db"
+        app:srcCompat="@drawable/bacground_myfood" />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSaveImage"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:autofillHints="name" />
+
+    <EditText
+        android:id="@+id/etCalories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etName"
+        android:layout_marginTop="11dp"
+        android:autofillHints="calories"
+        android:ems="10"
+        android:hint="@string/calories"
+        android:inputType="textPersonName"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/etCarbs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etCalories"
+        android:layout_marginTop="6dp"
+        android:autofillHints="carbs"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="@string/carbs" />
+
+    <EditText
+        android:id="@+id/etFat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etCarbs"
+        android:layout_marginTop="10dp"
+        android:autofillHints="none"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="@string/fat" />
+
+    <EditText
+        android:id="@+id/etProtein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etFat"
+        android:layout_marginTop="9dp"
+        android:autofillHints="protein"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="50dp"
+        android:text="@string/protein"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etProtein"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="@string/post" />
+
+
+</RelativeLayout>

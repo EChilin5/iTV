@@ -36,4 +36,8 @@
     <string name="_2_5g">2.5g</string>
     <string name="_31g">31g</string>
     <string name="protein">Protein</string>
+    <string name="save_image_to_db">save image to db</string>
+    <string name="name">Name</string>
+    <string name="post">Post</string>
+    <string name="carbs">carbs</string>
 </resources>
