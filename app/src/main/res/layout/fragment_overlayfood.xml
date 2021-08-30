@@ -2,22 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rvOverlayItem"
+
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical|center_horizontal"
-    android:padding="10dp">
-
+    android:padding="10dp"
+    tools:context=".overlayfood">
 
     <ImageView
         android:id="@+id/tvSaveImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_below="@+id/textView2"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="156dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="@string/save_image_to_db"
         app:srcCompat="@drawable/bacground_myfood" />
 
@@ -26,19 +26,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSaveImage"
-        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:autofillHints="name"
         android:ems="10"
         android:hint="@string/name"
         android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:autofillHints="name" />
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/etCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etName"
-        android:layout_marginTop="11dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:autofillHints="calories"
         android:ems="10"
         android:hint="@string/calories"
@@ -50,46 +52,59 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etCalories"
-        android:layout_marginTop="6dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:autofillHints="carbs"
         android:ems="10"
+        android:hint="@string/carbs"
         android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text="@string/carbs" />
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/etFat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etCarbs"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:autofillHints="none"
         android:ems="10"
+        android:hint="@string/fat"
         android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text="@string/fat" />
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/etProtein"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etFat"
-        android:layout_marginTop="9dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:autofillHints="protein"
         android:ems="10"
+        android:hint="@string/protein"
         android:inputType="textPersonName"
         android:minHeight="50dp"
-        android:text="@string/protein"
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etProtein"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:text="@string/post" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/confirming_content"
+        android:textSize="16sp" />
 
 
 </RelativeLayout>

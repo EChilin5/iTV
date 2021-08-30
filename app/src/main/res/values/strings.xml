@@ -40,4 +40,5 @@
     <string name="name">Name</string>
     <string name="post">Post</string>
     <string name="carbs">carbs</string>
+    <string name="confirming_content">Confirming Content</string>
 </resources>

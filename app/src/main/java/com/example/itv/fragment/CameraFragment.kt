@@ -1,16 +1,23 @@
 package com.example.itv.fragment
 
 import android.app.Activity
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.itv.R
 import com.example.itv.databinding.FragmentCameraBinding
+import com.example.itv.overlayfood
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
@@ -22,6 +29,8 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage
  * create an instance of this fragment.
  */
 class CameraFragment : Fragment() {
+
+
 
     private var _binding: FragmentCameraBinding? = null
     private val binding get() = _binding!!
@@ -51,6 +60,23 @@ class CameraFragment : Fragment() {
             startActivityForResult(intent, 123)
 
         }
+        binding.btnSave.setOnClickListener {
+            Toast.makeText(context, "selected button", Toast.LENGTH_LONG).show()
+            openFoodItem(context)
+        }
+
+    }
+
+    private fun openFoodItem(context: Context?) {
+
+        var dialog = overlayfood()
+        dialog.show(childFragmentManager, "overlay")
+    }
+
+    private fun openFoodItemOverlay() {
+
+
+
 
     }
 
