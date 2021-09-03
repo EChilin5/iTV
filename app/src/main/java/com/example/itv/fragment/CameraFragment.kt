@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +19,13 @@ import androidx.fragment.app.Fragment
 import com.example.itv.R
 import com.example.itv.databinding.FragmentCameraBinding
 import com.example.itv.overlayfood
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.text.FirebaseVisionText
+import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer
 
 
 /**
@@ -62,12 +67,12 @@ class CameraFragment : Fragment() {
         }
         binding.btnSave.setOnClickListener {
             Toast.makeText(context, "selected button", Toast.LENGTH_LONG).show()
-            openFoodItem(context)
+            openFoodItem()
         }
 
     }
 
-    private fun openFoodItem(context: Context?) {
+    private fun openFoodItem() {
 
         var dialog = overlayfood()
         dialog.show(childFragmentManager, "overlay")
@@ -77,17 +82,16 @@ class CameraFragment : Fragment() {
 
 
 
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 123){
             if(resultCode== Activity.RESULT_OK){
-                val photo = data?.extras?.get("data") as Bitmap
-                binding.ivImageText.setImageBitmap(photo)
-                val image = FirebaseVisionImage.fromBitmap(photo)
-                getImageText(image)
+//                val photo = data?.extras?.get("data") as Bitmap
+//                binding.ivImageText.setImageBitmap(photo)
+//                val image = FirebaseVisionImage.fromBitmap(photo)
+//                getImageText(image)
 
 //                photo = scaleBitmapDown(photo, 640)
 //                //convert bitmap to base64 encoded string
@@ -95,6 +99,47 @@ class CameraFragment : Fragment() {
 //                photo.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
 //                val imageBytes: ByteArray = byteArrayOutputStream.toByteArray()
 //                val base64encoded = Base64.encodeToString(imageBytes, Base64.NO_WRAP)
+
+                val bundle: Bundle = data?.extras!!
+                //form bundle, extract the image
+                //form bundle, extract the image
+                bundle["data"]
+                val bitmap = bundle["data"] as Bitmap?
+                //SET IMAGE IN IMAGE VIEW
+                //SET IMAGE IN IMAGE VIEW
+                binding.ivImageText.setImageBitmap(bitmap)
+                //proccess the Image
+
+                //1. create a firbaseVisionImage object from a bitmap object
+                //proccess the Image
+
+                //1. create a firbaseVisionImage object from a bitmap object
+                val image = FirebaseVisionImage.fromBitmap(bitmap!!)
+                // get an instance of firebasevISION
+                // get an instance of firebasevISION
+                val firebaseVision = FirebaseVision.getInstance()
+                //3.Create instance of the firebaseVisionfire
+                //3.Create instance of the firebaseVisionfire
+                val firebaseVisionTextRecognizer = firebaseVision.onDeviceTextRecognizer
+                //4 create task to proccess image
+                //4 create task to proccess image
+                val task = firebaseVisionTextRecognizer.processImage(image)
+
+                task.addOnSuccessListener { firebaseVisionText ->
+                    val s = firebaseVisionText.text
+                    // tvText.setText(s)
+                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
+                    Log.i("CameraFragment", s)
+
+
+
+                }
+                task.addOnFailureListener { e ->
+                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                    Log.i("CameraFragment" , e.message.toString())
+
+                }
+
 
             }
         }
@@ -104,16 +149,23 @@ class CameraFragment : Fragment() {
         val textRecognizer = FirebaseVision.getInstance().cloudTextRecognizer
         textRecognizer.processImage(image)
             .addOnSuccessListener {
-//                val it = it.text
+                val it = it.text
 //                binding.tvImageText.text = it
-//                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+               Log.i("CameraFragment", it)
+                // calories
+                // protein
+                // fat
+                // carbs
+                // create a hashmap
+
+
                 // ...
             }
             .addOnFailureListener {
                 // Task failed with an exception
                 // ...
-                Toast.makeText(context, "failed", Toast.LENGTH_LONG).show()
-
+                Toast.makeText(context, "failed" + it.message, Toast.LENGTH_LONG).show()
+                Log.i("CameraFragment" , it.message.toString())
             }
     }
 

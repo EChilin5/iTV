@@ -9,8 +9,8 @@ tools:context=".fragment.CameraFragment">
 
     <ImageView
         android:id="@+id/ivImageText"
-        android:layout_width="379dp"
-        android:layout_height="436dp"
+        android:layout_width="377dp"
+        android:layout_height="235dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

@@ -6,16 +6,22 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.example.itv.ApiSampleViewModel
 import com.example.itv.R
+import com.example.itv.SampleApiViewModelFactory
 import com.example.itv.databinding.FragmentImageUploadBinding
+import com.example.itv.repository.Repository
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.storage.FirebaseStorage
+import java.lang.Exception
 import java.net.URI
 import java.net.URL
 import java.text.SimpleDateFormat
@@ -35,94 +41,53 @@ class ImageUploadFragment : Fragment() {
 
     private var _binding: FragmentImageUploadBinding? = null
     private val binding get() = _binding!!
-    lateinit var imageUri : Uri
 
-    private var progress = 0
+
+    private lateinit var viewModel: ApiSampleViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentImageUploadBinding.inflate(inflater, container, false);
+        _binding = FragmentImageUploadBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        updateProgress()
-        binding.btnAdd.setOnClickListener {
-            if(progress <= 90){
-                progress+=10
-                updateProgress()
-            }
-        }
-
         binding.btnSub.setOnClickListener {
-            if(progress>=10){
-                progress-=10
-                updateProgress()
-            }
+            callApi()
         }
 
-//        var btnSelectImage:Button = binding.btnSelectImage;
-//        var btnUploadImage:Button = binding.btnUploadImage;
-
-//        btnSelectImage.setOnClickListener {
-//            selectImage()
-//        }
-//
-//        btnUploadImage.setOnClickListener {
-//            uploadImage();
-//        }
-
     }
 
-    private fun updateProgress(){
-        binding.progressBar.progress = progress
-        binding.tvPercentage.text = "$progress%"
-    }
+    private fun callApi() {
+        Log.d("ImageUploadFragment", "hello ")
 
-    private fun uploadImage() {
-        val progrssDialog = ProgressDialog(context);
-        progrssDialog.setMessage("Uploading File...");
+        val repository = Repository()
+        val viewModelFactory = SampleApiViewModelFactory(repository)
 
-        progrssDialog.setCancelable(false)
-        progrssDialog.show()
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ApiSampleViewModel::class.java)
+        viewModel.getPost()
 
-        
-        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
-        val now = Date()
-        val fileName = formatter.format(now)
-        val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
+        try {
+            viewModel.myResponse.observe(viewLifecycleOwner, {
+                    response ->
+                if(response.isSuccessful) {
+                    Toast.makeText(context, response.body()?.id.toString(), Toast.LENGTH_LONG).show()
+                    Log.d("ImageUploadFragment", response.body()?.myUserID.toString())
+                    Log.d("ImageUploadFragment", response.body()?.id.toString())
+                    Log.d("ImageUploadFragment", response.body()?.title.toString())
+                    Log.d("ImageUploadFragment", response.body()?.body.toString())
+                }
 
-        storageReference.putFile(imageUri).addOnSuccessListener {
-
-//            binding.imageView.setImageURI(null)
-            Toast.makeText(context, "Success uploaded", Toast.LENGTH_LONG).show()
-
-            if(progrssDialog.isShowing) progrssDialog.dismiss()
-
-        }.addOnFailureListener {
-            if(progrssDialog.isShowing) progrssDialog.dismiss()
-            Toast.makeText(context, "Failed to uploaded   " + it, Toast.LENGTH_LONG).show()
-
-        }
-    }
-
-    private fun selectImage() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, 100)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data )
-
-        if(requestCode === 100 && resultCode == Activity.RESULT_OK){
-            imageUri = data?.data!!
-//            binding.imageView.setImageURI(imageUri)
+            })
+        }catch (e:Exception){
+            Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
+            Log.d("ImageUploadFragment", e.message.toString())
 
         }
     }
