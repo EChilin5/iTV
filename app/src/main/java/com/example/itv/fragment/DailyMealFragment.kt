@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itv.databinding.FragmentDailyMealBinding
 import com.example.itv.user.UserData
+import com.example.itv.user.UserItemDataEntry
 import com.example.itv.user.UserMealAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -35,10 +36,11 @@ class DailyMealFragment : Fragment() {
     private var total = 0
     private var totalCalorieProgress = 0
     private val remainingCalorie = 10000
+    private var dateFormated = ""
 
     private val database = Firebase.database
     private lateinit var userRecylerView: RecyclerView
-    private lateinit var userArrayList: ArrayList<UserData>
+    private lateinit var userArrayList: ArrayList<UserItemDataEntry>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,13 +62,13 @@ class DailyMealFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val date = getCurrentDateTime()
-        val dateInString = date.toString("MM/dd/yyyy")
-        binding.tvCurrentDate.text = dateInString
+        dateFormated = date.toString("MM/dd/yyyy")
+        binding.tvCurrentDate.text = dateFormated
 
         userRecylerView = binding.rvDailyFood
         userRecylerView.layoutManager = LinearLayoutManager(context)
 
-        userArrayList = arrayListOf<UserData>()
+        userArrayList = arrayListOf<UserItemDataEntry>()
 
         getUserFoodData()
     }
@@ -83,16 +85,16 @@ class DailyMealFragment : Fragment() {
     }
 
     private fun getUserFoodData(){
-        val ref = database.getReference("Food")
+        val ref = database.getReference("UserMeal")
         ref.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 if(snapshot.exists()){
                     for(userSnapShot in snapshot.children){
-                        val user = userSnapShot.getValue(UserData::class.java)
-                        if(user?.date!!.contains("August 9 2021")) {
-                            calories -= user.calories!!
-                            total += user.calories!!
+                            val user = userSnapShot.getValue(UserItemDataEntry::class.java)
+                        if(user?.date!!.contains(dateFormated)) {
+                            calories -= Integer.parseInt( user.calories)
+                            total +=  Integer.parseInt( user.calories)
                                 userArrayList.add(user)
                             }
 
@@ -103,7 +105,7 @@ class DailyMealFragment : Fragment() {
                 binding.tvCurrentCalorieCounter.text = "$total"
                 binding.tvRemainingCaloriesCounter.text = "$calories"
 
-                var progress1 = ((total).toDouble() / 10000) *100
+                val progress1 = ((total).toDouble() / 10000) *100
                 var progress2 = ((remainingCalorie - calories).toDouble() /remainingCalorie) *100
                 progress2 = 100 - progress2
 
