@@ -1,31 +1,24 @@
 package com.example.itv.fragment
 
 import android.app.Activity
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.itv.R
 import com.example.itv.databinding.FragmentCameraBinding
+import com.example.itv.image.FirebaseStorageManager
 import com.example.itv.overlayfood
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import com.google.firebase.ml.vision.text.FirebaseVisionText
-import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer
+import com.github.dhaval2404.imagepicker.ImagePicker
+
 
 
 /**
@@ -35,12 +28,18 @@ import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer
  */
 class CameraFragment : Fragment() {
 
+    companion object{
+        const val REQUEST_FROM_CAMERA = 1001
+        const val REQUEST_FROM_GALLERY = 1002
+    }
+
 
 
     private var _binding: FragmentCameraBinding? = null
     private val binding get() = _binding!!
     private lateinit var functions: FirebaseFunctions
 
+    private val TAG = "CameraFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,16 +59,42 @@ class CameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnCapture.setOnClickListener{
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, 123)
 
+        intUi()
+//        binding.btnCapture.setOnClickListener{
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            startActivityForResult(intent, 123)
+//
+//        }
+//        binding.btnSave.setOnClickListener {
+//            Toast.makeText(context, "selected button", Toast.LENGTH_LONG).show()
+//            openFoodItem()
+//        }
+
+    }
+
+    private fun intUi() {
+        binding.btnCapture.setOnClickListener{
+            captureImageCam()
         }
         binding.btnSave.setOnClickListener {
-            Toast.makeText(context, "selected button", Toast.LENGTH_LONG).show()
-            openFoodItem()
-        }
+            val imgURI = binding.btnSave.tag
+            if(imgURI == null){
+                Toast.makeText(context, "Please select Image", Toast.LENGTH_SHORT).show()
+            }else{
+                context?.let { it1 -> FirebaseStorageManager().uploadImage(it1, imgURI as Uri) }
 
+            }
+
+        }
+    }
+
+    private fun captureImageCam() {
+        ImagePicker.with(this)
+            .crop()
+            .compress(1024)
+            .maxResultSize(1080, 1080)
+            .start()
     }
 
     private fun openFoodItem() {
@@ -78,72 +103,82 @@ class CameraFragment : Fragment() {
         dialog.show(childFragmentManager, "overlay")
     }
 
-    private fun openFoodItemOverlay() {
-
-
-
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 123){
-            if(resultCode== Activity.RESULT_OK){
-//                val photo = data?.extras?.get("data") as Bitmap
-//                binding.ivImageText.setImageBitmap(photo)
-//                val image = FirebaseVisionImage.fromBitmap(photo)
-//                getImageText(image)
+        if (resultCode == Activity.RESULT_OK) {
+            //Image Uri will not be null for RESULT_OK
+            val uri: Uri = data?.data!!
 
-//                photo = scaleBitmapDown(photo, 640)
-//                //convert bitmap to base64 encoded string
-//                val byteArrayOutputStream = ByteArrayOutputStream()
-//                photo.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-//                val imageBytes: ByteArray = byteArrayOutputStream.toByteArray()
-//                val base64encoded = Base64.encodeToString(imageBytes, Base64.NO_WRAP)
-
-                val bundle: Bundle = data?.extras!!
-                //form bundle, extract the image
-                //form bundle, extract the image
-                bundle["data"]
-                val bitmap = bundle["data"] as Bitmap?
-                //SET IMAGE IN IMAGE VIEW
-                //SET IMAGE IN IMAGE VIEW
-                binding.ivImageText.setImageBitmap(bitmap)
-                //proccess the Image
-
-                //1. create a firbaseVisionImage object from a bitmap object
-                //proccess the Image
-
-                //1. create a firbaseVisionImage object from a bitmap object
-                val image = FirebaseVisionImage.fromBitmap(bitmap!!)
-                // get an instance of firebasevISION
-                // get an instance of firebasevISION
-                val firebaseVision = FirebaseVision.getInstance()
-                //3.Create instance of the firebaseVisionfire
-                //3.Create instance of the firebaseVisionfire
-                val firebaseVisionTextRecognizer = firebaseVision.onDeviceTextRecognizer
-                //4 create task to proccess image
-                //4 create task to proccess image
-                val task = firebaseVisionTextRecognizer.processImage(image)
-
-                task.addOnSuccessListener { firebaseVisionText ->
-                    val s = firebaseVisionText.text
-                    // tvText.setText(s)
-                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
-                    Log.i("CameraFragment", s)
-
-
-
-                }
-                task.addOnFailureListener { e ->
-                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-                    Log.i("CameraFragment" , e.message.toString())
-
-                }
-
-
-            }
+            // Use Uri object instead of File to avoid storage permissions
+            binding.ivImageText.setImageURI(uri)
+            binding.btnSave.setTag(uri)
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Task Cancelled", Toast.LENGTH_SHORT).show()
         }
     }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == 123){
+//            if(resultCode== Activity.RESULT_OK){
+////                val photo = data?.extras?.get("data") as Bitmap
+////                binding.ivImageText.setImageBitmap(photo)
+////                val image = FirebaseVisionImage.fromBitmap(photo)
+////                getImageText(image)
+//
+////                photo = scaleBitmapDown(photo, 640)
+////                //convert bitmap to base64 encoded string
+////                val byteArrayOutputStream = ByteArrayOutputStream()
+////                photo.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+////                val imageBytes: ByteArray = byteArrayOutputStream.toByteArray()
+////                val base64encoded = Base64.encodeToString(imageBytes, Base64.NO_WRAP)
+//
+//                val bundle: Bundle = data?.extras!!
+//                //form bundle, extract the image
+//                //form bundle, extract the image
+//                bundle["data"]
+//                val bitmap = bundle["data"] as Bitmap?
+//                //SET IMAGE IN IMAGE VIEW
+//                //SET IMAGE IN IMAGE VIEW
+//                binding.ivImageText.setImageBitmap(bitmap)
+//                //proccess the Image
+//
+//                //1. create a firbaseVisionImage object from a bitmap object
+//                //proccess the Image
+//
+//                //1. create a firbaseVisionImage object from a bitmap object
+//                val image = FirebaseVisionImage.fromBitmap(bitmap!!)
+//                // get an instance of firebasevISION
+//                // get an instance of firebasevISION
+//                val firebaseVision = FirebaseVision.getInstance()
+//                //3.Create instance of the firebaseVisionfire
+//                //3.Create instance of the firebaseVisionfire
+//                val firebaseVisionTextRecognizer = firebaseVision.onDeviceTextRecognizer
+//                //4 create task to proccess image
+//                //4 create task to proccess image
+//                val task = firebaseVisionTextRecognizer.processImage(image)
+//
+//                task.addOnSuccessListener { firebaseVisionText ->
+//                    val s = firebaseVisionText.text
+//                    // tvText.setText(s)
+//                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
+//                    Log.i("CameraFragment", s)
+//
+//
+//
+//                }
+//                task.addOnFailureListener { e ->
+//                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+//                    Log.i("CameraFragment" , e.message.toString())
+//
+//                }
+//
+//
+//            }
+//        }
+//    }
 
     private fun getImageText(image: FirebaseVisionImage) {
         val textRecognizer = FirebaseVision.getInstance().cloudTextRecognizer
@@ -191,11 +226,5 @@ class CameraFragment : Fragment() {
         return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, false)
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            CameraFragment().apply {
 
-            }
-    }
 }

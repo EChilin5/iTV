@@ -39,6 +39,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class ImageUploadFragment : Fragment() {
 
+    private val TAG = "TestFragment"
     private var _binding: FragmentImageUploadBinding? = null
     private val binding get() = _binding!!
 
@@ -65,7 +66,6 @@ class ImageUploadFragment : Fragment() {
     }
 
     private fun callApi() {
-        Log.d("ImageUploadFragment", "hello ")
 
         val repository = Repository()
         val viewModelFactory = SampleApiViewModelFactory(repository)
@@ -78,16 +78,16 @@ class ImageUploadFragment : Fragment() {
                     response ->
                 if(response.isSuccessful) {
                     Toast.makeText(context, response.body()?.id.toString(), Toast.LENGTH_LONG).show()
-                    Log.d("ImageUploadFragment", response.body()?.myUserID.toString())
-                    Log.d("ImageUploadFragment", response.body()?.id.toString())
-                    Log.d("ImageUploadFragment", response.body()?.title.toString())
-                    Log.d("ImageUploadFragment", response.body()?.body.toString())
+                    Log.d(TAG, response.body()?.myUserID.toString())
+                    Log.d(TAG, response.body()?.id.toString())
+                    Log.d(TAG, response.body()?.title.toString())
+                    Log.d(TAG, response.body()?.body.toString())
                 }
 
             })
         }catch (e:Exception){
             Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
-            Log.d("ImageUploadFragment", e.message.toString())
+            Log.d(TAG, e.message.toString())
 
         }
     }
