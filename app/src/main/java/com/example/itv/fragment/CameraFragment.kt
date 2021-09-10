@@ -109,9 +109,12 @@ class CameraFragment : Fragment() {
             //Image Uri will not be null for RESULT_OK
             val uri: Uri = data?.data!!
 
+
             // Use Uri object instead of File to avoid storage permissions
             binding.ivImageText.setImageURI(uri)
             binding.btnSave.setTag(uri)
+            context?.let { FirebaseStorageManager().uploadImage(it, uri) }
+
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else {
