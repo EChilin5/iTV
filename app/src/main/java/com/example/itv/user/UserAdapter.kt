@@ -8,6 +8,8 @@ import com.example.itv.FoodItemDetailActivity
 import com.example.itv.databinding.UserFoodItemBinding
 import com.example.itv.databinding.UserItemBinding
 import com.example.itv.user.UserAdapter.*
+import com.github.dhaval2404.imagepicker.ImagePicker.Companion.with
+import com.squareup.picasso.Picasso
 
 class UserAdapter(private val userList: ArrayList<UserData>): RecyclerView.Adapter<UserAdapterHolder>() {
 
@@ -29,6 +31,13 @@ class UserAdapter(private val userList: ArrayList<UserData>): RecyclerView.Adapt
         binding.tvFoodName.text = currentItem.name
         binding.tvCalorieCount.text = currentItem.calories.toString()
         binding.tvFoodItemDescription.text = currentItem.description
+
+        Picasso.get()
+            .load(currentItem.imageUrl)
+            .resize(150, 150)         //optional
+            .centerCrop()                        //optional
+            .into(binding.ivUserFoodImage)
+
         binding.itemFood.setOnClickListener { v -> v.context
             val intent = Intent(v.context, FoodItemDetailActivity::class.java)
             intent.putExtra("foodName", currentItem.name)
