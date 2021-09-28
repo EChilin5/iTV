@@ -2,7 +2,7 @@
 An android application built with Kotlin in order to help user's to improve their eating habbits. 
 The app will show users a list of food they have ate in the past, healthy restaurants, and recipes. 
 Additionally the app  will be providing the user with the amount of calories they have consumed and how many they
-have left. This way the user can be more cautious of what they eat
+have left. This way the user can be more cautious of what they eat.
 
 - Upcoming feature, use Firebase ML take text from Image and save content on database. If user wants a better visual of the nutrition facts.
 - iTV name will be later be changed to fit the topic
