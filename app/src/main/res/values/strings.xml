@@ -41,4 +41,14 @@
     <string name="post">Post</string>
     <string name="carbs">carbs</string>
     <string name="confirming_content">Confirming Content</string>
+    <string name="sample_background_image_for_start_page">Sample Background Image for start page</string>
+    <string name="welcome">Welcome</string>
+    <string name="nice_to_see_you_again">Nice to see you again</string>
+    <string name="login">Login</string>
+    <string name="signup">SignUp</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="need_help">Need Help?</string>
+    <string name="hello_there">Hello There!</string>
+    <string name="back_arrow">back arrow</string>
 </resources>
