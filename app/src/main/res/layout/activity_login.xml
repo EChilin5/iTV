@@ -31,7 +31,7 @@
         android:ems="10"
         android:hint="@string/password"
         android:importantForAutofill="no"
-        android:inputType="textPersonName|numberPassword|textWebPassword"
+        android:inputType="textPersonName|textWebPassword"
         tools:ignore="TextContrastCheck" />
 
     <EditText
