@@ -5,16 +5,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import com.example.itv.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 private const val TAG= "LoginActivity"
 class LoginActivity : AppCompatActivity() {
 
+
+    private lateinit var auth: FirebaseAuth
+
     private lateinit var binding: ActivityLoginBinding
     private lateinit var btnLogin: Button
+    private lateinit var btnSignUp: Button
+    private lateinit var etUserName: EditText
+    private lateinit var etPassword: EditText
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,10 +30,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
-
-
-
-
 
 
     }
@@ -37,8 +41,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initView() {
         btnLogin = binding.btnLogin
+        btnSignUp = binding.btnSignup
 
-        val auth = FirebaseAuth.getInstance()
+        etUserName = binding.etUserName
+        etPassword = binding.etPasword
+
+        auth = Firebase.auth
         if(auth.currentUser !=null){
             goToMain()
         }
@@ -69,5 +77,32 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+
+        btnSignUp.setOnClickListener {
+            btnSignUp.isEnabled = false
+
+            createUserAccount(etUserName.text.toString(), etPassword.text.toString())
+
+
+        }
+
+
+    }
+
+    private fun createUserAccount(email: String, password: String) {
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task->
+                btnSignUp.isEnabled = true
+                if(task.isSuccessful){
+                    Log.i(TAG, "created user Successfully")
+                    goToMain()
+
+                }else{
+                    Log.e(TAG,"failed to create user", task.exception)
+                    Toast.makeText(this,"authentication failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+
     }
 }
