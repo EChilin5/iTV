@@ -99,9 +99,18 @@ class DailyMealFragment : Fragment() {
                             }
 
                     }
+                    if(userArrayList.isEmpty()){
+                        val temp = UserItemDataEntry( "Example User" ,  "Temp User","0", "0","0",
+                            dateFormated)
+                     userArrayList.add(temp)
+                    }
 
                     userRecylerView.adapter = UserMealAdapter(userArrayList)
                 }
+
+
+
+
                 binding.tvCurrentCalorieCounter.text = "$total"
                 binding.tvRemainingCaloriesCounter.text = "$calories"
 

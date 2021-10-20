@@ -51,4 +51,6 @@
     <string name="need_help">Need Help?</string>
     <string name="hello_there">Hello There!</string>
     <string name="back_arrow">back arrow</string>
+    <string name="create_post">create post</string>
+    <string name="upload_image">Upload Image</string>
 </resources>

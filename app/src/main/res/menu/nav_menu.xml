@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
     <item
         android:id="@+id/ic_home"
-        android:title="@string/home"/>
+        android:enabled="true"
+        android:title="@string/home"
+        android:icon="@drawable/home"
+        app:showAsAction="ifRoom">
+    </item>
     <item
         android:id="@+id/ic_Info"
-        android:title="@string/daily_meal"/>
+        android:enabled="true"
+        android:title="@string/daily_meal"
+        android:icon="@drawable/calendar"
+        app:showAsAction="ifRoom">
+
+    </item>
     <item
         android:id="@+id/ic_camera"
-        android:title="@string/record"/>
+        android:enabled="true"
+        android:title="@string/record"
+        android:icon="@drawable/camera"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/ic_imageTutorial"
-        android:title="Upload Image"/>
+        android:enabled="true"
+        android:title="@string/upload_image"
+        android:icon="@drawable/test"
+        app:showAsAction="ifRoom"/>
 
 </menu>

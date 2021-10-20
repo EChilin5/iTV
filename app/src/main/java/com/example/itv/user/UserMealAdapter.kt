@@ -25,8 +25,15 @@ class UserMealAdapter(private val userList:ArrayList<UserItemDataEntry>): Recycl
         val currentItem = userList[position]
         binding.tvFoodName.text = currentItem.name
         binding.tvCalorieCount.text = currentItem.calories.toString()
-        binding.tvFoodItemDescription.text = "No description can be found at this time"
-        binding.itemFood.setOnClickListener { v -> v.context
+        var response: String
+        if(currentItem.name == "Temp User"){
+            response = "A preview of nutrition facts or description once a food item is added to the list"
+        }else{
+            response = "No current description has been found"
+        }
+
+        binding.tvFoodItemDescription.text = response
+            binding.itemFood.setOnClickListener { v -> v.context
             val intent = Intent(v.context, FoodItemDetailActivity::class.java)
             intent.putExtra("foodName", currentItem.name)
             v.context.startActivity(intent)

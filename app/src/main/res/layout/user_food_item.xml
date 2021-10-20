@@ -31,7 +31,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="3dp"
         android:layout_toEndOf="@+id/ivUserFoodImage"
-        android:background="@color/light_blue">
+        android:background="@color/light_blue"
+        android:padding="4dp">
 
 
         <TextView
@@ -54,22 +55,23 @@
             android:layout_below="@+id/tvFoodName"
             android:layout_alignParentStart="true"
             android:layout_marginStart="33dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:text="@string/calories"
             android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tvFoodItemDescription"
-            android:layout_width="202dp"
-            android:layout_height="42dp"
+            android:layout_width="207dp"
+            android:layout_height="46dp"
             android:layout_below="@+id/tvTotalCCalories"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="33dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="17dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="19dp"
             android:text="@string/description"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvCalorieCount"
@@ -78,7 +80,7 @@
             android:layout_below="@+id/tvFoodName"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="14dp"
             android:layout_toEndOf="@+id/tvTotalCCalories"
             android:text="@string/_1000"
