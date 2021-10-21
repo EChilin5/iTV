@@ -16,9 +16,9 @@ have left. This way the user can be more cautious of what they eat.
   - [x] Able to add image to Storage
   
  ## Upcoming Features 
-  - [ ] Allow users to sign in and sign up
+  - [x] Allow users to sign in and sign up
   - [ ] Improve Firebase ML image quality or get Image path
-  - [ ] Look for Food Base Api and use retrofit to pull the info from the api
+  - [x] Look for Food Base Api and use retrofit to pull the info from the api
   - [ ] Add visual walkthrough
   - [ ] May required to change database from realtime to firestore
   - [ ] Continue Improving UI
