@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.itv.databinding.ActivityStarterBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class StarterActivity : AppCompatActivity() {
 
@@ -17,6 +18,13 @@ class StarterActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        val auth = FirebaseAuth.getInstance()
+
+        if(auth.currentUser !=null){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.btnLogin.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

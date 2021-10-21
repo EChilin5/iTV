@@ -17,8 +17,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.itv.ApiSampleViewModel
 import com.example.itv.R
 import com.example.itv.SampleApiViewModelFactory
+import com.example.itv.StarterActivity
 import com.example.itv.databinding.FragmentImageUploadBinding
 import com.example.itv.repository.Repository
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.storage.FirebaseStorage
 import java.lang.Exception
@@ -60,7 +62,12 @@ class ImageUploadFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnSub.setOnClickListener {
-            callApi()
+           // callApi()
+            Log.i(TAG, "User wants to logout")
+            FirebaseAuth.getInstance().signOut()
+            val intent  = Intent(context, StarterActivity::class.java)
+            context?.startActivity(intent)
+
         }
 
     }

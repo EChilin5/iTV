@@ -29,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         initView()
 
 
@@ -46,10 +47,6 @@ class LoginActivity : AppCompatActivity() {
         etUserName = binding.etUserName
         etPassword = binding.etPasword
 
-        auth = Firebase.auth
-        if(auth.currentUser !=null){
-            goToMain()
-        }
 
 
         btnLogin.setOnClickListener {
