@@ -18,7 +18,7 @@ import com.example.itv.ApiSampleViewModel
 import com.example.itv.R
 import com.example.itv.SampleApiViewModelFactory
 import com.example.itv.StarterActivity
-import com.example.itv.databinding.FragmentImageUploadBinding
+import com.example.itv.databinding.FragmentUserSettingsBinding
 import com.example.itv.repository.Repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
@@ -42,7 +42,7 @@ private const val ARG_PARAM2 = "param2"
 class ImageUploadFragment : Fragment() {
 
     private val TAG = "TestFragment"
-    private var _binding: FragmentImageUploadBinding? = null
+    private var _binding: FragmentUserSettingsBinding? = null
     private val binding get() = _binding!!
 
 
@@ -54,7 +54,7 @@ class ImageUploadFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentImageUploadBinding.inflate(inflater, container, false)
+        _binding = FragmentUserSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
