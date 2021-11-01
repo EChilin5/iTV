@@ -24,6 +24,8 @@ have left. This way the user can be more cautious of what they eat.
   - [ ] Continue Improving UI
   
 ## Visual Walkthrough
+:warning:Bugs may be present </br>
+
 <img src="https://github.com/EChilin5/iTV/blob/master/iTV_1.gif" width=250><br>
 
         
