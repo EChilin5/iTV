@@ -7,7 +7,6 @@ import com.example.itv.databinding.ActivityFoodItemDetailBinding
 import com.example.itv.databinding.ActivityFoodItemDetailBinding.bind
 import com.example.itv.databinding.ActivityFoodItemDetailBinding.inflate
 import com.example.itv.databinding.ActivityMainBinding
-import com.example.itv.databinding.FragmentImageUploadBinding
 
 class FoodItemDetailActivity : AppCompatActivity() {
 
@@ -18,7 +17,7 @@ class FoodItemDetailActivity : AppCompatActivity() {
 
 
 
-        binding = ActivityFoodItemDetailBinding.inflate(layoutInflater)
+        binding = inflate(layoutInflater)
         setContentView(binding.root)
 
         val foodName:String = intent?.getStringExtra("foodName").toString()

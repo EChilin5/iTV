@@ -51,6 +51,7 @@ class overlayfood : DialogFragment() {
         val date = getCurrentDateTime()
         val dateInString = date.toString("MM/dd/yyyy")
 
+
         binding.btnPost.setOnClickListener {
             val name = binding.etName.text.toString()
             val calories = binding.etCalories.text.toString()
@@ -84,6 +85,8 @@ class overlayfood : DialogFragment() {
     private fun getCurrentDateTime(): Date {
         return Calendar.getInstance().time
     }
+
+
 
     companion object {
 

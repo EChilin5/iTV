@@ -19,8 +19,11 @@
         android:theme="@style/Theme.ITV"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UserProfile"
+            android:exported="true" />
+        <activity
             android:name=".StarterActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,9 +34,7 @@
             android:name=".LoginActivity"
             android:exported="true" />
         <activity android:name=".FoodItemDetailActivity" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

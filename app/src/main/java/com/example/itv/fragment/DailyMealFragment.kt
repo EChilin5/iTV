@@ -1,5 +1,6 @@
 package com.example.itv.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itv.databinding.FragmentDailyMealBinding
+import com.example.itv.overlayfood
 import com.example.itv.user.UserData
 import com.example.itv.user.UserItemDataEntry
 import com.example.itv.user.UserMealAdapter
@@ -35,7 +37,7 @@ class DailyMealFragment : Fragment() {
     private var calories = 10000
     private var total = 0
     private var totalCalorieProgress = 0
-    private val remainingCalorie = 10000
+    private var remainingCalorie = 10000
     private var dateFormated = ""
 
     private val database = Firebase.database
@@ -65,12 +67,19 @@ class DailyMealFragment : Fragment() {
         dateFormated = date.toString("MM/dd/yyyy")
         binding.tvCurrentDate.text = dateFormated
 
+        binding.fabSave.setOnClickListener{
+            Toast.makeText(context, "selected button", Toast.LENGTH_LONG).show()
+            openFoodItem(context)
+        }
+
         userRecylerView = binding.rvDailyFood
         userRecylerView.layoutManager = LinearLayoutManager(context)
 
         userArrayList = arrayListOf<UserItemDataEntry>()
 
         getUserFoodData()
+
+
     }
 
     private fun saveUserInfo() {
@@ -85,6 +94,11 @@ class DailyMealFragment : Fragment() {
     }
 
     private fun getUserFoodData(){
+
+        calories = 10000
+        total = 0
+        totalCalorieProgress = 0
+        remainingCalorie = 10000
         val ref = database.getReference("UserMeal")
         ref.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -118,7 +132,6 @@ class DailyMealFragment : Fragment() {
                 var progress2 = ((remainingCalorie - calories).toDouble() /remainingCalorie) *100
                 progress2 = 100 - progress2
 
-                Toast.makeText(context, " "+progress1 + "  " + progress2, Toast.LENGTH_LONG).show()
                 binding.progressBar.progress = progress1.toInt()
                 binding.progressBar2.progress = progress2.toInt()
             }
@@ -129,7 +142,11 @@ class DailyMealFragment : Fragment() {
 
         })
     }
+    private fun openFoodItem(context: Context?) {
 
+        var dialog = overlayfood()
+        dialog.show(childFragmentManager, "overlay")
+    }
 
 
     private fun getCurrentDateTime():Date {

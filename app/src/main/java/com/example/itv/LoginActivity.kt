@@ -16,7 +16,6 @@ private const val TAG= "LoginActivity"
 class LoginActivity : AppCompatActivity() {
 
 
-    private lateinit var auth: FirebaseAuth
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var btnLogin: Button
@@ -38,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
     private fun goToMain() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun initView() {
@@ -47,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
         etUserName = binding.etUserName
         etPassword = binding.etPasword
 
+        val auth = FirebaseAuth.getInstance()
 
 
         btnLogin.setOnClickListener {
@@ -87,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun createUserAccount(email: String, password: String) {
-
+        val auth = FirebaseAuth.getInstance()
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task->
                 btnSignUp.isEnabled = true
