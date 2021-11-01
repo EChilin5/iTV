@@ -82,19 +82,10 @@ class DailyMealFragment : Fragment() {
 
     }
 
-    private fun saveUserInfo() {
-//        try {
-//            database = Firebase.database.reference
-//            val user = UserData("rex","ter", 24)
-//            database.child("Users").child("rex").setValue(user)
-//        }catch (e: Exception){
-//            Toast.makeText(context, "failed to write to db " + e.localizedMessage, Toast.LENGTH_LONG).show()
-//        }
 
-    }
 
     private fun getUserFoodData(){
-
+        userArrayList.clear()
         calories = 10000
         total = 0
         totalCalorieProgress = 0
@@ -104,6 +95,8 @@ class DailyMealFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 if(snapshot.exists()){
+                    userArrayList.clear()
+
                     for(userSnapShot in snapshot.children){
                             val user = userSnapShot.getValue(UserItemDataEntry::class.java)
                         if(user?.date!!.contains(dateFormated)) {
@@ -121,9 +114,6 @@ class DailyMealFragment : Fragment() {
 
                     userRecylerView.adapter = UserMealAdapter(userArrayList)
                 }
-
-
-
 
                 binding.tvCurrentCalorieCounter.text = "$total"
                 binding.tvRemainingCaloriesCounter.text = "$calories"
