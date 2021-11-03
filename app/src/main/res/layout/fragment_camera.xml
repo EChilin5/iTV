@@ -6,52 +6,39 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".fragment.CameraFragment">
 
-
-    <ImageView
-        android:id="@+id/ivImageText"
-        android:layout_width="377dp"
-        android:layout_height="235dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="77dp"
-        android:contentDescription="@string/sample_image"
-        app:srcCompat="@drawable/camera_icon_background"
-        tools:src="@drawable/camera_icon_background" />
-
-    <Button
-        android:id="@+id/btnCapture"
+    <TextView
+        android:id="@+id/tvProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivImageText"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="56dp"
-        android:text="@string/capture" />
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivImageText"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="79dp"
-        android:layout_toStartOf="@+id/btnCapture"
-        android:text="@string/save" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:text="@string/progress"
+        android:textColor="#040404"
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvStreaks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
-        android:text="@string/take_image"
-        android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:layout_below="@+id/tvProgress"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/streaks" />
 
+    <TextView
+        android:id="@+id/tvRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProgress"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="38dp"
+        android:text="@string/record" />
 </RelativeLayout>
 

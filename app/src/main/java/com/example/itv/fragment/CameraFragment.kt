@@ -74,19 +74,19 @@ class CameraFragment : Fragment() {
     }
 
     private fun intUi() {
-        binding.btnCapture.setOnClickListener{
-            captureImageCam()
-        }
-        binding.btnSave.setOnClickListener {
-            val imgURI = binding.btnSave.tag
-            if(imgURI == null){
-                Toast.makeText(context, "Please select Image", Toast.LENGTH_SHORT).show()
-            }else{
-                context?.let { it1 -> FirebaseStorageManager().uploadImage(it1, imgURI as Uri) }
-
-            }
-
-        }
+//        binding.btnCapture.setOnClickListener{
+//            captureImageCam()
+//        }
+//        binding.btnSave.setOnClickListener {
+//            val imgURI = binding.btnSave.tag
+//            if(imgURI == null){
+//                Toast.makeText(context, "Please select Image", Toast.LENGTH_SHORT).show()
+//            }else{
+//                context?.let { it1 -> FirebaseStorageManager().uploadImage(it1, imgURI as Uri) }
+//
+//            }
+//
+//        }
     }
 
     private fun captureImageCam() {
@@ -111,8 +111,8 @@ class CameraFragment : Fragment() {
 
 
             // Use Uri object instead of File to avoid storage permissions
-            binding.ivImageText.setImageURI(uri)
-            binding.btnSave.setTag(uri)
+//            binding.ivImageText.setImageURI(uri)
+//            binding.btnSave.setTag(uri)
             context?.let { FirebaseStorageManager().uploadImage(it, uri) }
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
