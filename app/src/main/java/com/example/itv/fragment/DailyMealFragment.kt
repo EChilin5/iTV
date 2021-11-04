@@ -115,8 +115,8 @@ class DailyMealFragment : Fragment() {
                     userRecylerView.adapter = UserMealAdapter(userArrayList)
                 }
 
-                binding.tvCurrentCalorieCounter.text = "$total"
-                binding.tvRemainingCaloriesCounter.text = "$calories"
+                binding.tvCurrentCalorieCounter.text = total.toString()
+                binding.tvRemainingCaloriesCounter.text = calories.toString()
 
                 val progress1 = ((total).toDouble() / 10000) *100
                 var progress2 = ((remainingCalorie - calories).toDouble() /remainingCalorie) *100

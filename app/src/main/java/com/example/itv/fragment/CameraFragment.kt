@@ -3,6 +3,7 @@ package com.example.itv.fragment
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +19,11 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.github.dhaval2404.imagepicker.ImagePicker
-
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.utils.ColorTemplate
 
 
 /**
@@ -38,6 +43,10 @@ class CameraFragment : Fragment() {
     private var _binding: FragmentCameraBinding? = null
     private val binding get() = _binding!!
     private lateinit var functions: FirebaseFunctions
+
+    private lateinit var barList:ArrayList<BarEntry>
+    private lateinit var barDataSet: BarDataSet
+    private lateinit var barData: BarData
 
     private val TAG = "CameraFragment"
 
@@ -61,6 +70,8 @@ class CameraFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         intUi()
+
+        setUpBarChart()
 //        binding.btnCapture.setOnClickListener{
 //            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 //            startActivityForResult(intent, 123)
@@ -70,6 +81,27 @@ class CameraFragment : Fragment() {
 //            Toast.makeText(context, "selected button", Toast.LENGTH_LONG).show()
 //            openFoodItem()
 //        }
+
+    }
+
+    private fun setUpBarChart() {
+        barList = ArrayList()
+        barList.add(BarEntry(1f, 500f))
+        barList.add(BarEntry(2f, 100f))
+        barList.add(BarEntry(3f, 400f))
+        barList.add(BarEntry(4f, 200f))
+        barList.add(BarEntry(5f, 300f))
+        barList.add(BarEntry(6f, 500f))
+        barList.add(BarEntry(7f, 400f))
+
+        barDataSet = BarDataSet(barList, "Population")
+        barData = BarData(barDataSet)
+
+        barDataSet.setColors(ColorTemplate.JOYFUL_COLORS, 250)
+        binding.barChart.data = barData
+
+        barDataSet.valueTextColor = Color.BLACK
+        barDataSet.valueTextSize = 15f
 
     }
 
