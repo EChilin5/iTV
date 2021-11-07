@@ -32,13 +32,13 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="52dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:importantForAutofill="no"
+        android:inputType="textWebEmailAddress|textPersonName"
         android:minHeight="48dp"
-        android:text="@string/email"
-        android:importantForAutofill="no" />
+        android:text="@string/email" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/etProfilePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etEmail"
@@ -48,32 +48,32 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="52dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName|textPassword"
         android:minHeight="48dp"
-        android:text="@string/password"
-        android:importantForAutofill="no" />
+        android:text="@string/password" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/etConfirmPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTextPersonName3"
+        android:layout_below="@+id/etProfilePassword"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="52dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="52dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName|textPassword"
         android:minHeight="48dp"
-        android:text="@string/confirm_password"
-        android:importantForAutofill="no" />
+        android:text="@string/confirm_password" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnProfileSubmit"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_below="@+id/editTextTextPersonName4"
+        android:layout_below="@+id/etConfirmPassword"
         android:layout_alignParentStart="true"
         android:layout_marginStart="136dp"
         android:layout_marginTop="20dp"

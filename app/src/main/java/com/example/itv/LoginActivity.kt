@@ -77,9 +77,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnSignUp.setOnClickListener {
-            btnSignUp.isEnabled = false
+        var intent = Intent(this, setUpProfileActivity::class.java)
+        startActivity(intent)
+        finish()
+        //btnSignUp.isEnabled = false
 
-            createUserAccount(etUserName.text.toString(), etPassword.text.toString())
+           // createUserAccount(etUserName.text.toString(), etPassword.text.toString())
 
 
         }
