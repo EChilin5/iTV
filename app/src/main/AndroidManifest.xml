@@ -19,6 +19,9 @@
         android:theme="@style/Theme.ITV"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".setUpProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".UserProfile"
             android:exported="true" />
         <activity
@@ -34,7 +37,7 @@
             android:name=".LoginActivity"
             android:exported="true" />
         <activity android:name=".FoodItemDetailActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
