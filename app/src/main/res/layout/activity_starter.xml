@@ -44,35 +44,20 @@
             android:textColor="@color/lightgrey"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="162dp"
-            android:layout_height="53dp"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvWelDesc"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="19dp"
-
-            android:background="@drawable/button"
-            android:shadowColor="@color/fusia"
-            android:text="@string/login"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/btnSignUp"
-            android:layout_width="162dp"
-            android:layout_height="53dp"
-            android:layout_below="@+id/btnLogin"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="25dp"
-
-            android:background="@drawable/button"
-            android:shadowColor="@color/fusia"
-            android:text="@string/signup"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="100dp"
+            android:gravity="center"
+            android:text="@string/itv"
+            android:textColor="#F3EDED"
+            android:textSize="96sp" />
 
     </RelativeLayout>
 </RelativeLayout>

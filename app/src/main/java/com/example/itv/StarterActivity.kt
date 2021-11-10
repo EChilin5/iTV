@@ -3,8 +3,10 @@ package com.example.itv
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import com.example.itv.databinding.ActivityStarterBinding
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.delay
 
 class StarterActivity : AppCompatActivity() {
 
@@ -14,6 +16,8 @@ class StarterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityStarterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
+
         initView()
     }
 
@@ -23,11 +27,15 @@ class StarterActivity : AppCompatActivity() {
         if(auth.currentUser !=null){
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+        }else{
+
+            Handler().postDelayed({
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }, (1500))
         }
 
-        binding.btnLogin.setOnClickListener{
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
+
     }
 }

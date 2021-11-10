@@ -7,26 +7,16 @@
     tools:context=".LoginActivity">
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="33dp"
-        android:contentDescription="@string/back_arrow"
-        app:srcCompat="@drawable/back_arrow" />
-
     <EditText
         android:id="@+id/etPasword"
         android:layout_width="300dp"
         android:layout_height="50sp"
         android:layout_below="@+id/etUserName"
         android:layout_alignParentStart="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="54dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="9dp"
+        android:layout_marginEnd="45dp"
         android:background="@drawable/input_text"
         android:ems="10"
         android:hint="@string/password"
@@ -40,8 +30,10 @@
         android:layout_height="50sp"
         android:layout_below="@+id/tvLoginTitle"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="54dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="45dp"
         android:background="@drawable/input_text"
         android:ems="10"
         android:hint="@string/email"
@@ -55,8 +47,10 @@
         android:layout_height="48dp"
         android:layout_below="@+id/etPasword"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="53dp"
-        android:layout_marginTop="27dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="80dp"
         android:text="@string/login" />
 
     <Button
@@ -65,19 +59,22 @@
         android:layout_height="48dp"
         android:layout_below="@+id/btnLogin"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="27dp"
-        android:text="@string/signup" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="80dp"
+        android:text="@string/signup"
+        app:rippleColor="@color/fusia" />
 
     <TextView
         android:id="@+id/tvHelp"
         android:layout_width="129dp"
         android:layout_height="26dp"
-        android:layout_below="@+id/etPasword"
+        android:layout_below="@+id/btnSignup"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="53dp"
-        android:text="@string/need_help"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="80dp"
+        android:text="@string/forgot_password"
         android:textColor="#D81B60" />
 
     <TextView
@@ -86,8 +83,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="100dp"
-        android:text="@string/hello_there"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="50dp"
+        android:gravity="center"
+        android:text="@string/login"
         android:textSize="34sp" />
 </RelativeLayout>
