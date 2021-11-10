@@ -34,10 +34,6 @@ class DailyMealFragment : Fragment() {
 
     private var _binding: FragmentDailyMealBinding? = null
     private val binding get() = _binding!!
-    private var calories = 10000
-    private var total = 0
-    private var totalCalorieProgress = 0
-    private var remainingCalorie = 10000
     private var dateFormated = ""
 
     private val database = Firebase.database
@@ -86,16 +82,16 @@ class DailyMealFragment : Fragment() {
 
     private fun getUserFoodData(){
         userArrayList.clear()
-        calories = 10000
-        total = 0
-        totalCalorieProgress = 0
-        remainingCalorie = 10000
+        var calories = 10000
+        var total = 0
         val ref = database.getReference("UserMeal")
         ref.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 if(snapshot.exists()){
                     userArrayList.clear()
+                    calories = 10000
+                    total = 0
 
                     for(userSnapShot in snapshot.children){
                             val user = userSnapShot.getValue(UserItemDataEntry::class.java)
@@ -119,8 +115,7 @@ class DailyMealFragment : Fragment() {
                 binding.tvRemainingCaloriesCounter.text = calories.toString()
 
                 val progress1 = ((total).toDouble() / 10000) *100
-                var progress2 = ((remainingCalorie - calories).toDouble() /remainingCalorie) *100
-                progress2 = 100 - progress2
+                var progress2 = 100 - progress1
 
                 binding.progressBar.progress = progress1.toInt()
                 binding.progressBar2.progress = progress2.toInt()
@@ -134,7 +129,7 @@ class DailyMealFragment : Fragment() {
     }
     private fun openFoodItem(context: Context?) {
 
-        var dialog = overlayfood()
+        val dialog = overlayfood()
         dialog.show(childFragmentManager, "overlay")
     }
 
