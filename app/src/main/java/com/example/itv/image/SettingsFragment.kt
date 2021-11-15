@@ -1,32 +1,15 @@
 package com.example.itv.image
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
-import android.app.ProgressDialog
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import com.example.itv.ApiSampleViewModel
-import com.example.itv.R
-import com.example.itv.SampleApiViewModelFactory
 import com.example.itv.StarterActivity
 import com.example.itv.databinding.FragmentUserSettingsBinding
-import com.example.itv.repository.Repository
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.functions.FirebaseFunctions
-import com.google.firebase.storage.FirebaseStorage
-import java.lang.Exception
-import java.net.URI
-import java.net.URL
-import java.text.SimpleDateFormat
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -46,7 +29,6 @@ class ImageUploadFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    private lateinit var viewModel: ApiSampleViewModel
 
 
     override fun onCreateView(
@@ -72,32 +54,6 @@ class ImageUploadFragment : Fragment() {
 
     }
 
-    private fun callApi() {
-
-        val repository = Repository()
-        val viewModelFactory = SampleApiViewModelFactory(repository)
-
-        viewModel = ViewModelProvider(this, viewModelFactory).get(ApiSampleViewModel::class.java)
-        viewModel.getPost()
-
-        try {
-            viewModel.myResponse.observe(viewLifecycleOwner, {
-                    response ->
-                if(response.isSuccessful) {
-                    Toast.makeText(context, response.body()?.id.toString(), Toast.LENGTH_LONG).show()
-                    Log.d(TAG, response.body()?.myUserID.toString())
-                    Log.d(TAG, response.body()?.id.toString())
-                    Log.d(TAG, response.body()?.title.toString())
-                    Log.d(TAG, response.body()?.body.toString())
-                }
-
-            })
-        }catch (e:Exception){
-            Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
-            Log.d(TAG, e.message.toString())
-
-        }
-    }
 
 
     override fun onDestroyView() {
