@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import com.example.itv.databinding.FragmentCameraBinding
 import com.example.itv.databinding.FragmentOverlayfoodBinding
 import com.example.itv.user.UserItemDataEntry
 import com.google.firebase.database.DatabaseReference

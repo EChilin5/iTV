@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.itv.databinding.ActivityMainBinding
-import com.example.itv.fragment.CameraFragment
 import com.example.itv.fragment.HomeFragment
 import com.example.itv.fragment.DailyMealFragment
 import com.example.itv.image.ImageUploadFragment
@@ -19,22 +18,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val homeFragment = HomeFragment()
-        val cameraFragment = CameraFragment()
-        val settingFragment = DailyMealFragment()
-        val imageFragment = ImageUploadFragment()
+        val possibleMealsFragment = HomeFragment()
+        val dailyMealFragment = DailyMealFragment()
+        val settingFragment = ImageUploadFragment()
 
         binding.bottomNavBar.setOnItemSelectedListener { it->
             when(it.itemId){
-                R.id.ic_home->openFragment(homeFragment)
-                R.id.ic_Info->openFragment(settingFragment)
-                R.id.ic_camera->openFragment(cameraFragment)
-                R.id.ic_imageTutorial->openFragment(imageFragment)
+                R.id.ic_home_daily->openFragment(dailyMealFragment)
+                R.id.ic_meals->openFragment(possibleMealsFragment)
+                R.id.ic_settings->openFragment(settingFragment)
             }
             true
         }
 
-        openFragment(homeFragment)
+        openFragment(dailyMealFragment)
     }
 
     private fun openFragment(fragment: Fragment) {
