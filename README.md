@@ -26,7 +26,7 @@ have left. This way the user can be more cautious of what they eat.
 ## Visual Walkthrough
 :warning:Bugs may be present </br>
 
-<img src="https://github.com/EChilin5/iTV/blob/master/Walkthrough/iTV_1.2.gif" width=250><br>
+<img src="https://github.com/EChilin5/iTV/blob/master/Walkthrough/ITV_1.3.gif" width=250><br>
 
         
  
