@@ -33,7 +33,7 @@ class UserAdapter(private val userList: ArrayList<UserData>): RecyclerView.Adapt
         binding.tvFoodItemDescription.text = currentItem.description
 
         Picasso.get()
-            .load(currentItem.imageUrl)
+            .load("https://firebasestorage.googleapis.com/v0/b/textdemo-9e9b1.appspot.com/o/posts%2Fapple-pink-lady.png?alt=media&token=7811fccb-6c9e-4fdc-a7dd-4ad86e5b7aa6")
             .resize(150, 150)         //optional
             .centerCrop()                        //optional
             .into(binding.ivUserFoodImage)

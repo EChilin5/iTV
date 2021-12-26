@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.itv.databinding.FragmentOverlayfoodBinding
 import com.example.itv.user.UserItemDataEntry
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -66,11 +67,23 @@ class overlayfood : DialogFragment() {
 
     private fun saveUserItem(name: String?, calories: String?, carbs: String?, protein: String?, dateInString: String) {
         try {
-            val userName = "ed"
+            val userName = Firebase.auth.currentUser
+            var currentUserName = ""
+            userName?.let {
+                for (profile in it.providerData) {
+                    // Id of the provider (ex: google.com)
+                    val providerId = profile.providerId
+                    currentUserName = profile.email.toString()
+                    val email = profile.email
+                }
+            }
+            currentUserName = currentUserName.dropLast(10)
+            Toast.makeText(context, currentUserName, Toast.LENGTH_SHORT).show()
+//            val userName = "ed"
             val dateNow = Calendar.getInstance().time
             database = Firebase.database.reference
-            val user = UserItemDataEntry(userName,name, carbs,calories,protein, dateInString)
-            database.child("UserMeal").child(userName+dateNow).setValue(user)
+            val user = UserItemDataEntry(currentUserName,name, carbs,calories,protein, dateInString)
+            database.child("UserMeal").child(currentUserName+dateNow).setValue(user)
         }catch (e: Exception){
             Toast.makeText(context, "failed to write to db " + e.localizedMessage, Toast.LENGTH_LONG).show()
         }

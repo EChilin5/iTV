@@ -14,6 +14,7 @@ import com.example.itv.R
 import com.example.itv.databinding.FragmentHomeBinding
 import com.example.itv.user.UserAdapter
 import com.example.itv.user.UserData
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -57,14 +58,30 @@ class HomeFragment : Fragment() {
     }
 
     private fun getUserData(){
-        val ref = database.getReference("Food")
+
+        val userName = Firebase.auth.currentUser
+        var currentUserName = ""
+        userName?.let {
+            for (profile in it.providerData) {
+
+                currentUserName = profile.email.toString()
+
+            }
+        }
+        currentUserName = currentUserName.dropLast(10)
+
+
+        val ref = database.getReference("UserMeal")
         ref.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 if(snapshot.exists()){
                     for(userSnapShot in snapshot.children){
                         val user = userSnapShot.getValue(UserData::class.java)
-                        userArrayList.add(user!!)
+                        if(user?.user == currentUserName ){
+                            userArrayList.add(user!!)
+                        }
+
                     }
 
                     userRecylerView.adapter = UserAdapter(userArrayList)
