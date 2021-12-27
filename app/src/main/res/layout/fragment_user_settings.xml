@@ -19,8 +19,8 @@
         android:id="@+id/tvContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUpdateeProfile"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="34dp"
         android:layout_marginTop="34dp"
         android:text="@string/contact_us_at_itv_dev_gmail_com"
@@ -36,16 +36,6 @@
         android:layout_marginTop="42dp"
         android:text="@string/version_0_1" />
 
-    <Button
-        android:id="@+id/btnAboutUs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnSub"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="33dp"
-        android:layout_marginBottom="14dp"
-        android:text="@string/about_us" />
-
     <TextView
         android:id="@+id/tvCopyRight"
         android:layout_width="155dp"
@@ -59,15 +49,5 @@
         android:text="@string/itv_2021"
         android:textColor="@color/black"
         android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tvUpdateeProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="23dp"
-        android:text="@string/update_profile" />
 
 </RelativeLayout>

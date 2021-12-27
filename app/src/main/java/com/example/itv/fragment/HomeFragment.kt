@@ -3,14 +3,14 @@ package com.example.itv.fragment
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.renderscript.Sampler
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itv.R
+import com.example.itv.databinding.ActivityFoodItemDetailBinding.inflate
 import com.example.itv.databinding.FragmentHomeBinding
 import com.example.itv.user.UserAdapter
 import com.example.itv.user.UserData
@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
     }
 
@@ -55,7 +56,10 @@ class HomeFragment : Fragment() {
 
         userArrayList = arrayListOf<UserData>()
         getUserData()
+
     }
+
+
 
     private fun getUserData(){
 
@@ -79,7 +83,7 @@ class HomeFragment : Fragment() {
                     for(userSnapShot in snapshot.children){
                         val user = userSnapShot.getValue(UserData::class.java)
                         if(user?.user == currentUserName ){
-                            userArrayList.add(user!!)
+                            userArrayList.add(user)
                         }
 
                     }
@@ -95,6 +99,39 @@ class HomeFragment : Fragment() {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.nav_search, menu)
+        val search: MenuItem? = menu.findItem(R.id.nav_search)
+        val searchView: SearchView = search?.actionView as SearchView
+        searchView.queryHint = "Search Something"
+
+        searchView.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                var tempArrayList: ArrayList<UserData> = arrayListOf<UserData>()
+
+                for(item in userArrayList){
+                    if(item.name == (newText) ){
+                        tempArrayList.add(item)
+                    }
+                }
+                    if(newText.isEmpty()){
+                        userRecylerView.adapter = UserAdapter(userArrayList)
+                    }else {
+                        userRecylerView.adapter = UserAdapter(tempArrayList)
+                    }
+
+                return true
+
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
 
     companion object {
         // TODO: Rename and change types and number of parameters

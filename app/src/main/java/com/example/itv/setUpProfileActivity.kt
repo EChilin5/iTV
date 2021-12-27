@@ -31,7 +31,6 @@ class setUpProfileActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        etName = binding.etSUName
         etEmail = binding.etEmail
         etPassword = binding.etProfilePassword
         etConfirmPassword = binding.etConfirmPassword

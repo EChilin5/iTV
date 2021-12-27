@@ -6,36 +6,20 @@
     tools:context=".setUpProfileActivity">
 
     <EditText
-        android:id="@+id/etSUName"
+        android:id="@+id/etEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvProfile"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="52dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text="@string/name"
-        android:importantForAutofill="no" />
-
-    <EditText
-        android:id="@+id/etEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etSUName"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="52dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="52dp"
         android:ems="10"
+        android:hint="@string/email"
         android:importantForAutofill="no"
         android:inputType="textWebEmailAddress|textPersonName"
-        android:minHeight="48dp"
-        android:text="@string/email" />
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/etProfilePassword"
@@ -47,11 +31,10 @@
         android:layout_marginStart="52dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="52dp"
-        android:ems="10"
+        android:hint="@string/password"
         android:importantForAutofill="no"
         android:inputType="textPersonName|textPassword"
-        android:minHeight="48dp"
-        android:text="@string/password" />
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/etConfirmPassword"
@@ -64,10 +47,10 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="52dp"
         android:ems="10"
+        android:hint="@string/confirm_password"
         android:importantForAutofill="no"
         android:inputType="textPersonName|textPassword"
-        android:minHeight="48dp"
-        android:text="@string/confirm_password" />
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/btnProfileSubmit"
@@ -75,8 +58,10 @@
         android:layout_height="48dp"
         android:layout_below="@+id/etConfirmPassword"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="136dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="80dp"
         android:minHeight="48dp"
         android:text="@string/submit" />
 
@@ -88,7 +73,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="30dp"
         android:gravity="center"
         android:text="@string/profile"

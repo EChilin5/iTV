@@ -15,6 +15,7 @@ import com.example.itv.overlayfood
 import com.example.itv.user.UserData
 import com.example.itv.user.UserItemDataEntry
 import com.example.itv.user.UserMealAdapter
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -43,6 +44,7 @@ class DailyMealFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         arguments?.let {
 
         }
@@ -58,6 +60,7 @@ class DailyMealFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         val date = getCurrentDateTime()
         dateFormated = date.toString("MM/dd/yyyy")
@@ -81,6 +84,17 @@ class DailyMealFragment : Fragment() {
 
 
     private fun getUserFoodData(){
+        val userName = Firebase.auth.currentUser
+        var currentUserName = ""
+        userName?.let {
+            for (profile in it.providerData) {
+
+                currentUserName = profile.email.toString()
+
+            }
+        }
+        currentUserName = currentUserName.dropLast(10)
+
         userArrayList.clear()
         var calories = 10000
         var total = 0
@@ -95,7 +109,7 @@ class DailyMealFragment : Fragment() {
 
                     for(userSnapShot in snapshot.children){
                             val user = userSnapShot.getValue(UserItemDataEntry::class.java)
-                        if(user?.date!!.contains(dateFormated)) {
+                        if(user?.date!!.contains(dateFormated) && user.user == currentUserName) {
                             calories -= Integer.parseInt( user.calories)
                             total +=  Integer.parseInt( user.calories)
                                 userArrayList.add(user)
