@@ -1,5 +1,6 @@
 package com.example.itv
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import com.example.itv.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -32,15 +34,19 @@ class LoginActivity : AppCompatActivity() {
         initView()
 
 
-
-
-
     }
 
     private fun goToMain() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun openFoodItem() {
+
+        val dialog = forgotPasswordOverlay()
+        val fm = this.supportFragmentManager
+        dialog.show(fm, "name")
     }
 
     private fun initView() {
@@ -53,17 +59,7 @@ class LoginActivity : AppCompatActivity() {
         val auth = FirebaseAuth.getInstance()
 
         binding.tvHelp.setOnClickListener {
-            Toast.makeText(this, "Selected Text ", Toast.LENGTH_LONG).show()
-
-            val emailAddress = "edgar3ac@gmail.com"
-
-            Firebase.auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Email sent.")
-                    }
-                }
-
+            openFoodItem()
 
         }
 
