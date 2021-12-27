@@ -32,6 +32,9 @@ class LoginActivity : AppCompatActivity() {
         initView()
 
 
+
+
+
     }
 
     private fun goToMain() {
@@ -49,9 +52,25 @@ class LoginActivity : AppCompatActivity() {
 
         val auth = FirebaseAuth.getInstance()
 
+        binding.tvHelp.setOnClickListener {
+            Toast.makeText(this, "Selected Text ", Toast.LENGTH_LONG).show()
+
+            val emailAddress = "edgar3ac@gmail.com"
+
+            Firebase.auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Email sent.")
+                    }
+                }
+
+
+        }
+
 
         btnLogin.setOnClickListener {
             btnLogin.isEnabled = false
+            Toast.makeText(this, "Selected Text ", Toast.LENGTH_LONG).show()
 
             val email = binding.etUserName.text.toString()
             val password = binding.etPasword.text.toString()
@@ -74,10 +93,13 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
+
         }
 
         btnSignUp.setOnClickListener {
-        var intent = Intent(this, setUpProfileActivity::class.java)
+            Toast.makeText(this, "Selected Text ", Toast.LENGTH_LONG).show()
+
+            val intent = Intent(this, setUpProfileActivity::class.java)
         startActivity(intent)
         finish()
         //btnSignUp.isEnabled = false
