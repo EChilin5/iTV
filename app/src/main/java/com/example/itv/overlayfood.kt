@@ -72,14 +72,10 @@ class overlayfood : DialogFragment() {
             userName?.let {
                 for (profile in it.providerData) {
                     // Id of the provider (ex: google.com)
-                    val providerId = profile.providerId
                     currentUserName = profile.email.toString()
-                    val email = profile.email
                 }
             }
             currentUserName = currentUserName.dropLast(10)
-            Toast.makeText(context, currentUserName, Toast.LENGTH_SHORT).show()
-//            val userName = "ed"
             val dateNow = Calendar.getInstance().time
             database = Firebase.database.reference
             val user = UserItemDataEntry(currentUserName,name, calories, dateInString)
@@ -103,7 +99,7 @@ class overlayfood : DialogFragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             overlayfood().apply {
                 arguments = Bundle().apply {
 

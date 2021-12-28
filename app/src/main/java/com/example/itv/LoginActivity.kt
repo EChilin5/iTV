@@ -66,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
 
         btnLogin.setOnClickListener {
             btnLogin.isEnabled = false
-            Toast.makeText(this, "Selected Text ", Toast.LENGTH_LONG).show()
 
             val email = binding.etUserName.text.toString()
             val password = binding.etPasword.text.toString()
@@ -85,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
                     goToMain()
                 }else{
                     Log.i(TAG, "Login Failed", task.exception)
-                    Toast.makeText(this, "Authentication Faile", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Unable to login", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -93,7 +92,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnSignUp.setOnClickListener {
-            Toast.makeText(this, "Selected Text ", Toast.LENGTH_LONG).show()
 
             val intent = Intent(this, setUpProfileActivity::class.java)
         startActivity(intent)
