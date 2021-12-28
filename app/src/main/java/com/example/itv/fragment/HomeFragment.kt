@@ -104,7 +104,7 @@ class HomeFragment : Fragment() {
         inflater.inflate(R.menu.nav_search, menu)
         val search: MenuItem? = menu.findItem(R.id.nav_search)
         val searchView: SearchView = search?.actionView as SearchView
-        searchView.queryHint = "Search Something"
+        searchView.queryHint = "search name or calorie"
 
         searchView.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -112,10 +112,10 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                var tempArrayList: ArrayList<UserData> = arrayListOf<UserData>()
+                val tempArrayList: ArrayList<UserData> = arrayListOf<UserData>()
 
                 for(item in userArrayList){
-                    if(item.name?.contains(newText) == true){
+                    if(item.name?.contains(newText) == true || item.calories?.toInt()!! <= newText.toInt()){
                         tempArrayList.add(item)
                     }
                 }
@@ -136,7 +136,7 @@ class HomeFragment : Fragment() {
     companion object {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             HomeFragment().apply {
                 arguments = Bundle().apply {
 
