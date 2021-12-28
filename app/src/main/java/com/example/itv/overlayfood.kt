@@ -55,17 +55,17 @@ class overlayfood : DialogFragment() {
         binding.btnPost.setOnClickListener {
             val name = binding.etName.text.toString()
             val calories = binding.etCalories.text.toString()
-            val carbs = binding.etCarbs.text.toString()
-            val protein = binding.etProtein.text.toString()
+//            val carbs = binding.etCarbs.text.toString()
+//            val protein = binding.etProtein.text.toString()
             if(name != "") {
-                saveUserItem(name, calories, carbs, protein, dateInString)
+                saveUserItem(name, calories, dateInString)
                 Toast.makeText(context, "Post is Saved", Toast.LENGTH_LONG).show()
             }
             this.dismiss()
         }
     }
 
-    private fun saveUserItem(name: String?, calories: String?, carbs: String?, protein: String?, dateInString: String) {
+    private fun saveUserItem(name: String?, calories: String?,  dateInString: String) {
         try {
             val userName = Firebase.auth.currentUser
             var currentUserName = ""
@@ -82,7 +82,7 @@ class overlayfood : DialogFragment() {
 //            val userName = "ed"
             val dateNow = Calendar.getInstance().time
             database = Firebase.database.reference
-            val user = UserItemDataEntry(currentUserName,name, carbs,calories,protein, dateInString)
+            val user = UserItemDataEntry(currentUserName,name, calories, dateInString)
             database.child("UserMeal").child(currentUserName+dateNow).setValue(user)
         }catch (e: Exception){
             Toast.makeText(context, "failed to write to db " + e.localizedMessage, Toast.LENGTH_LONG).show()

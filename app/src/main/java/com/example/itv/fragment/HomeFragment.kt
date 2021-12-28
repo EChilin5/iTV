@@ -115,7 +115,7 @@ class HomeFragment : Fragment() {
                 var tempArrayList: ArrayList<UserData> = arrayListOf<UserData>()
 
                 for(item in userArrayList){
-                    if(item.name == (newText) ){
+                    if(item.name?.contains(newText) == true){
                         tempArrayList.add(item)
                     }
                 }

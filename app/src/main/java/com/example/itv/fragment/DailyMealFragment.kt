@@ -117,7 +117,7 @@ class DailyMealFragment : Fragment() {
 
                     }
                     if(userArrayList.isEmpty()){
-                        val temp = UserItemDataEntry( "Example User" ,  "Temp User","0", "0","0",
+                        val temp = UserItemDataEntry( "Example User" ,  "Temp User","0",
                             dateFormated)
                      userArrayList.add(temp)
                     }
