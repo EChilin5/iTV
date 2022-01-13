@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itv.FoodItemDetailActivity
 import com.example.itv.databinding.UserFoodItemBinding
+import com.squareup.picasso.Picasso
 
 class UserMealAdapter(private val userList:ArrayList<UserItemDataEntry>): RecyclerView.Adapter<UserMealAdapter.UserMealAdapterHolder>() {
 
@@ -25,6 +26,14 @@ class UserMealAdapter(private val userList:ArrayList<UserItemDataEntry>): Recycl
         val currentItem = userList[position]
         binding.tvFoodName.text = currentItem.name
         binding.tvCalorieCount.text = currentItem.calories.toString()
+
+        Picasso.get()
+            .load(currentItem.img)
+            .resize(150, 150)         //optional
+            .centerCrop()                        //optional
+            .into(binding.ivUserFoodImage)
+
+
         var response: String
         if(currentItem.name == "Temp User"){
             response = "A preview of nutrition facts or description once a food item is added to the list"
@@ -32,13 +41,13 @@ class UserMealAdapter(private val userList:ArrayList<UserItemDataEntry>): Recycl
             response = "No current description has been found"
         }
 
-        binding.tvFoodItemDescription.text = response
-            binding.itemFood.setOnClickListener { v -> v.context
-            val intent = Intent(v.context, FoodItemDetailActivity::class.java)
-            intent.putExtra("foodName", currentItem.name)
-            v.context.startActivity(intent)
-
-        }
+//        binding.tvFoodItemDescription.text = response
+//            binding.itemFood.setOnClickListener { v -> v.context
+//            val intent = Intent(v.context, FoodItemDetailActivity::class.java)
+//            intent.putExtra("foodName", currentItem.name)
+//            v.context.startActivity(intent)
+//
+//        }
     }
 
     override fun getItemCount(): Int {

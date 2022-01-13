@@ -136,10 +136,6 @@ class DailyMealFragment : Fragment() {
         newFragment.arguments = args
         newFragment.show(childFragmentManager, "TAG")
 
-
-//
-//        val dialog = overlayfood()
-//        dialog.show(childFragmentManager, "overlay")
     }
 
 

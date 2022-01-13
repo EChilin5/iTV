@@ -6,6 +6,6 @@ data class UserData(
     var description:String? = "",
     var calories:String? = "",
     var date:String? = "",
-    var imageUrl:String?="",
+    var img:String?="",
     var user:String?=""
     )

@@ -119,7 +119,9 @@ class HomeFragment : Fragment() {
                 val tempArrayList: ArrayList<UserData> = arrayListOf<UserData>()
 
                 for(item in userArrayList){
-                    if(item.name?.contains(newText) == true || item.calories?.toInt()!! <= newText.toInt()){
+                    if(item.name?.contains(newText) == true ){
+                        tempArrayList.add(item)
+                    }else if( newText.toIntOrNull() != null && item.calories?.toInt()!! <= newText.toInt()){
                         tempArrayList.add(item)
                     }
                 }
