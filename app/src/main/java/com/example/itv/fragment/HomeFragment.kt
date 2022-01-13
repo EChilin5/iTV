@@ -24,7 +24,11 @@ import com.google.firebase.ktx.Firebase
  * A simple [Fragment] subclass.
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
+ *
  */
+
+
+
 class HomeFragment : Fragment() {
 
     private var _binding:FragmentHomeBinding? = null

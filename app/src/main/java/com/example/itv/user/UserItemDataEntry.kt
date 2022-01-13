@@ -6,5 +6,6 @@ data class UserItemDataEntry (
 //    var carbs:String? = "",
     var calories:String? = "",
 //    var protein:String? ="",
-    var date:String? = ""
+    var date:String? = "",
+    var img:String?=""
     )
