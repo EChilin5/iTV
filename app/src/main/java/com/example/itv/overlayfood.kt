@@ -78,9 +78,12 @@ class overlayfood : DialogFragment() {
             val calories = binding.etCalories.text.toString()
 //            val carbs = binding.etCarbs.text.toString()
 //            val protein = binding.etProtein.text.toString()
-            if(name != "") {
+            if(name != "" && calories.toIntOrNull() != null) {
                 uploadImage(name, calories, dateInString, imgPath)
                 Toast.makeText(context, "Post is Saved", Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(context, "Incorrect Information was provided", Toast.LENGTH_LONG).show()
+
             }
             this.dismiss()
         }

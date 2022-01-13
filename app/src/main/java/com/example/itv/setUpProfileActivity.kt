@@ -65,7 +65,7 @@ class setUpProfileActivity : AppCompatActivity() {
 
                 }else{
                     Log.e(TAG,"failed to create user", task.exception)
-                    Toast.makeText(this,"authentication failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"Unable to create account", Toast.LENGTH_SHORT).show()
                 }
             }
 

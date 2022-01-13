@@ -67,6 +67,7 @@ class HomeFragment : Fragment() {
 
     private fun getUserData(){
 
+        var hashSet = HashSet<String>()
         val userName = Firebase.auth.currentUser
         var currentUserName = ""
         userName?.let {
@@ -86,9 +87,11 @@ class HomeFragment : Fragment() {
                 if(snapshot.exists()){
                     for(userSnapShot in snapshot.children){
                         val user = userSnapShot.getValue(UserData::class.java)
-                        if(user?.user == currentUserName ){
+                        if(user?.user == currentUserName && !hashSet.contains(user?.name)){
                             userArrayList.add(user)
+                            hashSet.add(user.name.toString())
                         }
+
 
                     }
 

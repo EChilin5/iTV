@@ -29,6 +29,8 @@ import com.google.firebase.ktx.Firebase
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 
 
 /**
@@ -81,7 +83,6 @@ class DailyMealFragment : Fragment() {
         binding.tvCurrentDate.text = dateFormated
 
         binding.fabSave.setOnClickListener{
-            Toast.makeText(context, "selected button", Toast.LENGTH_LONG).show()
             takePhoto()
 
         }
@@ -140,6 +141,7 @@ class DailyMealFragment : Fragment() {
 
 
     private fun getUserFoodData(){
+        var hashSet = HashSet<String>()
         val userName = Firebase.auth.currentUser
         var currentUserName = ""
         userName?.let {
@@ -168,13 +170,17 @@ class DailyMealFragment : Fragment() {
                         if(user?.date!!.contains(dateFormated) && user.user == currentUserName) {
                             calories -= Integer.parseInt( user.calories.toString())
                             total +=  Integer.parseInt( user.calories.toString())
+                            if(!hashSet.contains(user.name)) {
                                 userArrayList.add(user)
+                                hashSet.add(user.name.toString())
+                            }
                             }
 
                     }
                     if(userArrayList.isEmpty()){
                         val temp = UserItemDataEntry( "Example User" ,  "Temp User","0",
                             dateFormated)
+
                      userArrayList.add(temp)
                     }
 
@@ -192,7 +198,6 @@ class DailyMealFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "failed to load data", Toast.LENGTH_LONG).show()
             }
 
         })

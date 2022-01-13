@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
 
 
             if(binding.etUserName.text.isBlank() || binding.etPasword.text.isBlank()) {
-                Toast.makeText(this, "Missing content", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Missing information", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -80,7 +80,6 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task->
                 btnLogin.isEnabled = true
                 if(task.isSuccessful){
-                    Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show()
                     goToMain()
                 }else{
                     Log.i(TAG, "Login Failed", task.exception)
@@ -117,7 +116,7 @@ class LoginActivity : AppCompatActivity() {
 
                 }else{
                     Log.e(TAG,"failed to create user", task.exception)
-                    Toast.makeText(this,"authentication failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"Unable to login", Toast.LENGTH_SHORT).show()
                 }
             }
 
