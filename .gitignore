@@ -14,3 +14,6 @@
 .cxx
 local.properties
 /google-services.json
+/app/release/app-release.aab
+/app/release/output-metadata.json
+/app_bundle/private_key.pepk

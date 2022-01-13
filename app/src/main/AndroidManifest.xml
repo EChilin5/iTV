@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.itv">
+    package="eachillz.dev.itv">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -20,7 +20,7 @@
         android:theme="@style/Theme.ITV"
         android:usesCleartextTraffic="true">
         <provider
-            android:authorities="com.example.itv.fragment.fileprovider"
+            android:authorities="eachillz.dev.itv.fragment.fileprovider"
             android:name="androidx.core.content.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -45,7 +45,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true" />
-        <activity android:name=".FoodItemDetailActivity" />
+        <activity android:name="eachillz.dev.itv.FoodItemDetailActivity" />
         <activity android:name=".MainActivity" />
     </application>
 
