@@ -37,12 +37,18 @@ class setUpProfileActivity : AppCompatActivity() {
         btnSubmit = binding.btnProfileSubmit
 
         btnSubmit.setOnClickListener {
+
+            if(etEmail.text.isEmpty() || etConfirmPassword.text.isEmpty() || etConfirmPassword.text.isEmpty()){
+                Toast.makeText(this, "Missing Infromation", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
             btnSubmit.isEnabled = false
 
-            if(etConfirmPassword.text.toString() == etPassword.text.toString()){
+            if(etConfirmPassword.text.toString() == etPassword.text.toString() && etEmail.text.contains("@")){
                 createUserAccount(etEmail.text.toString(), etPassword.text.toString())
             }else{
                 btnSubmit.isEnabled = true
+                Toast.makeText(this, "Invalid email or password do not match", Toast.LENGTH_LONG).show()
             }
 
         }
