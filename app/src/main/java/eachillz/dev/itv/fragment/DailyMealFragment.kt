@@ -176,7 +176,7 @@ class DailyMealFragment : Fragment() {
 
                     }
                     if(userArrayList.isEmpty()){
-                        val temp = UserItemDataEntry( "Example User" ,  "Temp User","0",
+                        val temp = UserItemDataEntry( "Example User" ,  "Select + to add your meal","0",
                             dateFormated)
 
                      userArrayList.add(temp)
@@ -189,7 +189,7 @@ class DailyMealFragment : Fragment() {
                 binding.tvRemainingCaloriesCounter.text = calories.toString()
 
                 val progress1 = ((total).toDouble() / 10000) *100
-                var progress2 = 100 - progress1
+                val progress2 = 100 - progress1
 
                 binding.progressBar.progress = progress1.toInt()
                 binding.progressBar2.progress = progress2.toInt()

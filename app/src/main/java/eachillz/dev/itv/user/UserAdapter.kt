@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import eachillz.dev.itv.databinding.UserFoodItemBinding
 import eachillz.dev.itv.user.UserAdapter.*
 import com.squareup.picasso.Picasso
+import eachillz.dev.itv.R
 
 class UserAdapter(private val userList: ArrayList<UserData>): RecyclerView.Adapter<UserAdapterHolder>() {
 
@@ -28,11 +29,23 @@ class UserAdapter(private val userList: ArrayList<UserData>): RecyclerView.Adapt
         binding.tvCalorieCount.text = currentItem.calories.toString()
         binding.tvFoodItemDescription.text = currentItem.description
 
-        Picasso.get()
-            .load(currentItem.img)
-            .resize(150, 150)         //optional
-            .centerCrop()                        //optional
-            .into(binding.ivUserFoodImage)
+        if(currentItem.img.isNullOrEmpty()){
+            Picasso.get()
+                .load(R.drawable.bacground_myfood)
+                .placeholder(R.drawable.bacground_myfood)
+                .resize(150, 150)         //optional
+                .centerCrop()                        //optional
+                .into(binding.ivUserFoodImage)
+        }else{
+            Picasso.get()
+                .load(currentItem.img)
+                .placeholder(R.drawable.bacground_myfood)
+                .error(R.drawable.bacground_myfood)
+                .resize(150, 150)         //optional
+                .centerCrop()                        //optional
+                .into(binding.ivUserFoodImage)
+        }
+
 
     }
 

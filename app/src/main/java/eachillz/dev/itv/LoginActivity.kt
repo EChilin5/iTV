@@ -68,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
 
 
             if(binding.etUserName.text.isBlank() || binding.etPasword.text.isBlank()) {
+                btnLogin.isEnabled = true
                 Toast.makeText(this, "Missing information", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

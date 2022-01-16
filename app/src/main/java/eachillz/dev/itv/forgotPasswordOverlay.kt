@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import eachillz.dev.itv.databinding.FragmentForgotPasswordOverlayBinding
 import com.google.firebase.auth.ktx.auth
@@ -48,14 +49,19 @@ class forgotPasswordOverlay : DialogFragment() {
 
             val emailAddress: String = binding.etResetEmail.text.toString()
 
-            Firebase.auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Email sent.")
-                    }else{
-                        Log.d(TAG, "Email failed")
+            if(emailAddress.isNotEmpty() && emailAddress.contains("@")) {
+                Firebase.auth.sendPasswordResetEmail(emailAddress)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.d(TAG, "Email sent.")
+                            Toast.makeText(context, "Email has been sent", Toast.LENGTH_LONG).show()
+                        } else {
+                            Log.d(TAG, "Email can not be found")
+                        }
                     }
-                }
+            }else{
+                Toast.makeText(context,"Invalid Email", Toast.LENGTH_LONG).show()
+            }
             this.dismiss()
         }
 
