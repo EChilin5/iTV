@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import eachillz.dev.itv.R
 import eachillz.dev.itv.databinding.ActivityFoodItemDetailBinding.inflate
 import eachillz.dev.itv.databinding.FragmentHomeBinding
@@ -76,7 +77,8 @@ class HomeFragment : Fragment() {
             }
         }
         currentUserName = currentUserName.dropLast(10)
-
+        val mAuth = FirebaseAuth.getInstance();
+        val mCurrentUserId = mAuth.getCurrentUser()?.getUid()
 
         val ref = database.getReference("UserMeal")
         ref.addValueEventListener(object: ValueEventListener{

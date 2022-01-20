@@ -45,7 +45,14 @@ class setUpProfileActivity : AppCompatActivity() {
             btnSubmit.isEnabled = false
 
             if(etConfirmPassword.text.toString() == etPassword.text.toString() && etEmail.text.contains("@")){
-                createUserAccount(etEmail.text.toString(), etPassword.text.toString())
+                var isNewUser: Boolean = checkForValidEmail(etEmail.text.toString())
+
+                if(isNewUser){
+                    createUserAccount(etEmail.text.toString(), etPassword.text.toString())
+                }else{
+                    Toast.makeText(this, "Email already exist, Please use a different email", Toast.LENGTH_LONG).show()
+                }
+
             }else{
                 btnSubmit.isEnabled = true
                 Toast.makeText(this, "Invalid email or password do not match", Toast.LENGTH_LONG).show()
@@ -61,19 +68,37 @@ class setUpProfileActivity : AppCompatActivity() {
     }
 
     private fun createUserAccount(email: String, password: String) {
-        val auth = FirebaseAuth.getInstance()
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task->
-                btnSubmit.isEnabled = true
-                if(task.isSuccessful){
-                    Log.i(TAG, "created user Successfully")
-                    goToMain()
 
-                }else{
-                    Log.e(TAG,"failed to create user", task.exception)
-                    Toast.makeText(this,"Unable to create account", Toast.LENGTH_SHORT).show()
+
+            val auth = FirebaseAuth.getInstance()
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    btnSubmit.isEnabled = true
+                    if (task.isSuccessful) {
+                        Log.i(TAG, "created user Successfully")
+                        goToMain()
+
+                    } else {
+                        Log.e(TAG, "failed to create user", task.exception)
+                        Toast.makeText(this, "Unable to create account", Toast.LENGTH_SHORT).show()
+                    }
                 }
+
+
+    }
+
+    private fun  checkForValidEmail(email:String) :Boolean{
+        var isValidUser: Boolean = false
+        val auth = FirebaseAuth.getInstance()
+        auth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task->
+            var isNewUser:Boolean = task.result.signInMethods?.isEmpty() == true;
+
+            if(isNewUser){
+                isValidUser = true
             }
+        }
+
+        return isValidUser
 
     }
 
