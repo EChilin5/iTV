@@ -19,6 +19,7 @@
         android:layout_marginStart="156dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/save_image_to_db"
+
         app:srcCompat="@drawable/bacground_myfood" />
 
     <EditText
