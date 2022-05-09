@@ -49,6 +49,7 @@ class ImageUploadFragment : Fragment() {
             FirebaseAuth.getInstance().signOut()
             val intent  = Intent(context, StarterActivity::class.java)
             context?.startActivity(intent)
+            activity?.finish()
 
         }
 

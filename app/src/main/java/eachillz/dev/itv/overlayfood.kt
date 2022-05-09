@@ -21,6 +21,8 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import eachillz.dev.itv.user.User
+import eachillz.dev.itv.user.UserDailyMealPost
 import java.io.File
 
 
@@ -34,7 +36,7 @@ class overlayfood : DialogFragment() {
     private lateinit var firestoreDb: FirebaseFirestore
     private lateinit var storageReference: StorageReference
 
-    private lateinit var database: DatabaseReference
+//    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +57,8 @@ class overlayfood : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //name, calories, carbs, protein
-//        val mArgs = arguments
-//        val myValue = mArgs!!.getString("keyUsed to send it...")
+
+        firestoreDb = FirebaseFirestore.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
 
 
@@ -85,7 +86,7 @@ class overlayfood : DialogFragment() {
         }
     }
 
-    private fun uploadImage(name: String?, calories: String?,  dateInString: String,imgPath: String?) {
+    private fun uploadImage(name: String, calories: String?,  dateInString: String,imgPath: String?) {
         val photoReference =
             storageReference.child("images/"+imgPath.toString())
         val file = Uri.fromFile(File(imgPath.toString()))
@@ -106,11 +107,13 @@ class overlayfood : DialogFragment() {
                             currentUserName = profile.email.toString()
                         }
                     }
+                    val email = currentUserName
                     currentUserName = currentUserName.dropLast(10)
                     val dateNow = Calendar.getInstance().time
-                    database = Firebase.database.reference
-                    val user = UserItemDataEntry(currentUserName,name, calories, dateInString,downloadUrlTask.result.toString())
-                    database.child("UserMeal").child(currentUserName+dateNow).setValue(user)
+
+                    val user : User = User("", email, currentUserName )
+                    val mealInfo: UserDailyMealPost = UserDailyMealPost("", name, downloadUrlTask.result.toString(), dateInString,System.currentTimeMillis(), calories!!.toLong(),user )
+                firestoreDb.collection("userDailyMeal").add(mealInfo)
 
             }.addOnCompleteListener { postCreationTask ->
 //                btnSubmitPost.isEnabled = true
@@ -123,25 +126,7 @@ class overlayfood : DialogFragment() {
             }
     }
 
-//    private fun saveUserItem(name: String?, calories: String?,  dateInString: String, imgPath: String?): Task<Any> {
-//        try {
-//            val userName = Firebase.auth.currentUser
-//            var currentUserName = ""
-//            userName?.let {
-//                for (profile in it.providerData) {
-//                    // Id of the provider (ex: google.com)
-//                    currentUserName = profile.email.toString()
-//                }
-//            }
-//            currentUserName = currentUserName.dropLast(10)
-//            val dateNow = Calendar.getInstance().time
-//            database = Firebase.database.reference
-//            val user = UserItemDataEntry(currentUserName,name, calories, dateInString,imgPath)
-//            database.child("UserMeal").child(currentUserName+dateNow).setValue(user)
-//        }catch (e: Exception){
-//            Toast.makeText(context, "failed to write to db " + e.localizedMessage, Toast.LENGTH_LONG).show()
-//        }
-//    }
+
 
     private fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
         val formatter = SimpleDateFormat(format, locale)

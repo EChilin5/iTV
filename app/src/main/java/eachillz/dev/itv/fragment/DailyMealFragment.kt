@@ -24,7 +24,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
+import eachillz.dev.itv.user.UserDailyMealPost
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,12 +52,12 @@ class DailyMealFragment : Fragment() {
     private var _binding: FragmentDailyMealBinding? = null
     private val binding get() = _binding!!
     private var dateFormated = ""
-    private var FILE_NAME ="photo.jpg"
+    private var FILE_NAME = "photo.jpg"
 
 
-    private val database = Firebase.database
+    private lateinit var firestoreDb: FirebaseFirestore
     private lateinit var userRecylerView: RecyclerView
-    private lateinit var userArrayList: ArrayList<UserItemDataEntry>
+    private lateinit var userMealArrayList: ArrayList<UserDailyMealPost>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,11 +80,13 @@ class DailyMealFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        firestoreDb = FirebaseFirestore.getInstance()
+
         val date = getCurrentDateTime()
         dateFormated = date.toString("MM/dd/yyyy")
         binding.tvCurrentDate.text = dateFormated
 
-        binding.fabSave.setOnClickListener{
+        binding.fabSave.setOnClickListener {
             takePhoto()
 
         }
@@ -88,47 +94,52 @@ class DailyMealFragment : Fragment() {
         userRecylerView = binding.rvDailyFood
         userRecylerView.layoutManager = LinearLayoutManager(context)
 
-        userArrayList = arrayListOf<UserItemDataEntry>()
+        userMealArrayList = arrayListOf<UserDailyMealPost>()
 
-        getUserFoodData()
-
+//        getUserFoodData()
+        fetchData()
 
     }
+
 
     private fun takePhoto() {
         Log.i(TAG, "open up image picker on device")
         val imagePickerIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         photFile = getPhotoFile(FILE_NAME)
 //        imagePickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, photFile)
-         val fileProvider = FileProvider.getUriForFile(requireContext(), "eachillz.dev.itv.fragment.fileprovider", photFile)
+        val fileProvider = FileProvider.getUriForFile(
+            requireContext(),
+            "eachillz.dev.itv.fragment.fileprovider",
+            photFile
+        )
         imagePickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
 
-        if(imagePickerIntent.resolveActivity(activity?.packageManager!!) != null){
-            startActivityForResult(imagePickerIntent, PICK_PHOTO_CODE )
+        if (imagePickerIntent.resolveActivity(activity?.packageManager!!) != null) {
+            startActivityForResult(imagePickerIntent, PICK_PHOTO_CODE)
 
-        }else{
+        } else {
             Toast.makeText(context, "Unable to open Camera", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun getPhotoFile(fileName: String): File {
         val storageDirectory = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-       return File.createTempFile(fileName, ".jpg", storageDirectory)
+        return File.createTempFile(fileName, ".jpg", storageDirectory)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == PICK_PHOTO_CODE && resultCode == Activity.RESULT_OK){
-           // val takenImage = data?.extras?.get("data") as Bitmap
+        if (requestCode == PICK_PHOTO_CODE && resultCode == Activity.RESULT_OK) {
+            // val takenImage = data?.extras?.get("data") as Bitmap
 //
-            val takenImage:String = photFile.absolutePath
+            val takenImage: String = photFile.absolutePath
             openFoodItem(takenImage)
-        }else{
+        } else {
             super.onActivityResult(requestCode, resultCode, data)
 
         }
     }
 
-    private fun openFoodItem( takenImage: String) {
+    private fun openFoodItem(takenImage: String) {
         val args = Bundle()
         args.putString("Image", takenImage)
         val newFragment = overlayfood()
@@ -137,8 +148,7 @@ class DailyMealFragment : Fragment() {
 
     }
 
-
-    private fun getUserFoodData(){
+    private fun fetchData() {
         var hashSet = HashSet<String>()
         val userName = Firebase.auth.currentUser
         var currentUserName = ""
@@ -150,56 +160,123 @@ class DailyMealFragment : Fragment() {
             }
         }
         currentUserName = currentUserName.dropLast(10)
-
-        userArrayList.clear()
+        userMealArrayList.clear()
         var calories = 10000
         var total = 0
-        val ref = database.getReference("UserMeal")
-        ref.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
 
-                if(snapshot.exists()){
-                    userArrayList.clear()
-                    calories = 10000
-                    total = 0
+        var mealReference = firestoreDb.collection("userDailyMeal")
+            .orderBy("creation_time_ms", Query.Direction.DESCENDING)
+        mealReference = mealReference.whereEqualTo("user.username", currentUserName)
 
-                    for(userSnapShot in snapshot.children){
-                            val user = userSnapShot.getValue(UserItemDataEntry::class.java)
-                        if(user?.date!!.contains(dateFormated) && user.user == currentUserName) {
-                            calories -= Integer.parseInt( user.calories.toString())
-                            total +=  Integer.parseInt( user.calories.toString())
-                            if(!hashSet.contains(user.name)) {
-                                userArrayList.add(user)
-                                hashSet.add(user.name.toString())
-                            }
-                            }
+        mealReference.addSnapshotListener { snapshot, exception ->
+            if (exception != null || snapshot == null) {
+                Log.e(TAG, "exception occurred", exception)
+                return@addSnapshotListener
+            }
 
+            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+                if (dc.type == DocumentChange.Type.ADDED) {
+
+                    val mealItem: UserDailyMealPost =
+                        dc.document.toObject(UserDailyMealPost::class.java)
+                    Toast.makeText(context, "id# ${mealItem.id}", Toast.LENGTH_SHORT).show()
+
+                    if (mealItem?.date!!.contains(dateFormated)) {
+                        calories -= Integer.parseInt(mealItem.calories.toString())
+                        total += Integer.parseInt(mealItem.calories.toString())
+                        if (!hashSet.contains(mealItem.name)) {
+                            userMealArrayList.add(mealItem)
+                            hashSet.add(mealItem.name.toString())
+                        }
                     }
-                    if(userArrayList.isEmpty()){
-                        val temp = UserItemDataEntry( "Example User" ,  "Select + to add your meal","0",
-                            dateFormated)
 
-                     userArrayList.add(temp)
-                    }
-
-                    userRecylerView.adapter = UserMealAdapter(userArrayList)
                 }
-
-                binding.tvCurrentCalorieCounter.text = total.toString()
-                binding.tvRemainingCaloriesCounter.text = calories.toString()
-
-                val progress1 = ((total).toDouble() / 10000) *100
-                val progress2 = 100 - progress1
-
-                binding.progressBar.progress = progress1.toInt()
-                binding.progressBar2.progress = progress2.toInt()
             }
+            if (userMealArrayList.isEmpty()) {
+                val temp =  UserDailyMealPost(
+                    "", "Example User", "", dateFormated, 0, 0,null
+                )
 
-            override fun onCancelled(error: DatabaseError) {
+                userMealArrayList.add(temp)
             }
+            userRecylerView.adapter = UserMealAdapter(userMealArrayList)
+            binding.tvCurrentCalorieCounter.text = total.toString()
+            binding.tvRemainingCaloriesCounter.text = calories.toString()
 
-        })
+            val progress1 = ((total).toDouble() / 10000) *100
+            val progress2 = 100 - progress1
+
+            binding.progressBar.progress = progress1.toInt()
+            binding.progressBar2.progress = progress2.toInt()
+
+
+        }
+
     }
+
+
+
+
+//    private fun getUserFoodData(){
+//        var hashSet = HashSet<String>()
+//        val userName = Firebase.auth.currentUser
+//        var currentUserName = ""
+//        userName?.let {
+//            for (profile in it.providerData) {
+//
+//                currentUserName = profile.email.toString()
+//
+//            }
+//        }
+//        currentUserName = currentUserName.dropLast(10)
+//
+//
+//        val ref = database.getReference("UserMeal")
+//        ref.addValueEventListener(object: ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//
+//                if(snapshot.exists()){
+//                    userArrayList.clear()
+//                    calories = 10000
+//                    total = 0
+//
+//                    for(userSnapShot in snapshot.children){
+//                            val user = userSnapShot.getValue(UserItemDataEntry::class.java)
+//                        if(user?.date!!.contains(dateFormated) && user.user == currentUserName) {
+//                            calories -= Integer.parseInt( user.calories.toString())
+//                            total +=  Integer.parseInt( user.calories.toString())
+//                            if(!hashSet.contains(user.name)) {
+//                                userArrayList.add(user)
+//                                hashSet.add(user.name.toString())
+//                            }
+//                            }
+//
+//                    }
+//                    if(userArrayList.isEmpty()){
+//                        val temp = UserItemDataEntry( "Example User" ,  "Select + to add your meal","0",
+//                            dateFormated)
+//
+//                     userArrayList.add(temp)
+//                    }
+//
+//                    userRecylerView.adapter = UserMealAdapter(userArrayList)
+//                }
+//
+//                binding.tvCurrentCalorieCounter.text = total.toString()
+//                binding.tvRemainingCaloriesCounter.text = calories.toString()
+//
+//                val progress1 = ((total).toDouble() / 10000) *100
+//                val progress2 = 100 - progress1
+//
+//                binding.progressBar.progress = progress1.toInt()
+//                binding.progressBar2.progress = progress2.toInt()
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//            }
+//
+//        })
+//    }
 
 
 

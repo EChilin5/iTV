@@ -7,7 +7,7 @@ import eachillz.dev.itv.databinding.UserFoodItemBinding
 import com.squareup.picasso.Picasso
 import eachillz.dev.itv.R
 
-class UserMealAdapter(private val userList:ArrayList<UserItemDataEntry>): RecyclerView.Adapter<UserMealAdapter.UserMealAdapterHolder>() {
+class UserMealAdapter(private val userList:ArrayList<UserDailyMealPost>): RecyclerView.Adapter<UserMealAdapter.UserMealAdapterHolder>() {
 
     private var _binding: UserFoodItemBinding? = null
     private val binding get() = _binding!!
@@ -26,7 +26,7 @@ class UserMealAdapter(private val userList:ArrayList<UserItemDataEntry>): Recycl
         binding.tvFoodName.text = currentItem.name
         binding.tvCalorieCount.text = currentItem.calories.toString()
 
-        if(currentItem.img.isNullOrEmpty()){
+        if(currentItem.image_url.isNullOrEmpty()){
             Picasso.get()
                 .load(R.drawable.bacground_myfood)
                 .placeholder(R.drawable.bacground_myfood)
@@ -35,7 +35,7 @@ class UserMealAdapter(private val userList:ArrayList<UserItemDataEntry>): Recycl
                 .into(binding.ivUserFoodImage)
         }else{
             Picasso.get()
-                .load(currentItem.img)
+                .load(currentItem.image_url)
                 .placeholder(R.drawable.bacground_myfood)
                 .error(R.drawable.bacground_myfood)
                 .resize(150, 150)         //optional

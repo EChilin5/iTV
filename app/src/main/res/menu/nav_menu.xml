@@ -12,6 +12,15 @@
     </item>
 
     <item
+        android:id="@+id/ic_progress"
+        android:enabled="true"
+        android:title="@string/progress"
+        android:icon="@drawable/ic_chart"
+        app:showAsAction="ifRoom">
+
+    </item>
+
+    <item
         android:id="@+id/ic_meals"
         android:enabled="true"
         android:title="@string/meals"

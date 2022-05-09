@@ -1,82 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_food"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="2dp">
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/FoodItemGL1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/FoodItemGLv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/FoodItemGLvEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="1.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rvUser_furtherDetail"
-        android:layout_width="353dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="19dp"
-        android:layout_marginBottom="2dp"
+        android:layout_width="0dp"
+        android:layout_height="152dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/custombackground"
         android:elevation="4dp"
-        android:padding="4dp">
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/FoodItemGLvEnd"
+        app:layout_constraintStart_toStartOf="@id/FoodItemGLv1"
+        app:layout_constraintTop_toTopOf="@id/FoodItemGL1">
 
 
         <ImageView
             android:id="@+id/ivUserFoodImage"
-            android:layout_width="120dp"
-            android:layout_height="118dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
 
             android:background="@drawable/circleimage"
             android:contentDescription="@string/sample_food_image"
             android:elevation="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/bacground_myfood"
+            app:layout_constraintBottom_toTopOf="@+id/FurtherDetailGLEnd"
+            app:layout_constraintEnd_toStartOf="@+id/FurtherGuideLineV2"
+            app:layout_constraintStart_toStartOf="@+id/FurtherGuideLineV1"
 
+            app:layout_constraintTop_toTopOf="@id/FurterDetailGL1"
+            app:srcCompat="@drawable/bacground_myfood"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/tvFoodName"
             android:layout_width="114dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-32dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="15dp"
             android:text="@string/salad"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivUserFoodImage"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="@id/FurtherGLVEnd"
+            app:layout_constraintStart_toEndOf="@id/FurtherGuideLineV2"
+            app:layout_constraintTop_toTopOf="@id/FurterDetailGL1" />
 
         <TextView
             android:id="@+id/tvTotalCCalories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:text="@string/calories"
             android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/ivUserFoodImage"
+            app:layout_constraintStart_toEndOf="@id/FurtherGuideLineV2"
             app:layout_constraintTop_toBottomOf="@+id/tvFoodName" />
-
-        <TextView
-            android:id="@+id/tvFoodItemDescription"
-            android:layout_width="76dp"
-            android:layout_height="38dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="19dp"
-            android:text="@string/description"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.175"
-            app:layout_constraintStart_toEndOf="@+id/ivUserFoodImage"
-            app:layout_constraintTop_toBottomOf="@+id/tvTotalCCalories" />
 
         <TextView
             android:id="@+id/tvCalorieCount"
@@ -86,9 +95,51 @@
             android:layout_marginTop="16dp"
             android:text="@string/_1000"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toStartOf="@+id/FurtherGLVEnd"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/tvTotalCCalories"
             app:layout_constraintTop_toBottomOf="@+id/tvFoodName" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/FurterDetailGL1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/FurtherDetailGLEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/FurtherGuideLineV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.04" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/FurtherGuideLineV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.4" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/FurtherGLVEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.95" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

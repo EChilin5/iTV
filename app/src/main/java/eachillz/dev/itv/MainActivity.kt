@@ -7,6 +7,7 @@ import eachillz.dev.itv.R
 import eachillz.dev.itv.databinding.ActivityMainBinding
 import eachillz.dev.itv.fragment.HomeFragment
 import eachillz.dev.itv.fragment.DailyMealFragment
+import eachillz.dev.itv.fragment.ProggressFragment
 import eachillz.dev.itv.image.ImageUploadFragment
 
 
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         val possibleMealsFragment = HomeFragment()
         val dailyMealFragment = DailyMealFragment()
+        val progressFragment = ProggressFragment()
         val settingFragment = ImageUploadFragment()
 
         binding.bottomNavBar.setOnItemSelectedListener { it->
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.ic_home_daily->openFragment(dailyMealFragment)
                 R.id.ic_meals->openFragment(possibleMealsFragment)
                 R.id.ic_settings->openFragment(settingFragment)
+                R.id.ic_progress->openFragment(progressFragment)
             }
             true
         }

@@ -27,7 +27,6 @@ class UserAdapter(private val userList: ArrayList<UserData>): RecyclerView.Adapt
         val currentItem = userList[position]
         binding.tvFoodName.text = currentItem.name
         binding.tvCalorieCount.text = currentItem.calories.toString()
-        binding.tvFoodItemDescription.text = ""
 
         if(currentItem.img.isNullOrEmpty()){
             Picasso.get()
