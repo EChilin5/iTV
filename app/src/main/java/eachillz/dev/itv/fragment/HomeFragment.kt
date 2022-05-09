@@ -1,6 +1,7 @@
 package eachillz.dev.itv.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -16,7 +17,11 @@ import eachillz.dev.itv.user.UserData
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
+import eachillz.dev.itv.user.UserDailyMealPost
 
 
 /**
@@ -27,15 +32,16 @@ import com.google.firebase.ktx.Firebase
  */
 
 
-
+private const val TAG = "HomeFragment"
 class HomeFragment : Fragment() {
 
     private var _binding:FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val database = Firebase.database
+//    private val database = Firebase.database
+    private lateinit var firestoreDb: FirebaseFirestore
     private lateinit var userRecylerView: RecyclerView
-    private lateinit var userArrayList: ArrayList<UserData>
+    private lateinit var userMealArrayList: ArrayList<UserDailyMealPost>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +59,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        firestoreDb = FirebaseFirestore.getInstance()
         userRecylerView  = binding.rvHome
         userRecylerView.layoutManager = LinearLayoutManager(context)
 
-        userArrayList = arrayListOf<UserData>()
+        userMealArrayList = arrayListOf<UserDailyMealPost>()
         getUserData()
 
     }
@@ -80,30 +86,29 @@ class HomeFragment : Fragment() {
         val mAuth = FirebaseAuth.getInstance();
         val mCurrentUserId = mAuth.getCurrentUser()?.getUid()
 
-        val ref = database.getReference("UserMeal")
-        ref.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
+        var mealReference = firestoreDb.collection("userDailyMeal")
+            .orderBy("creation_time_ms", Query.Direction.ASCENDING)
 
-                if(snapshot.exists()){
-                    for(userSnapShot in snapshot.children){
-                        val user = userSnapShot.getValue(UserData::class.java)
-                        if(user?.user == currentUserName && !hashSet.contains(user?.name)){
-                            userArrayList.add(user)
-                            hashSet.add(user.name.toString())
-                        }
+        mealReference = mealReference.whereEqualTo("user.username", currentUserName)
 
+        mealReference.addSnapshotListener{snapshot, exception ->
+            if(exception != null || snapshot == null){
+                Log.e(TAG, "exception occurred", exception)
+                return@addSnapshotListener
+            }
+            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+                if (dc.type == DocumentChange.Type.ADDED) {
 
-                    }
+                    val mealItem: UserDailyMealPost =
+                        dc.document.toObject(UserDailyMealPost::class.java)
+                    Toast.makeText(context, "id# ${mealItem.id}", Toast.LENGTH_SHORT).show()
+                    userMealArrayList.add(mealItem)
 
-                    userRecylerView.adapter = UserAdapter(userArrayList)
                 }
             }
+            userRecylerView.adapter = UserAdapter(userMealArrayList)
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "failed to load data", Toast.LENGTH_LONG).show()
-            }
-
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -119,9 +124,9 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                val tempArrayList: ArrayList<UserData> = arrayListOf<UserData>()
+                val tempArrayList: ArrayList<UserDailyMealPost> = arrayListOf<UserDailyMealPost>()
 
-                for(item in userArrayList){
+                for(item in userMealArrayList){
                     if(item.name?.contains(newText) == true ){
                         tempArrayList.add(item)
                     }else if( newText.toIntOrNull() != null && item.calories?.toInt()!! <= newText.toInt()){
@@ -129,7 +134,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                     if(newText.isEmpty()){
-                        userRecylerView.adapter = UserAdapter(userArrayList)
+                        userRecylerView.adapter = UserAdapter(userMealArrayList)
                     }else {
                         userRecylerView.adapter = UserAdapter(tempArrayList)
                     }
