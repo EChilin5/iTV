@@ -11,18 +11,23 @@
         android:id="@+id/plot"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="1dp"
         android:padding="10dp"
         app:domainTitle="domain"
+        app:lineLabels="left|bottom"
+
+        app:rangeTitle="range"
+        app:title="A Simple XY Plot"
+        app:lineLabelRotationBottom="-45"
+
         app:layout_constraintBottom_toTopOf="@+id/ProgressGL2"
-
-
+        app:paddingBottom="30dp"
+        android:paddingTop="20dp"
+        app:paddingLeft="2dp"
+        app:paddingRight="2dp"
         app:layout_constraintEnd_toEndOf="@id/ProgressGLV2"
         app:layout_constraintStart_toStartOf="@id/ProgressGLV1"
         app:layout_constraintTop_toTopOf="@+id/ProgressGL1"
-        app:lineLabels="left|bottom"
-        app:rangeTitle="range"
-        app:title="A Simple XY Plot" />
+       />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/ProgressGLV1"
@@ -63,4 +68,14 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="0.70" />
+
+    <Button
+        android:id="@+id/btnWeekly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plot" />
 </androidx.constraintlayout.widget.ConstraintLayout>
