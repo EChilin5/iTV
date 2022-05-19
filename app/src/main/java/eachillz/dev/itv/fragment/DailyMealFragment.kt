@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
+import eachillz.dev.itv.firestore.DailyMealPost
 import eachillz.dev.itv.user.UserDailyMealPost
 import java.io.File
 import java.text.SimpleDateFormat
@@ -57,7 +58,7 @@ class DailyMealFragment : Fragment() {
 
     private lateinit var firestoreDb: FirebaseFirestore
     private lateinit var userRecylerView: RecyclerView
-    private lateinit var userMealArrayList: ArrayList<UserDailyMealPost>
+    private lateinit var userMealArrayList: ArrayList<DailyMealPost>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,14 +88,14 @@ class DailyMealFragment : Fragment() {
         binding.tvCurrentDate.text = dateFormated
 
         binding.fabSave.setOnClickListener {
-            takePhoto()
-
+//            takePhoto()
+            openFoodItem()
         }
 
         userRecylerView = binding.rvDailyFood
         userRecylerView.layoutManager = LinearLayoutManager(context)
 
-        userMealArrayList = arrayListOf<UserDailyMealPost>()
+        userMealArrayList = arrayListOf<DailyMealPost>()
 
 //        getUserFoodData()
         fetchData()
@@ -102,54 +103,19 @@ class DailyMealFragment : Fragment() {
     }
 
 
-    private fun takePhoto() {
-        Log.i(TAG, "open up image picker on device")
-        val imagePickerIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        photFile = getPhotoFile(FILE_NAME)
-//        imagePickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, photFile)
-        val fileProvider = FileProvider.getUriForFile(
-            requireContext(),
-            "eachillz.dev.itv.fragment.fileprovider",
-            photFile
-        )
-        imagePickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
 
-        if (imagePickerIntent.resolveActivity(activity?.packageManager!!) != null) {
-            startActivityForResult(imagePickerIntent, PICK_PHOTO_CODE)
 
-        } else {
-            Toast.makeText(context, "Unable to open Camera", Toast.LENGTH_SHORT).show()
-        }
-    }
 
-    private fun getPhotoFile(fileName: String): File {
-        val storageDirectory = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(fileName, ".jpg", storageDirectory)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == PICK_PHOTO_CODE && resultCode == Activity.RESULT_OK) {
-            // val takenImage = data?.extras?.get("data") as Bitmap
-//
-            val takenImage: String = photFile.absolutePath
-            openFoodItem(takenImage)
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-
-        }
-    }
-
-    private fun openFoodItem(takenImage: String) {
-        val args = Bundle()
-        args.putString("Image", takenImage)
+    private fun openFoodItem() {
+//        val args = Bundle()
+//        args.putString("Image", takenImage)
         val newFragment = overlayfood()
-        newFragment.arguments = args
+//        newFragment.arguments = args
         newFragment.show(childFragmentManager, "TAG")
 
     }
 
-    private fun fetchData() {
-        var hashSet = HashSet<String>()
+    private fun getUserEmail():String{
         val userName = Firebase.auth.currentUser
         var currentUserName = ""
         userName?.let {
@@ -159,14 +125,19 @@ class DailyMealFragment : Fragment() {
 
             }
         }
-        currentUserName = currentUserName.dropLast(10)
+        return currentUserName
+    }
+
+    private fun fetchData() {
+        var hashSet = HashSet<String>()
+        var currentUserName = getUserEmail()
         userMealArrayList.clear()
         var calories = 10000
         var total = 0
 
         var mealReference = firestoreDb.collection("userDailyMeal")
             .orderBy("creation_time_ms", Query.Direction.DESCENDING)
-        mealReference = mealReference.whereEqualTo("user.username", currentUserName)
+        mealReference = mealReference.whereEqualTo("user.email", currentUserName)
 
         mealReference.addSnapshotListener { snapshot, exception ->
             if (exception != null || snapshot == null) {
@@ -177,9 +148,8 @@ class DailyMealFragment : Fragment() {
             for (dc: DocumentChange in snapshot?.documentChanges!!) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
-                    val mealItem: UserDailyMealPost =
-                        dc.document.toObject(UserDailyMealPost::class.java)
-                    Toast.makeText(context, "id# ${mealItem.id}", Toast.LENGTH_SHORT).show()
+                    val mealItem: DailyMealPost =
+                        dc.document.toObject(DailyMealPost::class.java)
 
                     if (mealItem?.date!!.contains(dateFormated)) {
                         calories -= Integer.parseInt(mealItem.calories.toString())
@@ -193,9 +163,8 @@ class DailyMealFragment : Fragment() {
                 }
             }
             if (userMealArrayList.isEmpty()) {
-                val temp =  UserDailyMealPost(
-                    "", "Example User", "", dateFormated, 0, 0,null
-                )
+                val temp =  DailyMealPost(
+                    "", "Example User", 0,0,0,0,"",0,0, dateFormated,null  )
 
                 userMealArrayList.add(temp)
             }

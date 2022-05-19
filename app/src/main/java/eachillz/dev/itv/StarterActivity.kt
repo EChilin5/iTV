@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import eachillz.dev.itv.databinding.ActivityStarterBinding
 import com.google.firebase.auth.FirebaseAuth
+import eachillz.dev.itv.activity.MainActivity
 
 class StarterActivity : AppCompatActivity() {
 

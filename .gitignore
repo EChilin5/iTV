@@ -17,3 +17,4 @@ local.properties
 /app/release/app-release.aab
 /app/release/output-metadata.json
 /app_bundle/private_key.pepk
+/app/src/main/res/values/importantstrings.xml

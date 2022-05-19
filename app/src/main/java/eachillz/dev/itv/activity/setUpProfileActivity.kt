@@ -1,4 +1,4 @@
-package eachillz.dev.itv
+package eachillz.dev.itv.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import eachillz.dev.itv.databinding.ActivitySetUpProfileBinding
 import com.google.firebase.auth.FirebaseAuth
+import eachillz.dev.itv.activity.MainActivity
 
 private const val TAG ="setUpProfileActivity"
 class setUpProfileActivity : AppCompatActivity() {

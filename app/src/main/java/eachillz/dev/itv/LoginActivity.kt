@@ -9,6 +9,8 @@ import android.widget.EditText
 import android.widget.Toast
 import eachillz.dev.itv.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import eachillz.dev.itv.activity.MainActivity
+import eachillz.dev.itv.activity.setUpProfileActivity
 
 private const val TAG= "LoginActivity"
 class LoginActivity : AppCompatActivity() {

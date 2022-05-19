@@ -21,11 +21,22 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import eachillz.dev.itv.api.FoodSearchResult
+import eachillz.dev.itv.api.FoodService
+import eachillz.dev.itv.firestore.DailyMealPost
+import eachillz.dev.itv.fragment.DailyMealFragment
 import eachillz.dev.itv.user.User
+import eachillz.dev.itv.user.UserAdapter
 import eachillz.dev.itv.user.UserDailyMealPost
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 
 
+private const val BASE_URL = "https://api.edamam.com/api/food-database/v2/"
 private const val TAG = "DialogFragment"
 class overlayfood : DialogFragment() {
 
@@ -61,70 +72,138 @@ class overlayfood : DialogFragment() {
         firestoreDb = FirebaseFirestore.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
 
-
-        val imgPath = requireArguments().getString("Image")
-        val bitmap = BitmapFactory.decodeFile((imgPath))
-        binding.tvSaveImage.setImageBitmap(bitmap)
-
         val date = getCurrentDateTime()
         val dateInString = date.toString("MM/dd/yyyy")
 
 
         binding.btnPost.setOnClickListener {
-            val name = binding.etName.text.toString()
-            val calories = binding.etCalories.text.toString()
-//            val carbs = binding.etCarbs.text.toString()
-//            val protein = binding.etProtein.text.toString()
-            if(name.isNotEmpty() && calories.toIntOrNull() != null) {
-                uploadImage(name, calories, dateInString, imgPath)
-                Toast.makeText(context, "Post is Saved", Toast.LENGTH_LONG).show()
-            }else{
-                Toast.makeText(context, "Incorrect Information was provided", Toast.LENGTH_LONG).show()
-
+            var text = binding.etName.text.toString()
+            if(text.isNotEmpty()){
+                retrieveEdamanFoodInformation(text)
             }
-            this.dismiss()
+
         }
     }
 
-    private fun uploadImage(name: String, calories: String?,  dateInString: String,imgPath: String?) {
-        val photoReference =
-            storageReference.child("images/"+imgPath.toString())
-        val file = Uri.fromFile(File(imgPath.toString()))
 
-        photoReference.putFile( file)
-            .continueWithTask { photoUploadTask ->
-                Log.i(TAG, "upload bytes: ${photoUploadTask.result.bytesTransferred}")
-                // retrieve image url of upload image
-                photoReference.downloadUrl
-
-            }.continueWithTask { downloadUrlTask ->
-
-                    val userName = Firebase.auth.currentUser
-                    var currentUserName = ""
-                    userName?.let {
-                        for (profile in it.providerData) {
-                            // Id of the provider (ex: google.com)
-                            currentUserName = profile.email.toString()
-                        }
+    private fun retrieveEdamanFoodInformation(ingr:String){
+        var nutrition_type = "cooking"
+        var retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        val edamanService = retrofit.create(FoodService::class.java)
+        edamanService.foodInfo( getString(R.string.app_id_food_db), getString(R.string.app_key_food_db), ingr, nutrition_type)
+            .enqueue(object : Callback<FoodSearchResult> {
+                override fun onResponse(
+                    call: Call<FoodSearchResult>,
+                    response: Response<FoodSearchResult>
+                ) {
+                    Log.i(TAG, "onResponse $response")
+                    val body = response.body()
+                    if(body == null){
+                        Log.w(TAG, "Did not receive valid response body from Yelp API... exiting")
+                        return
                     }
-                    val email = currentUserName
-                    currentUserName = currentUserName.dropLast(10)
-                    val dateNow = Calendar.getInstance().time
+                    Log.i(TAG, "${response.body()}")
 
-                    val user : User = User("", email, currentUserName )
-                    val mealInfo: UserDailyMealPost = UserDailyMealPost("", name, downloadUrlTask.result.toString(), dateInString,System.currentTimeMillis(), calories!!.toLong(),user )
-                firestoreDb.collection("userDailyMeal").add(mealInfo)
+                    var name = body.text
+                    var protein = body.parsed.get(0).food.nutrients.PROCNT.toLong()
+                    var calories = body.parsed.get(0).food.nutrients.ENERC_KCAL.toLong()
+                    var fat = body.parsed.get(0).food.nutrients.FAT.toLong()
+                    var carbs = body.parsed.get(0).food.nutrients.CHOCDF.toLong()
+                    var image = body.parsed.get(0).food.image
+                    var time = System.currentTimeMillis()
+                    val date = getCurrentDateTime()
+                    val dateInString = date.toString("MM/dd/yyyy")
+                    var serving = 1
 
-            }.addOnCompleteListener { postCreationTask ->
-//                btnSubmitPost.isEnabled = true
+                    var emailName = getEmailName()
 
-                if (!postCreationTask.isSuccessful) {
-//                    Toast.makeText(context, "UPLOADED failed", Toast.LENGTH_SHORT).show()
-                    Log.e(TAG, "failed", postCreationTask.exception)
+                    val user : User = User("", emailName )
+                    var meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, dateInString, user )
+
+                    addMealDB(meal)
+
                 }
 
-            }
+                override fun onFailure(call: Call<FoodSearchResult>, t: Throwable) {
+                    Log.e(TAG, "onFailure $t")
+                }
+            })
     }
+
+    private fun addMealDB(mealPost: DailyMealPost){
+        firestoreDb.collection("userDailyMeal").add(mealPost).addOnCompleteListener {
+            if(it.isSuccessful){
+                this.dismiss()
+            }
+        }
+    }
+
+    private fun getEmailName():String{
+        val userName = Firebase.auth.currentUser
+        var currentUserName = ""
+        userName?.let {
+            for (profile in it.providerData) {
+                // Id of the provider (ex: google.com)
+                    currentUserName = profile.email.toString()
+            }
+        }
+
+        return currentUserName
+    }
+
+    private fun takePhoto(){
+        val name = binding.etName.text.toString()
+//        val calories = binding.etCalories.text.toString()
+//            val carbs = binding.etCarbs.text.toString()
+//            val protein = binding.etProtein.text.toString()
+//        if(name.isNotEmpty() && calories.toIntOrNull() != null) {
+//            uploadImage(name, calories, dateInString, imgPath)
+//            Toast.makeText(context, "Post is Saved", Toast.LENGTH_LONG).show()
+//        }else{
+//            Toast.makeText(context, "Incorrect Information was provided", Toast.LENGTH_LONG).show()
+//
+//        }
+    }
+
+//    private fun uploadImage(name: String, calories: String?,  dateInString: String,imgPath: String?) {
+//        val photoReference =
+//            storageReference.child("images/"+imgPath.toString())
+//        val file = Uri.fromFile(File(imgPath.toString()))
+//
+//        photoReference.putFile( file)
+//            .continueWithTask { photoUploadTask ->
+//                Log.i(TAG, "upload bytes: ${photoUploadTask.result.bytesTransferred}")
+//                // retrieve image url of upload image
+//                photoReference.downloadUrl
+//
+//            }.continueWithTask { downloadUrlTask ->
+//
+//                    val userName = Firebase.auth.currentUser
+//                    var currentUserName = ""
+//                    userName?.let {
+//                        for (profile in it.providerData) {
+//                            // Id of the provider (ex: google.com)
+//                            currentUserName = profile.email.toString()
+//                        }
+//                    }
+//                    val email = currentUserName
+//                    currentUserName = currentUserName.dropLast(10)
+//                    val dateNow = Calendar.getInstance().time
+//
+//                    val user : User = User("", email, currentUserName )
+//                    val mealInfo: UserDailyMealPost = UserDailyMealPost("", name, downloadUrlTask.result.toString(), dateInString,System.currentTimeMillis(), calories!!.toLong(),user )
+//                firestoreDb.collection("userDailyMeal").add(mealInfo)
+//
+//            }.addOnCompleteListener { postCreationTask ->
+////                btnSubmitPost.isEnabled = true
+//
+//                if (!postCreationTask.isSuccessful) {
+////                    Toast.makeText(context, "UPLOADED failed", Toast.LENGTH_SHORT).show()
+//                    Log.e(TAG, "failed", postCreationTask.exception)
+//                }
+//
+//            }
+//    }
 
 
 

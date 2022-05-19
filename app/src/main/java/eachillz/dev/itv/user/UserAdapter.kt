@@ -1,5 +1,7 @@
 package eachillz.dev.itv.user
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,13 +9,45 @@ import eachillz.dev.itv.databinding.UserFoodItemBinding
 import eachillz.dev.itv.user.UserAdapter.*
 import com.squareup.picasso.Picasso
 import eachillz.dev.itv.R
+import eachillz.dev.itv.activity.FoodItemDetailActivity
+import eachillz.dev.itv.api.FoodSearchResult
 
-class UserAdapter(private val userList: ArrayList<UserDailyMealPost>): RecyclerView.Adapter<UserAdapterHolder>() {
+private const val TAG = "UserAdapter"
+class UserAdapter(private val userList: MutableList<FoodSearchResult>): RecyclerView.Adapter<UserAdapterHolder>() {
 
     private var _binding : UserFoodItemBinding? = null
     private val binding get() = _binding!!
 
     class UserAdapterHolder(itemView: UserFoodItemBinding?) : RecyclerView.ViewHolder(itemView?.root!!) {
+        fun bind(currentItem: FoodSearchResult, binding: UserFoodItemBinding) {
+            binding.tvFoodName.text = currentItem.text
+
+            Log.i(TAG, "${currentItem.parsed}")
+
+            var parsed = currentItem.parsed
+            var calorie = parsed[0].food.nutrients.ENERC_KCAL
+            var image_url = parsed[0].food.image
+            binding.tvCalorieCount.text = calorie.toString()
+
+            if(image_url.isNullOrEmpty()){
+                Picasso.get()
+                    .load(R.drawable.bacground_myfood)
+                    .placeholder(R.drawable.bacground_myfood)
+                    .resize(150, 150)         //optional
+                    .centerCrop()                        //optional
+                    .into(binding.ivUserFoodImage)
+            }else{
+                Picasso.get()
+                    .load(image_url)
+                    .placeholder(R.drawable.bacground_myfood)
+                    .error(R.drawable.bacground_myfood)
+                    .resize(150, 150)         //optional
+                    .centerCrop()                        //optional
+                    .into(binding.ivUserFoodImage)
+            }
+
+
+        }
 
 
     }
@@ -25,25 +59,11 @@ class UserAdapter(private val userList: ArrayList<UserDailyMealPost>): RecyclerV
 
     override fun onBindViewHolder(holder: UserAdapterHolder, position: Int) {
         val currentItem = userList[position]
-        binding.tvFoodName.text = currentItem.name
-        binding.tvCalorieCount.text = currentItem.calories.toString()
 
-        if(currentItem.image_url.isNullOrEmpty()){
-            Picasso.get()
-                .load(R.drawable.bacground_myfood)
-                .placeholder(R.drawable.bacground_myfood)
-                .resize(150, 150)         //optional
-                .centerCrop()                        //optional
-                .into(binding.ivUserFoodImage)
-        }else{
-            Picasso.get()
-                .load(currentItem.image_url)
-                .placeholder(R.drawable.bacground_myfood)
-                .error(R.drawable.bacground_myfood)
-                .resize(150, 150)         //optional
-                .centerCrop()                        //optional
-                .into(binding.ivUserFoodImage)
-        }
+        holder.bind(currentItem, binding)
+
+
+
 
 
     }

@@ -1,4 +1,4 @@
-package eachillz.dev.itv
+package eachillz.dev.itv.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
