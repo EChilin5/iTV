@@ -7,7 +7,7 @@ data class RecipeResult(
 )
 
 data class Hit(
-    var recipe: List<Recipe>
+    var recipe: Recipe
 )
 
 data class Recipe(

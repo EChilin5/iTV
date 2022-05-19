@@ -21,8 +21,8 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
-import eachillz.dev.itv.api.FoodSearchResult
-import eachillz.dev.itv.api.FoodService
+import eachillz.dev.itv.api.*
+import eachillz.dev.itv.firestore.DailyMealPost
 import eachillz.dev.itv.user.UserDailyMealPost
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,9 +30,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import eachillz.dev.itv.model.Post
-
-
-
+import eachillz.dev.itv.user.User
 
 
 /**
@@ -42,7 +40,7 @@ import eachillz.dev.itv.model.Post
  *
  */
 
-private const val BASE_URL = "https://api.edamam.com/api/food-database/v2/"
+private const val BASE_URL = "https://api.edamam.com/api/recipes/"
 private const val TAG = "HomeFragment"
 class HomeFragment : Fragment() {
 
@@ -52,7 +50,9 @@ class HomeFragment : Fragment() {
 //    private val database = Firebase.database
     private lateinit var firestoreDb: FirebaseFirestore
     private lateinit var userRecylerView: RecyclerView
-    private val userMealArrayList = mutableListOf<FoodSearchResult>()
+
+    private val recipeResult = mutableListOf<Hit>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,89 +75,41 @@ class HomeFragment : Fragment() {
         userRecylerView.layoutManager = LinearLayoutManager(context)
 //        getUserData()
 
-//        retrieveEdamanFoodInformation()
+        retrieveEdamanFoodInformation("chicken")
+    }
+
+    private fun retrieveEdamanFoodInformation(foodSearch :String){
+        val type = "public"
+        val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        val edamamRecipeService = retrofit.create(RecipeService::class.java)
+        edamamRecipeService.recipeInfo(type, foodSearch, getString(R.string.app_id_recipe_db), getString(R.string.app_key_recipe_db))
+            .enqueue(object : Callback<RecipeResult>{
+                override fun onResponse(
+                    call: Call<RecipeResult>,
+                    response: Response<RecipeResult>
+                ) {
+                    Log.i(TAG, "onResponse $response")
+                    val body = response.body()
+                    if(body == null){
+                        Log.i(TAG, "Did not recieve valid response from Edamam Food Service")
+                        return
+                    }
+
+                    recipeResult.addAll(body.hits)
+
+                    Log.i(TAG, "${recipeResult.size}")
+
+                }
+
+                override fun onFailure(call: Call<RecipeResult>, t: Throwable) {
+                    Log.i(TAG, "failed to get info $t")
+                }
+
+            })
     }
 
 
 
-
-
-    private fun getUserData(){
-
-//        var hashSet = HashSet<String>()
-//        val userName = Firebase.auth.currentUser
-//        var currentUserName = ""
-//        userName?.let {
-//            for (profile in it.providerData) {
-//
-//                currentUserName = profile.email.toString()
-//
-//            }
-//        }
-//        currentUserName = currentUserName.dropLast(10)
-//        val mAuth = FirebaseAuth.getInstance();
-//        val mCurrentUserId = mAuth.getCurrentUser()?.getUid()
-//
-//        var mealReference = firestoreDb.collection("userDailyMeal")
-//            .orderBy("creation_time_ms", Query.Direction.ASCENDING)
-//
-//        mealReference = mealReference.whereEqualTo("user.username", currentUserName)
-//
-//        mealReference.addSnapshotListener{snapshot, exception ->
-//            if(exception != null || snapshot == null){
-//                Log.e(TAG, "exception occurred", exception)
-//                return@addSnapshotListener
-//            }
-//            for (dc: DocumentChange in snapshot?.documentChanges!!) {
-//                if (dc.type == DocumentChange.Type.ADDED) {
-//
-//                    val mealItem: UserDailyMealPost =
-//                        dc.document.toObject(UserDailyMealPost::class.java)
-//                    Toast.makeText(context, "id# ${mealItem.id}", Toast.LENGTH_SHORT).show()
-//                    userMealArrayList.add(mealItem)
-//
-//                }
-//            }
-//            userRecylerView.adapter = UserAdapter(userMealArrayList)
-//
-//        }
-    }
-
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-////        super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.nav_search, menu)
-//        val search: MenuItem? = menu.findItem(R.id.nav_search)
-//        val searchView: SearchView = search?.actionView as SearchView
-//        searchView.queryHint = "search name or calorie"
-//
-//        searchView.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                return false
-//            }
-
-//            override fun onQueryTextChange(newText: String): Boolean {
-//                val tempArrayList: ArrayList<UserDailyMealPost> = arrayListOf<UserDailyMealPost>()
-//
-//                for(item in userMealArrayList){
-//                    if(item.name?.contains(newText) == true ){
-//                        tempArrayList.add(item)
-//                    }else if( newText.toIntOrNull() != null && item.calories?.toInt()!! <= newText.toInt()){
-//                        tempArrayList.add(item)
-//                    }
-//                }
-//                    if(newText.isEmpty()){
-//                        userRecylerView.adapter = UserAdapter(userMealArrayList)
-//                    }else {
-//                        userRecylerView.adapter = UserAdapter(tempArrayList)
-//                    }
-//
-//                return true
-//
-//            }
-//
-//        })
-//        return super.onCreateOptionsMenu(menu, inflater)
-//    }
 
     companion object {
         // TODO: Rename and change types and number of parameters
