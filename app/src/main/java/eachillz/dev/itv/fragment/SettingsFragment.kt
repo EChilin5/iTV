@@ -1,4 +1,4 @@
-package eachillz.dev.itv.image
+package eachillz.dev.itv.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,20 +10,11 @@ import android.view.ViewGroup
 import eachillz.dev.itv.activity.StarterActivity
 import eachillz.dev.itv.databinding.FragmentUserSettingsBinding
 import com.google.firebase.auth.FirebaseAuth
+import eachillz.dev.itv.overlay.forgotPasswordOverlay
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val TAG = "TestFragment"
+class SettingsFragment : Fragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ImageUploadFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ImageUploadFragment : Fragment() {
-
-    private val TAG = "TestFragment"
     private var _binding: FragmentUserSettingsBinding? = null
     private val binding get() = _binding!!
 
@@ -42,7 +33,7 @@ class ImageUploadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnSub.setOnClickListener {
+        binding.btnSignout.setOnClickListener {
            // callApi()
             Log.i(TAG, "User wants to logout")
             FirebaseAuth.getInstance().signOut()
@@ -52,6 +43,18 @@ class ImageUploadFragment : Fragment() {
 
         }
 
+        binding.tvResetPassword.setOnClickListener {
+            resetPassword()
+        }
+
+    }
+
+
+    private fun resetPassword() {
+
+        val dialog = forgotPasswordOverlay()
+        val fm = parentFragmentManager
+        dialog.show(fm, "name")
     }
 
 
@@ -61,23 +64,5 @@ class ImageUploadFragment : Fragment() {
         _binding = null
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ImageUploadFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ImageUploadFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }
