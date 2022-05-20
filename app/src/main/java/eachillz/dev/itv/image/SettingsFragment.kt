@@ -7,10 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import eachillz.dev.itv.StarterActivity
+import eachillz.dev.itv.activity.StarterActivity
 import eachillz.dev.itv.databinding.FragmentUserSettingsBinding
 import com.google.firebase.auth.FirebaseAuth
-import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

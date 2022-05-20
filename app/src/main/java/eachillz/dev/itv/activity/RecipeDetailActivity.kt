@@ -1,4 +1,4 @@
-package eachillz.dev.itv
+package eachillz.dev.itv.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,13 +7,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
-import eachillz.dev.itv.activity.MainActivity
 import eachillz.dev.itv.api.Hit
-import eachillz.dev.itv.api.Ingredient
-import eachillz.dev.itv.databinding.ActivityMainBinding
 import eachillz.dev.itv.databinding.ActivityRecipeDetailBinding
-import eachillz.dev.itv.fragment.HomeFragment
 
 class RecipeDetailActivity : AppCompatActivity() {
 

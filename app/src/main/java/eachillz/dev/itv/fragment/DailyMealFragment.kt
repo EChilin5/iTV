@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import eachillz.dev.itv.databinding.FragmentDailyMealBinding
-import eachillz.dev.itv.overlayfood
+import eachillz.dev.itv.overlay.overlayfood
 import eachillz.dev.itv.adapter.UserMealAdapter
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentChange

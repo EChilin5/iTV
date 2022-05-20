@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import eachillz.dev.itv.R
-import eachillz.dev.itv.RecipeDetailActivity
+import eachillz.dev.itv.activity.RecipeDetailActivity
 import eachillz.dev.itv.api.Hit
 import eachillz.dev.itv.databinding.UserFoodItemBinding
 

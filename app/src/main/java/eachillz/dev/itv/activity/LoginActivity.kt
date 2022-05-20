@@ -1,4 +1,4 @@
-package eachillz.dev.itv
+package eachillz.dev.itv.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import eachillz.dev.itv.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
-import eachillz.dev.itv.activity.MainActivity
-import eachillz.dev.itv.activity.setUpProfileActivity
+import eachillz.dev.itv.overlay.forgotPasswordOverlay
 
 private const val TAG= "LoginActivity"
 class LoginActivity : AppCompatActivity() {

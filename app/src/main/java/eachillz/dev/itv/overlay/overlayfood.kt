@@ -1,41 +1,31 @@
-package eachillz.dev.itv
+package eachillz.dev.itv.overlay
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import eachillz.dev.itv.databinding.FragmentOverlayfoodBinding
-import eachillz.dev.itv.user.UserItemDataEntry
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
-import android.graphics.BitmapFactory
 
-import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import eachillz.dev.itv.R
 import eachillz.dev.itv.api.FoodSearchResult
 import eachillz.dev.itv.api.FoodService
 import eachillz.dev.itv.api.Hint
-import eachillz.dev.itv.api.Parsed
 import eachillz.dev.itv.firestore.DailyMealPost
-import eachillz.dev.itv.fragment.DailyMealFragment
 import eachillz.dev.itv.user.User
-import eachillz.dev.itv.user.UserAdapter
-import eachillz.dev.itv.user.UserDailyMealPost
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
 
 
 private const val BASE_URL = "https://api.edamam.com/api/food-database/v2/"
