@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun openFoodItem() {
+    private fun resetPassword() {
 
         val dialog = forgotPasswordOverlay()
         val fm = this.supportFragmentManager
@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
         val auth = FirebaseAuth.getInstance()
 
         binding.tvHelp.setOnClickListener {
-            openFoodItem()
+            resetPassword()
 
         }
 

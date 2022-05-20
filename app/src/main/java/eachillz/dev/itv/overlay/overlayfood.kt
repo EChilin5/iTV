@@ -12,10 +12,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import eachillz.dev.itv.R
+import eachillz.dev.itv.adapter.FoodResultAdapter
 import eachillz.dev.itv.api.FoodSearchResult
 import eachillz.dev.itv.api.FoodService
 import eachillz.dev.itv.api.Hint
@@ -41,6 +44,10 @@ class overlayfood : DialogFragment() {
 
 //    private lateinit var database: DatabaseReference
 
+    private  var foodResult = mutableListOf<Hint>()
+    private var adapter = FoodResultAdapter(foodResult, ::insertItem)
+    private lateinit var rvFoodResult :RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -63,6 +70,10 @@ class overlayfood : DialogFragment() {
 
         firestoreDb = FirebaseFirestore.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
+
+        rvFoodResult = binding.rvResults
+        rvFoodResult.adapter = adapter
+        rvFoodResult.layoutManager = LinearLayoutManager(context)
 
         val date = getCurrentDateTime()
         val dateInString = date.toString("MM/dd/yyyy")
@@ -96,32 +107,33 @@ class overlayfood : DialogFragment() {
                     }
                     Log.i(TAG, "${response.body()}")
 
+                    foodResult.addAll(body.hints)
+                    adapter?.notifyDataSetChanged()
 
-                    var arrayParsed = mutableListOf<Hint>()
-                    arrayParsed.addAll(body.hints)
+//                    arrayParsed.addAll(body.hints)
 
-                    var name = body.text
-                    var protein = arrayParsed.get(0).food.nutrients.PROCNT.toLong()
-                    var calories = arrayParsed.get(0).food.nutrients.ENERC_KCAL.toLong()
-                    var fat = arrayParsed.get(0).food.nutrients.FAT.toLong()
-                    var carbs = arrayParsed.get(0).food.nutrients.CHOCDF.toLong()
-                    var image = arrayParsed.get(0).food.image
-                    var time = System.currentTimeMillis()
-                    val date = getCurrentDateTime()
-                    val dateInString = date.toString("MM/dd/yyyy")
-                    var serving = 1
-
-
-                    if(image.isNullOrEmpty()){
-                        image = "https://firebasestorage.googleapis.com/v0/b/textdemo-9e9b1.appspot.com/o/posts%2FFri%20Sep%2010%2015%3A52%3A09%20PDT%202021.png?alt=media&token=a774304d-da5b-4cb9-8fbc-853f8ff6a78f"
-                    }
-
-                    var emailName = getEmailName()
-
-                    val user : User = User("", emailName )
-                    var meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, dateInString, user )
-
-                    addMealDB(meal)
+//                    var name = body.text
+//                    var protein = arrayParsed.get(0).food.nutrients.PROCNT.toLong()
+//                    var calories = arrayParsed.get(0).food.nutrients.ENERC_KCAL.toLong()
+//                    var fat = arrayParsed.get(0).food.nutrients.FAT.toLong()
+//                    var carbs = arrayParsed.get(0).food.nutrients.CHOCDF.toLong()
+//                    var image = arrayParsed.get(0).food.image
+//                    var time = System.currentTimeMillis()
+//                    val date = getCurrentDateTime()
+//                    val dateInString = date.toString("MM/dd/yyyy")
+//                    var serving = 1
+//
+//
+//                    if(image.isNullOrEmpty()){
+//                        image = "https://firebasestorage.googleapis.com/v0/b/textdemo-9e9b1.appspot.com/o/posts%2FFri%20Sep%2010%2015%3A52%3A09%20PDT%202021.png?alt=media&token=a774304d-da5b-4cb9-8fbc-853f8ff6a78f"
+//                    }
+//
+//                    var emailName = getEmailName()
+//
+//                    val user : User = User("", emailName )
+//                    var meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, dateInString, user )
+//
+//                    addMealDB(meal)
 
                 }
 
@@ -150,6 +162,17 @@ class overlayfood : DialogFragment() {
         }
 
         return currentUserName
+    }
+
+    private fun insertItem(dailyMeal : DailyMealPost){
+        var emailName = getEmailName()
+
+        val user : User = User("", emailName )
+        dailyMeal.user = user
+        var date = getCurrentDateTime()
+        val dateInString = date.toString("MM/dd/yyyy")
+        dailyMeal.date = dateInString
+        addMealDB(dailyMeal)
     }
 
     private fun takePhoto(){
