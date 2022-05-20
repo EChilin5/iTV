@@ -1,14 +1,15 @@
 package eachillz.dev.itv.api
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class RecipeResult(
     var hits: List<Hit>
-)
+):Serializable
 
 data class Hit(
     var recipe: Recipe
-)
+):Serializable
 
 data class Recipe(
     var calories: Double,
@@ -33,7 +34,7 @@ data class Recipe(
     var uri: String,
     var url: String,
     var yield: Double
-)
+):Serializable
 
 
 
@@ -46,14 +47,14 @@ data class Digest(
     var tag: String,
     var total: Double,
     var unit: String
-)
+):Serializable
 
 data class Images(
     var LARGE: LARGE,
     var REGULAR: REGULAR,
     var SMALL: SMALL,
     var THUMBNAIL: THUMBNAIL
-)
+):Serializable
 
 data class Ingredient(
     var food: String,
@@ -64,7 +65,7 @@ data class Ingredient(
     var quantity: Double,
     var text: String,
     var weight: Double
-)
+):Serializable
 
 data class TotalDaily(
     var CA: CA,
@@ -92,7 +93,7 @@ data class TotalDaily(
     var VITD: VITD,
     var VITK1: VITK1,
     var ZN: ZN
-)
+):Serializable
 
 data class TotalNutrients(
     var CA: CAX,
@@ -134,7 +135,7 @@ data class TotalNutrients(
     var VITK1: VITK1X,
     var WATER: WATER,
     var ZN: ZNX
-)
+):Serializable
 
 data class Sub(
     var daily: Double,
@@ -144,388 +145,388 @@ data class Sub(
     var tag: String,
     var total: Double,
     var unit: String
-)
+):Serializable
 
 data class LARGE(
     var height: Int,
     var url: String,
     var width: Int
-)
+) :Serializable
 
 data class REGULAR(
     var height: Int,
     var url: String,
     var width: Int
-)
+): Serializable
 
 data class SMALL(
     var height: Int,
     var url: String,
     var width: Int
-)
+) :Serializable
 
 data class THUMBNAIL(
     var height: Int,
     var url: String,
     var width: Int
-)
+) : Serializable
 
 data class CA(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class CHOCDF(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class CHOLE(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class ENERCKCAL(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+): Serializable
 
 data class FASAT(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+): Serializable
 
 data class FAT(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class FE(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class FIBTG(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class FOLDFE(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class K(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class MG(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+)  :Serializable
 
 data class NA(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class NIA(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class P(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class PROCNT(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class RIBF(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class THIA(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+): Serializable
 
 data class TOCPHA(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class VITARAE(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class VITB12(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class VITB6A(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class VITC(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class VITD(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class VITK1(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class ZN(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class CAX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class CHOCDFX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class CHOCDFNet(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class CHOLEX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class ENERCKCALX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class FAMS(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class FAPU(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class FASATX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class FATX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class FATRN(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class FEX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+): Serializable
 
 data class FIBTGX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class FOLAC(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class FOLDFEX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+): Serializable
 
 data class FOLFD(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class KX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class MGX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class NAX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class NIAX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class PX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class PROCNTX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
-data class RIBFX(
-    var label: String,
-    var quantity: Double,
-    var unit: String
-)
+//data class RIBFX(
+//    var label: String,
+//    var quantity: Double,
+//    var unit: String
+//) : Serializable
 
 data class SUGAR(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class SUGARAdded(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class SugarAlcohol(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class THIAX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class TOCPHAX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class VITARAEX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) : Serializable
 
 data class VITB12X(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+) :Serializable
 
 data class VITB6AX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class VITCX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class VITDX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class VITK1X(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class WATER(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable
 
 data class ZNX(
     var label: String,
     var quantity: Double,
     var unit: String
-)
+):Serializable

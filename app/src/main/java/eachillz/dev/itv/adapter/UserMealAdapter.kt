@@ -1,4 +1,4 @@
-package eachillz.dev.itv.user
+package eachillz.dev.itv.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater

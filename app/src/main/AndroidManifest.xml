@@ -5,7 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature
@@ -20,14 +20,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ITV"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".RecipeDetailActivity"
+            android:exported="true" />
+
         <provider
-            android:authorities="eachillz.dev.itv.fragment.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="eachillz.dev.itv.fragment.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/fileprovider"/>
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
         </provider>
+
         <activity
             android:name=".activity.setUpProfileActivity"
             android:exported="true"
@@ -37,7 +43,7 @@
             android:name=".UserProfile"
             android:exported="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".StarterActivity"
             android:exported="true"
@@ -53,11 +59,13 @@
             android:name=".LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name="eachillz.dev.itv.activity.FoodItemDetailActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.FoodItemDetailActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".activity.MainActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
     </application>
