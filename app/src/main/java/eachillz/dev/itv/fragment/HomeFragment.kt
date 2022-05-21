@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -59,15 +62,39 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firestoreDb = FirebaseFirestore.getInstance()
-        rvRecipe  = binding.rvHome
+        rvRecipe = binding.rvHome
         rvRecipe.adapter = adapter
         rvRecipe.layoutManager = LinearLayoutManager(context)
 //        getUserData()
 
-        retrieveEdamanFoodInformation("chicken")
+        var text ="chicken"
+
+        binding.ivbtnSearch.setOnClickListener {
+            text = binding.etFoodSearch.text.toString()
+            Toast.makeText(context, "$text has changed", Toast.LENGTH_SHORT).show()
+
+            retrieveEdamanFoodInformation(text)
+        }
+//
+//        if(recipeResult.isEmpty()){
+//             retrieveEdamanFoodInformation(text)
+//        }
+
+
     }
 
     private fun retrieveEdamanFoodInformation(foodSearch :String){
+
+        var size = recipeResult.size-1
+        while(size >=0){
+            recipeResult.removeAt(size)
+            adapter.notifyItemRemoved(size)
+        size--
+
+        }
+        recipeResult.clear()
+
+
         val type = "public"
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
         val edamamRecipeService = retrofit.create(RecipeService::class.java)
@@ -84,11 +111,19 @@ class HomeFragment : Fragment() {
                         Log.i(TAG, "Did not recieve valid response from Edamam Food Service")
                         return
                     }
+                    Log.i(TAG, "${recipeResult.size}")
 
-                    recipeResult.addAll(body.hits)
+                    var count = 0
+                    for(item in body.hits){
+                        recipeResult.add(item)
+                        adapter.notifyItemInserted(count)
+                        count++;
+                    }
+
+
 
                     Log.i(TAG, "${recipeResult.size}")
-                    adapter?.notifyDataSetChanged()
+            //        adapter.notifyItemRangeInserted(0, recipeResult.size)
 
                 }
 
