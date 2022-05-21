@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import eachillz.dev.itv.R
 import eachillz.dev.itv.api.Hint
+import eachillz.dev.itv.databinding.ItemFoodResultBinding
 import eachillz.dev.itv.databinding.UserFoodItemBinding
 import eachillz.dev.itv.firestore.DailyMealPost
 import eachillz.dev.itv.user.User
@@ -15,13 +16,13 @@ class FoodResultAdapter(
     var insertDB: (DailyMealPost) -> Unit
 ) :RecyclerView.Adapter<FoodResultAdapter.FoodResultViewHolder>(){
 
-   private var _binding : UserFoodItemBinding? = null
+   private var _binding : ItemFoodResultBinding? = null
    private val binding get() = _binding!!
 
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodResultViewHolder {
-        _binding = UserFoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        _binding = ItemFoodResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FoodResultViewHolder(_binding!!)
     }
 
@@ -34,9 +35,9 @@ class FoodResultAdapter(
         return foodResult.size
     }
 
-    class FoodResultViewHolder(itemView: UserFoodItemBinding) : RecyclerView.ViewHolder(itemView.root) {
-        fun bind(foodItem: Hint, binding: UserFoodItemBinding, insertDB: (DailyMealPost) -> Unit) {
-            binding.tvFoodName.text = foodItem.food.label
+    class FoodResultViewHolder(itemView: ItemFoodResultBinding) : RecyclerView.ViewHolder(itemView.root) {
+        fun bind(foodItem: Hint, binding: ItemFoodResultBinding, insertDB: (DailyMealPost) -> Unit) {
+            binding.tvFoodResultItemName.text = foodItem.food.label
 
             var name = foodItem.food.label
             var protein = foodItem.food.nutrients.PROCNT.toLong()
@@ -55,13 +56,12 @@ class FoodResultAdapter(
             Glide.with(itemView.context)
                 .load(image)
                 .error(R.drawable.bacground_myfood)
-                .circleCrop()
-                .into(binding.ivUserFoodImage)
+                .into(binding.ivFoodResultImage)
             val user: User = User("","")
             var meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, dateInString, user )
 
 
-            binding.rvUserFurtherDetail.setOnClickListener {
+            binding.clFoodResult.setOnClickListener {
                 insertDB(meal)
             }
 

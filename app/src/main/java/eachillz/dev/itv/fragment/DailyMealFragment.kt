@@ -73,7 +73,7 @@ class DailyMealFragment : Fragment() {
 
         val date = getCurrentDateTime()
         dateFormated = date.toString("MM/dd/yyyy")
-        binding.tvCurrentDate.text = dateFormated
+//        binding.tvCurrentDate.text = dateFormated
 
         binding.fabSave.setOnClickListener {
 //            takePhoto()
@@ -157,13 +157,13 @@ class DailyMealFragment : Fragment() {
                 userMealArrayList.add(temp)
             }
             userRecylerView.adapter = UserMealAdapter(userMealArrayList)
-            binding.tvCurrentCalorieCounter.text = total.toString()
+//            binding.tvCurrentCalorieCounter.text = total.toString()
             binding.tvRemainingCaloriesCounter.text = calories.toString()
 
             val progress1 = ((total).toDouble() / 10000) *100
             val progress2 = 100 - progress1
 
-            binding.progressBar.progress = progress1.toInt()
+//            binding.progressBar.progress = progress1.toInt()
             binding.progressBar2.progress = progress2.toInt()
 
 

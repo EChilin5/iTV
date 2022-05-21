@@ -36,11 +36,9 @@
         android:layout_height="152dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_margin="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/custombackground"
         android:elevation="4dp"
-        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/FoodItemGLvEnd"
         app:layout_constraintStart_toStartOf="@id/FoodItemGLv1"
@@ -52,26 +50,26 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            android:background="@drawable/circleimage"
             android:contentDescription="@string/sample_food_image"
-            android:elevation="2dp"
+            android:padding="2dp"
             app:layout_constraintBottom_toTopOf="@+id/FurtherDetailGLEnd"
             app:layout_constraintEnd_toStartOf="@+id/FurtherGuideLineV2"
-            app:layout_constraintStart_toStartOf="@+id/FurtherGuideLineV1"
 
+            app:layout_constraintStart_toStartOf="@+id/FurtherGuideLineV1"
             app:layout_constraintTop_toTopOf="@id/FurterDetailGL1"
             app:srcCompat="@drawable/bacground_myfood"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/tvFoodName"
-            android:layout_width="114dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="22dp"
             android:layout_marginEnd="15dp"
             android:text="@string/salad"
             android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@id/FurtherGLVEnd"
             app:layout_constraintStart_toEndOf="@id/FurtherGuideLineV2"
             app:layout_constraintTop_toTopOf="@id/FurterDetailGL1" />
@@ -84,8 +82,23 @@
             android:layout_marginTop="16dp"
             android:text="@string/calories"
             android:textColor="@color/black"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/FurtherGuideLineV2"
             app:layout_constraintTop_toBottomOf="@+id/tvFoodName" />
+
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/item_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.031"
+            app:layout_constraintStart_toStartOf="@+id/FurtherGuideLineV2"
+            app:layout_constraintTop_toTopOf="@+id/FurterDetailGL1"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/tvCalorieCount"
@@ -95,6 +108,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/_1000"
             android:textColor="@color/black"
+            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/FurtherGLVEnd"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/tvTotalCCalories"
@@ -106,7 +120,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.05" />
+            app:layout_constraintGuide_percent="0.0" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/FurtherDetailGLEnd"
@@ -114,7 +128,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.9" />
+            app:layout_constraintGuide_percent="1.0" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/FurtherGuideLineV1"
@@ -122,14 +136,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.04" />
+            app:layout_constraintGuide_percent="0.0" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/FurtherGuideLineV2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_begin="137dp"
             app:layout_constraintGuide_percent="0.4" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -138,7 +152,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.95" />
+            app:layout_constraintGuide_percent="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

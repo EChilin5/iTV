@@ -13,4 +13,5 @@
     <color name="extra_light_grey">#E8EBEC</color>
     <color name="light_blue">#B1CDE4</color>
     <color name="underline">#D8D6D6</color>
+    <color name="item_background">#cdd4d2</color>
 </resources>
