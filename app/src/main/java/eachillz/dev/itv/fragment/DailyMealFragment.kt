@@ -121,6 +121,9 @@ class DailyMealFragment : Fragment() {
         var currentUserName = getUserEmail()
         userMealArrayList.clear()
         var calories = 10000
+        var proteinCount = 0
+        var fatCount = 0
+        var carbCount = 0
         var total = 0
 
         var mealReference = firestoreDb.collection("userDailyMeal")
@@ -142,6 +145,9 @@ class DailyMealFragment : Fragment() {
                     if (mealItem?.date!!.contains(dateFormated)) {
                         calories -= Integer.parseInt(mealItem.calories.toString())
                         total += Integer.parseInt(mealItem.calories.toString())
+                        proteinCount += mealItem.protein.toInt()
+                        carbCount += mealItem.carbs.toInt()
+                        fatCount += mealItem.fat.toInt()
                         if (!hashSet.contains(mealItem.name)) {
                             userMealArrayList.add(mealItem)
                             hashSet.add(mealItem.name.toString())
@@ -165,6 +171,9 @@ class DailyMealFragment : Fragment() {
 
 //            binding.progressBar.progress = progress1.toInt()
             binding.progressBar2.progress = progress2.toInt()
+            binding.tvHProteinAmt.text = proteinCount.toString()
+            binding.tvHcarbsAmt.text = carbCount.toString()
+            binding.tvHFatAmnt.text = fatCount.toString()
 
 
         }

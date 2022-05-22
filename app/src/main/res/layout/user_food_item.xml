@@ -39,6 +39,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/custombackground"
         android:elevation="4dp"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/FoodItemGLvEnd"
         app:layout_constraintStart_toStartOf="@id/FoodItemGLv1"
@@ -50,11 +51,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
 
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+
             android:contentDescription="@string/sample_food_image"
-            android:padding="2dp"
             app:layout_constraintBottom_toTopOf="@+id/FurtherDetailGLEnd"
             app:layout_constraintEnd_toStartOf="@+id/FurtherGuideLineV2"
-
             app:layout_constraintStart_toStartOf="@+id/FurtherGuideLineV1"
             app:layout_constraintTop_toTopOf="@id/FurterDetailGL1"
             app:srcCompat="@drawable/bacground_myfood"

@@ -28,6 +28,7 @@
             android:gravity="center"
             android:text="Remaining Calories"
             android:textColor="@color/white"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/HeaderGL3"
             app:layout_constraintEnd_toStartOf="@+id/HeaderGLv2"
             app:layout_constraintStart_toStartOf="@+id/HeaderGLmid"
@@ -52,6 +53,7 @@
             android:gravity="center"
             android:text="@string/_1000"
             android:textColor="@color/white"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/HeaderGLEnd"
             app:layout_constraintEnd_toEndOf="@id/HeaderGLv2"
             app:layout_constraintStart_toEndOf="@id/HeaderGLmid"
@@ -72,6 +74,14 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="20dp"
             app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/HeaderGLv1.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.27" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/HeaderGLv2"
@@ -115,38 +125,85 @@
 
         <TextView
             android:id="@+id/tvHProteinCOUNT"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
             android:text="Protein"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/HeaderGLmid"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/HeaderGLv1.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/HeaderGLv1"
             app:layout_constraintTop_toTopOf="@+id/HeaderGL3" />
 
         <TextView
             android:id="@+id/tvHCarbs"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
             android:text="Carbs"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/HeaderGLmid"
-            app:layout_constraintHorizontal_bias="0.307"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/HeaderGLv1.5"
+            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1"
             app:layout_constraintTop_toBottomOf="@+id/tvHProteinCOUNT" />
 
         <TextView
             android:id="@+id/tvHFat"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginBottom="28dp"
+            android:gravity="center"
             android:text="@string/fat"
             android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/HeaderGLEnd"
+            app:layout_constraintEnd_toStartOf="@+id/HeaderGLv1.5"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1" />
+
+        <TextView
+            android:id="@+id/tvHProteinAmt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="100"
+            android:textColor="@color/white"
+            android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/HeaderGLmid"
-            app:layout_constraintHorizontal_bias="0.54"
-            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1"
-            app:layout_constraintTop_toBottomOf="@+id/tvHCarbs" />
+            app:layout_constraintHorizontal_bias="0.56"
+            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1.5"
+            app:layout_constraintTop_toTopOf="@+id/HeaderGL3" />
+
+        <TextView
+            android:id="@+id/tvHcarbsAmt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="100"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/HeaderGLmid"
+            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1.5"
+            app:layout_constraintTop_toBottomOf="@+id/tvHProteinAmt" />
+
+        <TextView
+            android:id="@+id/tvHFatAmnt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:gravity="center"
+            android:text="100"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/HeaderGLEnd"
+            app:layout_constraintEnd_toStartOf="@+id/HeaderGLmid"
+            app:layout_constraintHorizontal_bias="0.656"
+            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1.5" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -160,7 +217,8 @@
         android:layout_alignParentEnd="true"
         android:gravity="center"
         android:text="@string/today_s_food_log_title"
-        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/rvDailyFood"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -197,6 +255,7 @@
         android:layout_marginBottom="28dp"
         android:contentDescription="@string/create_post"
         android:src="@drawable/add"
+        app:backgroundTint="#75D5E6"
         app:layout_constraintBottom_toTopOf="@+id/DailyMealGLEnd"
         app:layout_constraintEnd_toEndOf="@id/DailyMealGLVEnd" />
 

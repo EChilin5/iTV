@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import eachillz.dev.itv.R
 import eachillz.dev.itv.api.Hint
 import eachillz.dev.itv.databinding.ItemFoodResultBinding
@@ -53,9 +54,10 @@ class FoodResultAdapter(
                 image = "https://firebasestorage.googleapis.com/v0/b/textdemo-9e9b1.appspot.com/o/posts%2FFri%20Sep%2010%2015%3A52%3A09%20PDT%202021.png?alt=media&token=a774304d-da5b-4cb9-8fbc-853f8ff6a78f"
             }
 
-            Glide.with(itemView.context)
+
+            Picasso.get()
                 .load(image)
-                .error(R.drawable.bacground_myfood)
+                .placeholder(R.drawable.bacground_myfood)
                 .into(binding.ivFoodResultImage)
             val user: User = User("","")
             var meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, dateInString, user )

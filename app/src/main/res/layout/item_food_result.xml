@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clFoodResult"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_margin="10dp"
         android:background="@color/white"
         android:elevation="12dp"
@@ -20,7 +20,7 @@
         <ImageView
             android:id="@+id/ivFoodResultImage"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@id/glFoodResult2"
             app:layout_constraintEnd_toStartOf="@+id/glFoodResultV2"
             app:layout_constraintStart_toStartOf="@id/glFoodResultV1"
