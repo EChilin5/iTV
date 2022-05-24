@@ -39,6 +39,7 @@
             style="@style/CircularDeterminateProgressBarRev"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:elevation="12dp"
             android:padding="20dp"
             app:layout_constraintBottom_toBottomOf="@id/HeaderGLEnd"
             app:layout_constraintEnd_toStartOf="@+id/HeaderGLv2"

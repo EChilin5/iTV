@@ -21,6 +21,12 @@ class RecipeDetailActivity : AppCompatActivity() {
     private lateinit var tvCalorieAmt:TextView
     private lateinit var tvIngredient: TextView
     private lateinit var btnBack : ImageButton
+    private lateinit var tvRecipeName: TextView
+
+    private lateinit var tvRecipeProtien: TextView
+    private lateinit var tvRecipeCarbs: TextView
+    private lateinit var tvRecipeFat :TextView
+    private lateinit var tvServing: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +42,15 @@ class RecipeDetailActivity : AppCompatActivity() {
     }
 
     private fun assignValue() {
+        tvRecipeName.text = recipeInfo.recipe.label
         tvTimeAmt.text = recipeInfo.recipe.totalTime.toString()
         tvCalorieAmt.text = recipeInfo.recipe.calories.toString()
+
+        tvRecipeProtien.text = recipeInfo.recipe.totalDaily.PROCNT.quantity.toString()
+        tvRecipeCarbs.text = recipeInfo.recipe.totalDaily.CA.quantity.toString()
+        tvRecipeFat.text = recipeInfo.recipe.totalDaily.FAT.quantity.toString()
+
+
         var IngredientText = ""
         for(item in recipeInfo.recipe.ingredientLines){
             IngredientText += item +"\n"
@@ -57,11 +70,16 @@ class RecipeDetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        tvRecipeName = binding.tvRecipeDetailName
         ivRecipe = binding.ivRecipeDetail
         tvTimeAmt = binding.tvTimeAmt
         tvCalorieAmt = binding.tvRcalorieDetailAmt
         tvIngredient = binding.tvIngrdienList
         btnBack = binding.ivRecipeBack
+        tvRecipeProtien = binding.tvRdProteinAmt
+        tvRecipeCarbs = binding.tvRDCarbsAmt
+        tvRecipeFat = binding.tvRDCarbsAmt
+        tvServing = binding.tvRDServingAmt
 
 
     }

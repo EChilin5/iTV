@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/FoodItemGL1"
+        android:id="@+id/RecipeItemGL1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -15,7 +15,7 @@
         app:layout_constraintGuide_percent="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/FoodItemGLv1"
+        android:id="@+id/RecipeItemGLv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -23,7 +23,7 @@
         app:layout_constraintGuide_percent="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/FoodItemGLvEnd"
+        android:id="@+id/RecipeItemGLvEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -31,7 +31,7 @@
         app:layout_constraintGuide_percent="1.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rvUser_furtherDetail"
+        android:id="@+id/rvRecipe_furtherDetail"
         android:layout_width="0dp"
         android:layout_height="152dp"
         android:layout_centerHorizontal="true"
@@ -41,58 +41,54 @@
         android:elevation="4dp"
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/FoodItemGLvEnd"
-        app:layout_constraintStart_toStartOf="@id/FoodItemGLv1"
-        app:layout_constraintTop_toTopOf="@id/FoodItemGL1">
+        app:layout_constraintEnd_toEndOf="@id/RecipeItemGLvEnd"
+        app:layout_constraintStart_toStartOf="@id/RecipeItemGLv1"
+        app:layout_constraintTop_toTopOf="@id/RecipeItemGL1">
 
 
         <ImageView
-            android:id="@+id/ivUserFoodImage"
+            android:id="@+id/ivRecipeFoodImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
-
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
-
             android:contentDescription="@string/sample_food_image"
-            app:layout_constraintBottom_toTopOf="@+id/FurtherDetailGLEnd"
-            app:layout_constraintEnd_toStartOf="@+id/FurtherGuideLineV2"
-            app:layout_constraintStart_toStartOf="@+id/FurtherGuideLineV1"
-            app:layout_constraintTop_toTopOf="@id/FurterDetailGL1"
+            app:layout_constraintBottom_toTopOf="@+id/RecipeFurtherDetailGLEnd"
+            app:layout_constraintEnd_toStartOf="@+id/RecipeFurtherGuideLineV2"
+            app:layout_constraintStart_toStartOf="@+id/RecipeFurtherGuideLineV1"
+            app:layout_constraintTop_toTopOf="@id/RecipeFurterDetailGL1"
             app:srcCompat="@drawable/bacground_myfood"
             tools:srcCompat="@tools:sample/avatars" />
 
 
         <TextView
-            android:id="@+id/tvFoodName"
-            android:layout_width="188dp"
-            android:layout_height="64dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginEnd="15dp"
+            android:id="@+id/tvRecipeFoodName"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:text="@string/salad"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/FurtherDetailGl2"
-            app:layout_constraintEnd_toEndOf="@id/FurtherGLVEnd"
+            app:layout_constraintBottom_toTopOf="@+id/RecipeFurtherDetailGl2"
+            app:layout_constraintEnd_toEndOf="@id/RecipeFurtherGLVEnd"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/FurtherGuideLineV2"
-            app:layout_constraintTop_toTopOf="@id/FurterDetailGL1"
+            app:layout_constraintStart_toStartOf="@+id/RecipeFurtherGuideLineV3"
+            app:layout_constraintTop_toTopOf="@id/RecipeFurterDetailGL1"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/tvTotalCCalories"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvRecipeTotalCCalories"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
+            android:gravity="center"
             android:text="@string/calories"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/FurtherDetailGLEnd"
-            app:layout_constraintStart_toEndOf="@id/FurtherGuideLineV2"
-            app:layout_constraintTop_toTopOf="@+id/FurtherDetailGl2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintEnd_toStartOf="@+id/RecipeFurtherGuideLinev4"
+            app:layout_constraintStart_toStartOf="@+id/RecipeFurtherGuideLineV3"
+            app:layout_constraintTop_toTopOf="@+id/RecipeFurtherDetailGl2" />
 
         <View
             android:layout_width="3dp"
@@ -103,28 +99,26 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.031"
-            app:layout_constraintStart_toStartOf="@+id/FurtherGuideLineV2"
-            app:layout_constraintTop_toTopOf="@+id/FurterDetailGL1"
+            app:layout_constraintStart_toStartOf="@+id/RecipeFurtherGuideLineV2"
+            app:layout_constraintTop_toTopOf="@+id/RecipeFurterDetailGL1"
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/tvCalorieCount"
-            android:layout_width="78dp"
+            android:id="@+id/tvRecipeCalorieCount"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
+            android:gravity="center"
             android:text="@string/_1000"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/FurtherDetailGLEnd"
-            app:layout_constraintEnd_toStartOf="@+id/FurtherGLVEnd"
+            app:layout_constraintEnd_toStartOf="@+id/RecipeFurtherGLVEnd"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/tvTotalCCalories"
-            app:layout_constraintTop_toTopOf="@+id/FurtherDetailGl2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="@+id/RecipeFurtherGuideLinev4"
+            app:layout_constraintTop_toTopOf="@+id/RecipeFurtherDetailGl2" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/FurterDetailGL1"
+            android:id="@+id/RecipeFurterDetailGL1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -132,15 +126,15 @@
             app:layout_constraintGuide_percent="0.0" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/FurtherDetailGl2"
+            android:id="@+id/RecipeFurtherDetailGl2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.65" />
+            app:layout_constraintGuide_percent="0.55" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/FurtherDetailGLEnd"
+            android:id="@+id/RecipeFurtherDetailGLEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -148,7 +142,7 @@
             app:layout_constraintGuide_percent="1.0" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/FurtherGuideLineV1"
+            android:id="@+id/RecipeFurtherGuideLineV1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -156,7 +150,7 @@
             app:layout_constraintGuide_percent="0.0" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/FurtherGuideLineV2"
+            android:id="@+id/RecipeFurtherGuideLineV2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -164,12 +158,57 @@
             app:layout_constraintGuide_percent="0.4" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/FurtherGLVEnd"
+            android:id="@+id/RecipeFurtherGuideLineV3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.44" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/RecipeFurtherGuideLinev4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.70" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/RecipeFurtherGLVEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="20dp"
             app:layout_constraintGuide_percent="1.0" />
+
+        <TextView
+            android:id="@+id/tvRecipeTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Time"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/RecipeFurtherGuideLinev4"
+            app:layout_constraintStart_toStartOf="@+id/RecipeFurtherGuideLineV3"
+            app:layout_constraintTop_toBottomOf="@+id/tvRecipeTotalCCalories" />
+
+        <TextView
+            android:id="@+id/tvRecipeTimeAmt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="100"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/RecipeFurtherDetailGLEnd"
+            app:layout_constraintEnd_toStartOf="@+id/RecipeFurtherGLVEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/RecipeFurtherGuideLinev4"
+            app:layout_constraintTop_toBottomOf="@+id/tvRecipeCalorieCount"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

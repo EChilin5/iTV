@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgrey"
     tools:context="eachillz.dev.itv.activity.FoodItemDetailActivity">
 
 
@@ -13,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/white"
+        android:elevation="12dp"
         app:layout_constraintBottom_toTopOf="@+id/DetailGL2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +65,7 @@
         android:layout_width="77dp"
         android:layout_height="67dp"
         android:background="@null"
+        android:elevation="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
@@ -74,7 +75,7 @@
         android:id="@+id/clTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/teal_200"
+        android:background="@color/grey"
         android:elevation="8dp"
         app:layout_constraintBottom_toTopOf="@+id/DetailGL3"
         app:layout_constraintEnd_toEndOf="@id/DetailGLvEnd"
@@ -93,21 +94,73 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clNutrionDL"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:background="@color/white"
+        android:elevation="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/DetailGLvEnd"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/DetailGLv1"
-        app:layout_constraintTop_toTopOf="@+id/DetailGL3"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/tvNutrionFactsTitle"
+        app:layout_constraintVertical_bias="1.0">
+
+        <View
+            android:id="@+id/splitLine_hor"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/lightgrey"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCalorie" />
+
+        <View
+            android:id="@+id/splitLine_hor2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/lightgrey"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.737"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvProtein" />
+
+        <View
+            android:id="@+id/splitLine_hor3"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/lightgrey"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.737"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCarbs" />
+
+        <View
+            android:id="@+id/splitLine_hor5"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/lightgrey"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvFat" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/clNGLv1"
@@ -116,6 +169,14 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="20dp"
             app:layout_constraintGuide_percent="0.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/clNGlv1_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="236dp"
+            app:layout_constraintGuide_percent="0.6" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/clNGLvEnd"
@@ -133,150 +194,183 @@
             app:layout_constraintGuide_begin="20dp"
             app:layout_constraintGuide_percent="0.0" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/clNGLh2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.2" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/clNGLh3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.35" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/clNGLh4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/clNGLh5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.65" />
-
         <TextView
             android:id="@+id/tvServing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="12dp"
             android:text="Serving Size: "
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/clNGLh2"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/clNGLv1"
             app:layout_constraintTop_toTopOf="@+id/clNGLh1" />
 
+
         <TextView
             android:id="@+id/tvServingAmnt"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
             android:text="1"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/clNGLh2"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/clNGlv1_5"
             app:layout_constraintTop_toTopOf="@id/clNGLh1" />
-
 
         <TextView
             android:id="@+id/tvCalorie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="12dp"
             android:text="Calorie: "
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/clNGLh3"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/clNGLv1"
-            app:layout_constraintTop_toTopOf="@+id/clNGLh2" />
+            app:layout_constraintTop_toBottomOf="@+id/SplitLine_hor1" />
 
         <TextView
             android:id="@+id/tvCalorieAmnt"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
             android:text="1"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/clNGLh3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/clNGLh2" />
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/clNGLvEnd"
+            app:layout_constraintStart_toStartOf="@+id/clNGlv1_5"
+            app:layout_constraintTop_toBottomOf="@+id/SplitLine_hor1" />
 
         <TextView
             android:id="@+id/tvProtein"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="12dp"
             android:text="Protein: "
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/clNGLh4"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/clNGLv1"
-            app:layout_constraintTop_toTopOf="@+id/clNGLh3" />
+            app:layout_constraintTop_toBottomOf="@+id/splitLine_hor" />
 
         <TextView
             android:id="@+id/tvProteinAmnt"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
             android:text="1"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/clNGLh4"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/clNGLh3" />
+            app:layout_constraintStart_toStartOf="@+id/clNGlv1_5"
+            app:layout_constraintTop_toBottomOf="@+id/splitLine_hor" />
 
         <TextView
             android:id="@+id/tvCarbs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="12dp"
             android:text="Carbs: "
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/clNGLh5"
-            app:layout_constraintStart_toStartOf="@id/clNGLv1"
-            app:layout_constraintTop_toTopOf="@+id/clNGLh4" />
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/splitLine_hor2" />
 
         <TextView
             android:id="@+id/tvCarbsAmnt"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
             android:text="1"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/clNGLh5"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/clNGLh4" />
+            app:layout_constraintStart_toStartOf="@+id/clNGlv1_5"
+            app:layout_constraintTop_toBottomOf="@+id/splitLine_hor2" />
 
         <TextView
             android:id="@+id/tvFat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="12dp"
             android:text="Fat: "
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/clNGLv1"
-            app:layout_constraintTop_toTopOf="@+id/clNGLh5"
-            app:layout_constraintVertical_bias="0.479" />
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/splitLine_hor3" />
 
         <TextView
             android:id="@+id/tvFatAmnt"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
             android:text="1"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/clNGLvEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/clNGlv1_5"
+            app:layout_constraintTop_toBottomOf="@+id/splitLine_hor3" />
+
+        <View
+            android:id="@+id/SplitLine_hor1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/lightgrey"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/clNGLh5" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvServing" />
+
+        <View
+            android:id="@+id/splitLine_hor4"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/lightgrey"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/clNGLh1" />
+
+        <View
+            android:id="@+id/SplitLine_v1"
+            android:layout_width="3dp"
+            android:layout_height="260dp"
+            android:background="@color/lightgrey"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/clNGlv1_5"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/clNGLv1"
+            app:layout_constraintTop_toTopOf="@+id/clNGLh1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvNutrionFactsTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="20dp"
+        android:text="Nutrition Facts"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toStartOf="@+id/DetailGLvEnd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/DetailGL3" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

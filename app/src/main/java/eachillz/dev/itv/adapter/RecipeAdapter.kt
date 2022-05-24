@@ -8,15 +8,18 @@ import com.squareup.picasso.Picasso
 import eachillz.dev.itv.R
 import eachillz.dev.itv.activity.RecipeDetailActivity
 import eachillz.dev.itv.api.Hit
+import eachillz.dev.itv.databinding.ItemRecipeResultBinding
 import eachillz.dev.itv.databinding.UserFoodItemBinding
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 class RecipeAdapter(private var recipe : MutableList<Hit>) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
-    private var _binding: UserFoodItemBinding? =null
+    private var _binding: ItemRecipeResultBinding? =null
     private val binding get() = _binding!!
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        _binding = UserFoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        _binding = ItemRecipeResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RecipeViewHolder(_binding!!)
     }
 
@@ -29,10 +32,14 @@ class RecipeAdapter(private var recipe : MutableList<Hit>) : RecyclerView.Adapte
         return recipe.size
     }
 
-    class RecipeViewHolder(itemView: UserFoodItemBinding) : RecyclerView.ViewHolder(itemView.root) {
-        fun bind(hit: Hit, binding: UserFoodItemBinding) {
-            binding.tvFoodName.text = hit.recipe.label
-            binding.tvCalorieCount.text = hit.recipe.calories.toString()
+    class RecipeViewHolder(itemView: ItemRecipeResultBinding) : RecyclerView.ViewHolder(itemView.root) {
+        fun bind(hit: Hit, binding: ItemRecipeResultBinding) {
+            binding.tvRecipeFoodName.text = hit.recipe.label
+            binding.tvRecipeCalorieCount.text = hit.recipe.calories.roundToInt().toString()
+            var time = hit.recipe.totalTime.roundToInt()
+
+            binding.tvRecipeTimeAmt.text = time.toString()
+
             var image_url = hit.recipe.image
             if(image_url.isNullOrEmpty()){
                 Picasso.get()
@@ -40,7 +47,7 @@ class RecipeAdapter(private var recipe : MutableList<Hit>) : RecyclerView.Adapte
                     .placeholder(R.drawable.bacground_myfood)
                     .resize(150, 150)         //optional
                     .centerCrop()                        //optional
-                    .into(binding.ivUserFoodImage)
+                    .into(binding.ivRecipeFoodImage)
             }else{
                 Picasso.get()
                     .load(image_url)
@@ -48,11 +55,11 @@ class RecipeAdapter(private var recipe : MutableList<Hit>) : RecyclerView.Adapte
                     .error(R.drawable.bacground_myfood)
                     .resize(150, 150)         //optional
                     .centerCrop()                        //optional
-                    .into(binding.ivUserFoodImage)
+                    .into(binding.ivRecipeFoodImage)
             }
 
 
-            binding.rvUserFurtherDetail.setOnClickListener {
+            binding.rvRecipeFurtherDetail.setOnClickListener {
                 val intent  = Intent(itemView.context, RecipeDetailActivity::class.java)
                 intent.putExtra("recipeInfo", hit)
                 itemView.context.startActivity(intent)

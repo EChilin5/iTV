@@ -77,7 +77,7 @@ class HomeFragment : Fragment() {
         }
 //
 //        if(recipeResult.isEmpty()){
-//             retrieveEdamanFoodInformation(text)
+             retrieveEdamanFoodInformation(text)
 //        }
 
 

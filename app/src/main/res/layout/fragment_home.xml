@@ -13,6 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/item_background"
+        android:elevation="12dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="@id/HomeGLEnd"
         app:layout_constraintEnd_toEndOf="@id/HomeGLvEnd"
@@ -21,13 +22,14 @@
         tools:listitem="@layout/user_food_item" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvRecipeLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/my_meals"
+        android:text="Recipes"
         android:textColor="@color/black"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/HomeGL1.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,20 +43,12 @@
         app:layout_constraintGuide_percent="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/HomeGL1"
+        android:id="@+id/HomeGLv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.0" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/HomeGL2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.14" />
+        app:layout_constraintGuide_percent="0.82" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/HomeGLvEnd"
@@ -63,6 +57,30 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="1.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/HomeGL1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/HomeGL1.5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/HomeGL2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.14" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/HomeGLEnd"
@@ -74,24 +92,32 @@
 
     <EditText
         android:id="@+id/etFoodSearch"
-        android:layout_width="284dp"
-        android:layout_height="76dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:ems="10"
+        android:hint="Search Recipe"
         android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintBottom_toTopOf="@id/HomeGL2"
+        app:layout_constraintEnd_toStartOf="@+id/HomeGLv2"
+        app:layout_constraintStart_toStartOf="@id/HomeGLv1"
+        app:layout_constraintTop_toBottomOf="@id/HomeGL1.5" />
 
     <ImageButton
         android:id="@+id/ivbtnSearch"
-        android:layout_width="67dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:background="@color/grey"
+        android:elevation="6dp"
         android:src="@drawable/search"
         app:layout_constraintBottom_toTopOf="@+id/HomeGL2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
-        app:layout_constraintStart_toEndOf="@+id/etFoodSearch"
+        app:layout_constraintEnd_toEndOf="@id/HomeGLvEnd"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/HomeGLv2"
+        app:layout_constraintTop_toBottomOf="@id/HomeGL1.5"
         tools:ignore="SpeakableTextPresentCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

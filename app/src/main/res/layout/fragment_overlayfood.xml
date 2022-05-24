@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical|center_horizontal"
-    android:padding="10dp"
+    android:padding="6dp"
     tools:context=".overlay.overlayfood">
 
     <EditText
@@ -60,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:background="@color/item_background"
-            android:padding="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
