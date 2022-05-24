@@ -41,14 +41,6 @@
         app:layout_constraintGuide_percent="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/RecipeDetailGLv1.5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.25" />
-
-    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/RecipeDetailGLv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,103 +61,12 @@
         app:layout_constraintTop_toTopOf="@id/RecipeDetailGL1"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/tvRecipeDetailName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/cereal"
-        android:textColor="#000000"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/RecipeDetailGL2" />
-
-    <TextView
-        android:id="@+id/tvTimeTiltle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRecipeDetailName" />
-
-    <TextView
-        android:id="@+id/tvTimeAmt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/_10min"
-        app:layout_constraintStart_toEndOf="@+id/tvTimeTiltle"
-        app:layout_constraintTop_toBottomOf="@+id/tvRecipeDetailName" />
-
-    <TextView
-        android:id="@+id/tvCalorieDetailTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/calories"
-        app:layout_constraintStart_toEndOf="@+id/tvTimeAmt"
-        app:layout_constraintTop_toBottomOf="@+id/tvRecipeDetailName" />
-
-    <TextView
-        android:id="@+id/tvRcalorieDetailAmt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/_200"
-        app:layout_constraintStart_toEndOf="@+id/tvCalorieDetailTitle"
-        app:layout_constraintTop_toBottomOf="@+id/tvRecipeDetailName" />
-
-    <TextView
-        android:id="@+id/tvIngredientsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/ingredients"
-        android:textColor="#171717"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTimeTiltle" />
-
-    <TextView
-        android:id="@+id/tvIngrdienList"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/_1_2_cup_olive_oil_5_cloves_garlic_peeled_2_large_russet_potatoes_peeled_and_cut_into_chunks_1_3_4_pound_chicken_cut_into_8_pieces_or_3_pound_chicken_legs_3_4_cup_white_wine_3_4_cup_chicken_stock_3_tablespoons_chopped_parsley_1_tablespoon_dried_oregano_salt_and_pepper_1_cup_frozen_peas_thawed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/RecipeDetailGLv1"
-        app:layout_constraintTop_toBottomOf="@+id/tvIngredientsTitle" />
-
-    <TextView
-        android:id="@+id/NutritionFacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/nutrition_facts"
-        android:textColor="#171717"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvIngrdienList" />
-
     <ImageButton
         android:id="@+id/ivRecipeBack"
         android:layout_width="48dp"
-        android:layout_height="37dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:background="@null"
         android:elevation="12dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -173,87 +74,199 @@
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <TextView
-        android:id="@+id/tvRDProtein"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/protein"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NutritionFacts" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/RecipeDetailGLEnd"
+        app:layout_constraintEnd_toEndOf="@id/RecipeDetailGLv2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/RecipeDetailGLv1"
+        app:layout_constraintTop_toTopOf="@+id/RecipeDetailGL2">
 
-    <TextView
-        android:id="@+id/tvRDCarbs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/carbs"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRDProtein" />
 
-    <TextView
-        android:id="@+id/tvRDFat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/fat"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRDCarbs" />
+        <TextView
+            android:id="@+id/tvRecipeDetailName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/cereal"
+            android:textColor="#000000"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvRDServing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/serving"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRDFat" />
+        <TextView
+            android:id="@+id/tvTimeTiltle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRecipeDetailName" />
 
-    <TextView
-        android:id="@+id/tvRdProteinAmt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/_1000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/RecipeDetailGLv1.5"
-        app:layout_constraintTop_toBottomOf="@+id/NutritionFacts" />
+        <TextView
+            android:id="@+id/tvTimeAmt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/_10min"
+            app:layout_constraintStart_toEndOf="@+id/tvTimeTiltle"
+            app:layout_constraintTop_toBottomOf="@+id/tvRecipeDetailName" />
 
-    <TextView
-        android:id="@+id/tvRDCarbsAmt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/_1000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/RecipeDetailGLv1.5"
-        app:layout_constraintTop_toBottomOf="@+id/tvRdProteinAmt" />
+        <TextView
+            android:id="@+id/tvCalorieDetailTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/calories"
+            app:layout_constraintStart_toEndOf="@+id/tvTimeAmt"
+            app:layout_constraintTop_toBottomOf="@+id/tvRecipeDetailName" />
 
-    <TextView
-        android:id="@+id/tvRDFatAmt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/_1000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/RecipeDetailGLv1.5"
-        app:layout_constraintTop_toBottomOf="@+id/tvRDCarbsAmt" />
+        <TextView
+            android:id="@+id/tvRcalorieDetailAmt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/_200"
+            app:layout_constraintStart_toEndOf="@+id/tvCalorieDetailTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvRecipeDetailName" />
 
-    <TextView
-        android:id="@+id/tvRDServingAmt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/_1000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/RecipeDetailGLv1.5"
-        app:layout_constraintTop_toBottomOf="@+id/tvRDFatAmt" />
+        <TextView
+            android:id="@+id/tvIngredientsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/ingredients"
+            android:textColor="#171717"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTimeTiltle" />
 
+        <TextView
+            android:id="@+id/tvIngrdienList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/_1_2_cup_olive_oil_5_cloves_garlic_peeled_2_large_russet_potatoes_peeled_and_cut_into_chunks_1_3_4_pound_chicken_cut_into_8_pieces_or_3_pound_chicken_legs_3_4_cup_white_wine_3_4_cup_chicken_stock_3_tablespoons_chopped_parsley_1_tablespoon_dried_oregano_salt_and_pepper_1_cup_frozen_peas_thawed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvIngredientsTitle" />
+
+        <TextView
+            android:id="@+id/NutritionFacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/nutrition_facts"
+            android:textColor="#171717"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvIngrdienList" />
+
+        <TextView
+            android:id="@+id/tvRDProtein"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/protein"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/NutritionFacts" />
+
+        <TextView
+            android:id="@+id/tvRDCarbs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/carbs"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRDProtein" />
+
+        <TextView
+            android:id="@+id/tvRDFat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/fat"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRDCarbs" />
+
+        <TextView
+            android:id="@+id/tvRDServing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/serving"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRDFat" />
+
+        <TextView
+            android:id="@+id/tvRdProteinAmt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/_1000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/RecipeDetailGLv1.5"
+            app:layout_constraintTop_toBottomOf="@+id/NutritionFacts" />
+
+        <TextView
+            android:id="@+id/tvRDCarbsAmt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/_1000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/RecipeDetailGLv1.5"
+            app:layout_constraintTop_toBottomOf="@+id/tvRdProteinAmt" />
+
+        <TextView
+            android:id="@+id/tvRDFatAmt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/_1000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/RecipeDetailGLv1.5"
+            app:layout_constraintTop_toBottomOf="@+id/tvRDCarbsAmt" />
+
+        <TextView
+            android:id="@+id/tvRDServingAmt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/_1000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/RecipeDetailGLv1.5"
+            app:layout_constraintTop_toBottomOf="@+id/tvRDFatAmt" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/RecipeDetailGLv1.5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.25" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

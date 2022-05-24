@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import eachillz.dev.itv.api.Hit
 import eachillz.dev.itv.databinding.ActivityRecipeDetailBinding
+import kotlin.math.roundToInt
 
 class RecipeDetailActivity : AppCompatActivity() {
 
@@ -43,12 +44,12 @@ class RecipeDetailActivity : AppCompatActivity() {
 
     private fun assignValue() {
         tvRecipeName.text = recipeInfo.recipe.label
-        tvTimeAmt.text = recipeInfo.recipe.totalTime.toString()
-        tvCalorieAmt.text = recipeInfo.recipe.calories.toString()
+        tvTimeAmt.text = recipeInfo.recipe.totalTime.roundToInt().toString()
+        tvCalorieAmt.text = recipeInfo.recipe.calories.roundToInt().toString()
 
-        tvRecipeProtien.text = recipeInfo.recipe.totalDaily.PROCNT.quantity.toString()
-        tvRecipeCarbs.text = recipeInfo.recipe.totalDaily.CA.quantity.toString()
-        tvRecipeFat.text = recipeInfo.recipe.totalDaily.FAT.quantity.toString()
+        tvRecipeProtien.text = recipeInfo.recipe.totalDaily.PROCNT.quantity.roundToInt().toString()
+        tvRecipeCarbs.text = recipeInfo.recipe.totalDaily.CA.quantity.roundToInt().toString()
+        tvRecipeFat.text = recipeInfo.recipe.totalDaily.FAT.quantity.roundToInt().toString()
 
 
         var IngredientText = ""
