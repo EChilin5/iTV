@@ -15,6 +15,7 @@ import eachillz.dev.itv.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import eachillz.dev.itv.adapter.RecipeAdapter
 import eachillz.dev.itv.api.*
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -72,29 +73,43 @@ class HomeFragment : Fragment() {
         binding.ivbtnSearch.setOnClickListener {
             text = binding.etFoodSearch.text.toString()
             Toast.makeText(context, "$text has changed", Toast.LENGTH_SHORT).show()
-
-            retrieveEdamanFoodInformation(text)
+            threadBlockCouritinApiFetch(text)
         }
-//
-//        if(recipeResult.isEmpty()){
-             retrieveEdamanFoodInformation(text)
-//        }
+
+        if(recipeResult.isEmpty()){
+            Log.e(TAG, "api is called first time ")
+            threadBlockCouritinApiFetch(text)
+        }
 
 
     }
 
-    private fun retrieveEdamanFoodInformation(foodSearch :String){
-
+    private fun clearRecyclerView() :Boolean{
         var size = recipeResult.size-1
         while(size >=0){
             recipeResult.removeAt(size)
             adapter.notifyItemRemoved(size)
-        size--
+            size--
 
         }
         recipeResult.clear()
+        adapter.notifyDataSetChanged()
+        Toast.makeText(context, "${recipeResult.size}", Toast.LENGTH_SHORT).show()
+        Log.e(TAG, "size is ${recipeResult.size} " + System.currentTimeMillis())
+        return true
+    }
 
+    fun threadBlockCouritinApiFetch(text:String) = runBlocking {
+        var clear = async { clearRecyclerView() }
+        if( clear.await()){
+            Log.e(TAG, "$clear is called running second thread")
+            async { retrieveEdamanFoodInformation(text) }
+        }
 
+    }
+
+    private suspend fun retrieveEdamanFoodInformation (foodSearch :String) {
+        Log.e(TAG, "api is called retrieveEdamanFoodInformation" + System.currentTimeMillis())
         val type = "public"
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
         val edamamRecipeService = retrofit.create(RecipeService::class.java)
@@ -111,7 +126,6 @@ class HomeFragment : Fragment() {
                         Log.i(TAG, "Did not recieve valid response from Edamam Food Service")
                         return
                     }
-                    Log.i(TAG, "${recipeResult.size}")
 
                     var count = 0
                     for(item in body.hits){
@@ -120,9 +134,10 @@ class HomeFragment : Fragment() {
                         count++;
                     }
 
-
-
-                    Log.i(TAG, "${recipeResult.size}")
+                //                    recipeApiResult.addAll(body.hits)
+//
+//
+//                    Log.i(TAG, "${recipeApiResult.size}")
             //        adapter.notifyItemRangeInserted(0, recipeResult.size)
 
                 }
@@ -132,6 +147,7 @@ class HomeFragment : Fragment() {
                 }
 
             })
+
     }
 
 

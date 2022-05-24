@@ -55,6 +55,11 @@ class LoginActivity : AppCompatActivity() {
 
         val auth = FirebaseAuth.getInstance()
 
+
+        if(auth.currentUser!= null){
+            goToMain()
+        }
+
         binding.tvHelp.setOnClickListener {
             resetPassword()
 
