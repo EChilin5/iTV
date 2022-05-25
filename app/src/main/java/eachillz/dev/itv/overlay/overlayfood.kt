@@ -76,7 +76,7 @@ class overlayfood : DialogFragment() {
         rvFoodResult.adapter = adapter
         rvFoodResult.layoutManager = LinearLayoutManager(context)
 
-//        binding.clFoodResult.isVisible = false
+        binding.clFoodResult.isVisible = false
 
 
         val date = getCurrentDateTime()
@@ -103,7 +103,7 @@ class overlayfood : DialogFragment() {
                     call: Call<FoodSearchResult>,
                     response: Response<FoodSearchResult>
                 ) {
-//                    binding.clFoodResult.isVisible = true
+                    binding.clFoodResult.isVisible = true
                     Log.i(TAG, "onResponse $response")
                     val body = response.body()
                     if(body == null){
@@ -111,7 +111,6 @@ class overlayfood : DialogFragment() {
                         return
                     }
                     Log.i(TAG, "${response.body()}")
-
                     foodResult.addAll(body.hints)
                     adapter?.notifyDataSetChanged()
 

@@ -81,6 +81,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    implementation 'com.robinhood.spark:spark:1.2.0'
+    implementation 'com.robinhood.ticker:ticker:2.0.4'
+
+
 
 
 }

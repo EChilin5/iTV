@@ -39,13 +39,16 @@ class MainActivity : AppCompatActivity() {
                     openFragment(settingFragment)
                     return@setOnItemSelectedListener true
                 }
-//                R.id.ic_progress->openFragment(progressFragment)
+               R.id.ic_progress-> {
+                   openFragment(progressFragment)
+                   return@setOnItemSelectedListener true
+               }
                 else -> false
             }
 
         }
 
-        openFragment(dailyMealFragment)
+        openFragment(progressFragment)
     }
 
     private fun openFragment(fragment: Fragment) {

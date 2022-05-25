@@ -11,14 +11,14 @@
 
     </item>
 
-<!--    <item-->
-<!--        android:id="@+id/ic_progress"-->
-<!--        android:enabled="true"-->
-<!--        android:title="@string/progress"-->
-<!--        android:icon="@drawable/ic_chart"-->
-<!--        app:showAsAction="ifRoom">-->
+    <item
+        android:id="@+id/ic_progress"
+        android:enabled="true"
+        android:title="@string/progress"
+        android:icon="@drawable/ic_chart"
+        app:showAsAction="ifRoom">
 
-<!--    </item>-->
+    </item>
 
     <item
         android:id="@+id/ic_meals"
