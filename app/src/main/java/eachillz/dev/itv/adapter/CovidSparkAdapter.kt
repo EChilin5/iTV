@@ -3,8 +3,9 @@ package eachillz.dev.itv.adapter
 import android.graphics.RectF
 import com.robinhood.spark.SparkAdapter
 import eachillz.dev.itv.api.CovidData
+import eachillz.dev.itv.firestore.DailyMealChartData
 
-class CovidSparkAdapter(private val dailydata: List<CovidData>) : SparkAdapter(){
+class CovidSparkAdapter(private val dailydata: List<DailyMealChartData>) : SparkAdapter(){
 
     var metric = Metric.POSITIVE
     var daysAgo = TimeScale.MAX
@@ -18,12 +19,7 @@ class CovidSparkAdapter(private val dailydata: List<CovidData>) : SparkAdapter()
     override fun getY(index: Int): Float {
         val chosenDayData = dailydata[index]
 
-        return when(metric){
-            Metric.POSITIVE -> chosenDayData.positiveIncrease.toFloat()
-            Metric.NEGATIVE -> chosenDayData.negativeIncrease.toFloat()
-            Metric.DEATH -> chosenDayData.deathIncrease.toFloat()
-
-        }
+        return  chosenDayData.calorieTrend.toFloat()
     }
 
     override fun getDataBounds(): RectF {

@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        openFragment(progressFragment)
+        openFragment(dailyMealFragment)
     }
 
     private fun openFragment(fragment: Fragment) {

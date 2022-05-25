@@ -114,30 +114,6 @@ class overlayfood : DialogFragment() {
                     foodResult.addAll(body.hints)
                     adapter?.notifyDataSetChanged()
 
-//                    arrayParsed.addAll(body.hints)
-
-//                    var name = body.text
-//                    var protein = arrayParsed.get(0).food.nutrients.PROCNT.toLong()
-//                    var calories = arrayParsed.get(0).food.nutrients.ENERC_KCAL.toLong()
-//                    var fat = arrayParsed.get(0).food.nutrients.FAT.toLong()
-//                    var carbs = arrayParsed.get(0).food.nutrients.CHOCDF.toLong()
-//                    var image = arrayParsed.get(0).food.image
-//                    var time = System.currentTimeMillis()
-//                    val date = getCurrentDateTime()
-//                    val dateInString = date.toString("MM/dd/yyyy")
-//                    var serving = 1
-//
-//
-//                    if(image.isNullOrEmpty()){
-//                        image = "https://firebasestorage.googleapis.com/v0/b/textdemo-9e9b1.appspot.com/o/posts%2FFri%20Sep%2010%2015%3A52%3A09%20PDT%202021.png?alt=media&token=a774304d-da5b-4cb9-8fbc-853f8ff6a78f"
-//                    }
-//
-//                    var emailName = getEmailName()
-//
-//                    val user : User = User("", emailName )
-//                    var meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, dateInString, user )
-//
-//                    addMealDB(meal)
 
                 }
 
@@ -174,7 +150,7 @@ class overlayfood : DialogFragment() {
         val user : User = User("", emailName )
         dailyMeal.user = user
         var date = getCurrentDateTime()
-        val dateInString = date.toString("MM/dd/yyyy")
+        val dateInString = date.toString("yyyyMMdd")
         dailyMeal.date = dateInString
         addMealDB(dailyMeal)
     }

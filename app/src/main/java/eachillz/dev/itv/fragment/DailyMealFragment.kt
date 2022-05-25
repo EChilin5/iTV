@@ -72,7 +72,7 @@ class DailyMealFragment : Fragment() {
         firestoreDb = FirebaseFirestore.getInstance()
 
         val date = getCurrentDateTime()
-        dateFormated = date.toString("MM/dd/yyyy")
+        dateFormated = date.toString("yyyyMMdd")
 //        binding.tvCurrentDate.text = dateFormated
 
         binding.fabSave.setOnClickListener {
