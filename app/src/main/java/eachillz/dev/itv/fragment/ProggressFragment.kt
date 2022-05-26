@@ -21,7 +21,7 @@ import java.util.*
 
 import com.robinhood.ticker.TickerUtils
 import eachillz.dev.itv.R
-import eachillz.dev.itv.adapter.CovidSparkAdapter
+import eachillz.dev.itv.adapter.CalorieSparkAdapter
 import eachillz.dev.itv.adapter.Metric
 import eachillz.dev.itv.adapter.TimeScale
 import eachillz.dev.itv.api.CovidData
@@ -32,10 +32,6 @@ import java.text.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlin.collections.HashMap
-import java.time.temporal.TemporalQueries.localDate
-
-
-
 
 
 private const val TAG = "ProggressFragment"
@@ -44,7 +40,7 @@ class ProggressFragment : Fragment() {
 
     private lateinit var dateFormated: String
     private lateinit var currentlyShownData: List<DailyMealChartData>
-    private lateinit var adapter: CovidSparkAdapter
+    private lateinit var adapter: CalorieSparkAdapter
     private lateinit var perStateDailyData: Map<String, List<CovidData>>
     private lateinit var nationalDailyData: List<CovidData>
     private  var calorieDailyData =  mutableListOf<DailyMealChartData>()
@@ -263,7 +259,7 @@ class ProggressFragment : Fragment() {
     private fun updateDisplayWithData(dailydata: MutableList<DailyMealChartData>) {
         currentlyShownData = dailydata
         // create a new spark adapter with data
-        adapter = CovidSparkAdapter(dailydata)
+        adapter = CalorieSparkAdapter(dailydata)
         binding.sparkView.adapter = adapter
         // update the radio button to select the positive case and max time by defualt
 

@@ -10,9 +10,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rv_header"
         android:layout_width="match_parent"
-        android:layout_height="215dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/bacground_myfood"
+        android:layout_height="0dp"
+        android:background="@color/teal_200"
+        android:elevation="12dp"
         app:layout_constraintBottom_toTopOf="@+id/DailyMealGL2"
         app:layout_constraintEnd_toEndOf="@id/DailyMealGLVEnd"
         app:layout_constraintHorizontal_bias="0.0"
@@ -142,7 +142,6 @@
             android:id="@+id/tvHCarbs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="Carbs"
             android:textColor="@color/white"
@@ -155,15 +154,14 @@
             android:id="@+id/tvHFat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="28dp"
             android:gravity="center"
             android:text="@string/fat"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/HeaderGLEnd"
             app:layout_constraintEnd_toStartOf="@+id/HeaderGLv1.5"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1" />
+            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1"
+            app:layout_constraintTop_toBottomOf="@+id/tvHCarbs" />
 
         <TextView
             android:id="@+id/tvHProteinAmt"
@@ -183,7 +181,6 @@
             android:id="@+id/tvHcarbsAmt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="100"
             android:textColor="@color/white"
@@ -196,50 +193,47 @@
             android:id="@+id/tvHFatAmnt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="28dp"
             android:gravity="center"
             android:text="100"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/HeaderGLEnd"
             app:layout_constraintEnd_toStartOf="@+id/HeaderGLmid"
             app:layout_constraintHorizontal_bias="0.656"
-            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1.5" />
+            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1.5"
+            app:layout_constraintTop_toBottomOf="@+id/tvHcarbsAmt" />
+
+        <TextView
+            android:id="@+id/tvFoodLogTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rv_header"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="false"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/today_s_food_log_title"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/HeaderGL3"
+            app:layout_constraintEnd_toStartOf="@+id/HeaderGLmid"
+            app:layout_constraintStart_toStartOf="@+id/HeaderGLv1"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/tvFoodLogTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rv_header"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentEnd="false"
-        android:gravity="center"
-        android:text="@string/today_s_food_log_title"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/DailyMealGL3"
-        app:layout_constraintEnd_toEndOf="@id/DailyMealGLVEnd"
-        app:layout_constraintStart_toStartOf="@id/DailyMealGLv0"
-        app:layout_constraintTop_toBottomOf="@id/DailyMealGL2" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDailyFood"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@+id/tvFoodLogTitle"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
         android:background="@color/item_background"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/DailyMealGLEnd"
+        app:layout_constraintEnd_toEndOf="@id/DailyMealGLVEnd"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/DailyMealGL3"
+        app:layout_constraintStart_toStartOf="@id/DailyMealGLv0"
+        app:layout_constraintTop_toTopOf="@id/DailyMealGL2"
         tools:listitem="@layout/user_food_item">
 
 
@@ -256,7 +250,7 @@
         android:layout_marginBottom="28dp"
         android:contentDescription="@string/create_post"
         android:src="@drawable/add"
-        app:backgroundTint="#75D5E6"
+        app:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@+id/DailyMealGLEnd"
         app:layout_constraintEnd_toEndOf="@id/DailyMealGLVEnd" />
 
@@ -291,14 +285,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="0.27" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/DailyMealGL3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.40" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/DailyMealGLEnd"

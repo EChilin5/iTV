@@ -14,7 +14,6 @@
         android:layout_height="0dp"
         android:background="@color/item_background"
         android:elevation="12dp"
-        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="@id/HomeGLEnd"
         app:layout_constraintEnd_toEndOf="@id/HomeGLvEnd"
         app:layout_constraintStart_toStartOf="@id/HomeGLv1"

@@ -2,10 +2,9 @@ package eachillz.dev.itv.adapter
 
 import android.graphics.RectF
 import com.robinhood.spark.SparkAdapter
-import eachillz.dev.itv.api.CovidData
 import eachillz.dev.itv.firestore.DailyMealChartData
 
-class CovidSparkAdapter(private val dailydata: List<DailyMealChartData>) : SparkAdapter(){
+class CalorieSparkAdapter(private val dailydata: List<DailyMealChartData>) : SparkAdapter(){
 
     var metric = Metric.POSITIVE
     var daysAgo = TimeScale.MAX
