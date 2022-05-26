@@ -39,7 +39,7 @@
         android:layout_marginBottom="2dp"
         android:background="@drawable/custombackground"
         android:elevation="4dp"
-        android:padding="4dp"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/FoodItemGLvEnd"
         app:layout_constraintStart_toStartOf="@id/FoodItemGLv1"
@@ -70,6 +70,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="22dp"
             android:layout_marginEnd="15dp"
+            android:gravity="center"
             android:text="@string/salad"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -93,19 +94,6 @@
             app:layout_constraintStart_toEndOf="@id/FurtherGuideLineV2"
             app:layout_constraintTop_toTopOf="@+id/FurtherDetailGl2"
             app:layout_constraintVertical_bias="0.0" />
-
-        <View
-            android:layout_width="3dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/item_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.031"
-            app:layout_constraintStart_toStartOf="@+id/FurtherGuideLineV2"
-            app:layout_constraintTop_toTopOf="@+id/FurterDetailGL1"
-            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/tvCalorieCount"

@@ -94,7 +94,6 @@ class HomeFragment : Fragment() {
         }
         recipeResult.clear()
         adapter.notifyDataSetChanged()
-        Toast.makeText(context, "${recipeResult.size}", Toast.LENGTH_SHORT).show()
         Log.e(TAG, "size is ${recipeResult.size} " + System.currentTimeMillis())
         return true
     }
