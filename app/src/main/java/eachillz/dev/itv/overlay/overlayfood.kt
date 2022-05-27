@@ -113,7 +113,7 @@ class overlayfood : DialogFragment() {
                     Log.i(TAG, "${response.body()}")
                     foodResult.addAll(body.hints)
                     adapter?.notifyDataSetChanged()
-
+                    return
 
                 }
 
@@ -121,10 +121,13 @@ class overlayfood : DialogFragment() {
                     Log.e(TAG, "onFailure $t")
                 }
             })
+
+
     }
 
     private fun addMealDB(mealPost: DailyMealPost){
-        firestoreDb.collection("userDailyMeal").add(mealPost).addOnCompleteListener {
+        var addMeal = firestoreDb.collection("userDailyMeal")
+            addMeal.add(mealPost).addOnCompleteListener {
             if(it.isSuccessful){
                 this.dismiss()
             }

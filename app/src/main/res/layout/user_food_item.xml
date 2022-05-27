@@ -36,7 +36,7 @@
         android:layout_height="152dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="1dp"
         android:background="@drawable/custombackground"
         android:elevation="4dp"
         android:padding="8dp"
@@ -65,21 +65,16 @@
 
         <TextView
             android:id="@+id/tvFoodName"
-            android:layout_width="188dp"
-            android:layout_height="64dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginEnd="15dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:gravity="center"
             android:text="@string/salad"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/FurtherDetailGl2"
             app:layout_constraintEnd_toEndOf="@id/FurtherGLVEnd"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/FurtherGuideLineV2"
-            app:layout_constraintTop_toTopOf="@id/FurterDetailGL1"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@id/FurterDetailGL1" />
 
         <TextView
             android:id="@+id/tvTotalCCalories"

@@ -13,9 +13,7 @@ import eachillz.dev.itv.databinding.FragmentDailyMealBinding
 import eachillz.dev.itv.overlay.overlayfood
 import eachillz.dev.itv.adapter.UserMealAdapter
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.*
 import com.google.firebase.ktx.Firebase
 import eachillz.dev.itv.firestore.DailyMealPost
 import java.io.File
@@ -38,6 +36,7 @@ private lateinit var photFile: File
 class DailyMealFragment : Fragment() {
 
 
+    private lateinit var mealListener: ListenerRegistration
     private var _binding: FragmentDailyMealBinding? = null
     private val binding get() = _binding!!
     private var dateFormated = ""
@@ -130,7 +129,7 @@ class DailyMealFragment : Fragment() {
             .orderBy("creation_time_ms", Query.Direction.DESCENDING)
         mealReference = mealReference.whereEqualTo("user.email", currentUserName)
 
-        mealReference.addSnapshotListener { snapshot, exception ->
+         mealListener = mealReference.addSnapshotListener { snapshot, exception ->
             if (exception != null || snapshot == null) {
                 Log.e(TAG, "exception occurred", exception)
                 return@addSnapshotListener
@@ -157,8 +156,9 @@ class DailyMealFragment : Fragment() {
                 }
             }
             if (userMealArrayList.isEmpty()) {
-                val temp =  DailyMealPost(
-                    "", "Example User", 0,0,0,0,"",0,0, dateFormated,null  )
+                val temp = DailyMealPost(
+                    "", "Example User", 0, 0, 0, 0, "", 0, 0, dateFormated, null
+                )
 
                 userMealArrayList.add(temp)
             }
@@ -166,7 +166,7 @@ class DailyMealFragment : Fragment() {
 //            binding.tvCurrentCalorieCounter.text = total.toString()
             binding.tvRemainingCaloriesCounter.text = calories.toString()
 
-            val progress1 = ((total).toDouble() / 10000) *100
+            val progress1 = ((total).toDouble() / 10000) * 100
             val progress2 = 100 - progress1
 
 //            binding.progressBar.progress = progress1.toInt()
@@ -178,7 +178,19 @@ class DailyMealFragment : Fragment() {
 
         }
 
+
     }
+
+
+    override fun onStop() {
+        super.onStop()
+        if(mealListener != null){
+            mealListener.remove()
+        }
+
+        Log.e(TAG, "item removed ")
+    }
+
 
 
 

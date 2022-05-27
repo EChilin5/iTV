@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import eachillz.dev.itv.databinding.FragmentProggressBinding
@@ -38,6 +39,7 @@ private const val TAG = "ProggressFragment"
 private const val BASE_URL = "https://covidtracking.com/api/v1/"
 class ProggressFragment : Fragment() {
 
+    private lateinit var userCalorieListener: ListenerRegistration
     private lateinit var dateFormated: String
     private lateinit var currentlyShownData: List<DailyMealChartData>
     private lateinit var adapter: CalorieSparkAdapter
@@ -87,7 +89,7 @@ class ProggressFragment : Fragment() {
             .orderBy("date", Query.Direction.DESCENDING)
         mealReference = mealReference.whereEqualTo("user.email", currentUserName)
 
-        mealReference.addSnapshotListener { snapshot, exception ->
+        userCalorieListener = mealReference.addSnapshotListener { snapshot, exception ->
             if (exception != null || snapshot == null) {
                 Log.e(TAG, "exception occurred", exception)
                 return@addSnapshotListener
@@ -156,6 +158,15 @@ class ProggressFragment : Fragment() {
         return currentUserName
     }
 
+    override fun onStop() {
+        super.onStop()
+        userCalorieListener.remove()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        userCalorieListener.remove()
+    }
 
 
 //    private fun covidFetchData(){
