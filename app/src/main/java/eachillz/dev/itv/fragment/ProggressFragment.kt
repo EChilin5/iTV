@@ -152,7 +152,7 @@ class ProggressFragment : Fragment() {
         var today = outputDateFormat.format(Date())
         Toast.makeText(context, email, Toast.LENGTH_SHORT).show()
         var weightTracker = firestoreDb.collection("weightWatcher").whereEqualTo("user.email", email )
-            .orderBy("date", Query.Direction.ASCENDING)
+            .orderBy("date", Query.Direction.DESCENDING)
         weightListener = weightTracker.addSnapshotListener { snapshot, exception ->
             if(exception != null || snapshot == null){
                 Log.e(TAG, "exception occurred", exception)
@@ -177,7 +177,7 @@ class ProggressFragment : Fragment() {
 
                 }
             }
-            weightInformation.reverse()
+            calorieDailyData.reverse()
             adapterWeight.notifyDataSetChanged()
 
             setUpEventListeners()

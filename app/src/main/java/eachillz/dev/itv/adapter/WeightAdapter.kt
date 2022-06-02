@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import eachillz.dev.itv.R
 import eachillz.dev.itv.databinding.WeightItemBinding
@@ -41,7 +42,9 @@ class WeightAdapter(private var weightModals: MutableList<WeightWatcherModal>) :
 
             }
         }
-
+        if(position == weightModals.size -1){
+            binding.itemWeightVLine1.isVisible = false
+        }
         holder.bind(weightItem, binding, weightProgressText, isWeightDecreased)
     }
 
