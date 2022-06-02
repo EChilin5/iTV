@@ -230,8 +230,10 @@
         android:background="@color/item_background"
         app:layout_constraintBottom_toBottomOf="@id/DailyMealGLEnd"
         app:layout_constraintEnd_toEndOf="@id/DailyMealGLVEnd"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@id/DailyMealGLv0"
         app:layout_constraintTop_toTopOf="@id/DailyMealGL2"
+        app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/user_food_item">
 
 
@@ -291,6 +293,37 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="1.0" />
+
+    <ImageView
+        android:id="@+id/ivSalySearch"
+        android:layout_width="0dp"
+        android:layout_height="181dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/saly_search_"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_header" />
+
+    <ImageView
+        android:id="@+id/ivNoMeals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/no_meals_found_"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivSalySearch" />
+
+    <ImageView
+        android:id="@+id/ivPleaseAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/thank_you_"
+        app:layout_constraintEnd_toStartOf="@+id/DailyMealGLVEnd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivNoMeals" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

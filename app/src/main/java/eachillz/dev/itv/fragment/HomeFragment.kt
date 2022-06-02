@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -68,17 +69,20 @@ class HomeFragment : Fragment() {
         rvRecipe.layoutManager = LinearLayoutManager(context)
 //        getUserData()
 
-        var text ="chicken"
+        //var text ="chicken"
 
         binding.ivbtnSearch.setOnClickListener {
-            text = binding.etFoodSearch.text.toString()
+            var text = binding.etFoodSearch.text.toString()
             Toast.makeText(context, "$text has changed", Toast.LENGTH_SHORT).show()
             threadBlockCouritinApiFetch(text)
         }
 
         if(recipeResult.isEmpty()){
             Log.e(TAG, "api is called first time ")
-            threadBlockCouritinApiFetch(text)
+            rvRecipe.isVisible = false
+            rvRecipe.isEnabled = false
+            binding.ivRecipeNotFound.isVisible = true
+            binding.tvRecipeNotFound.isVisible = true
         }
 
 
@@ -119,6 +123,7 @@ class HomeFragment : Fragment() {
                     call: Call<RecipeResult>,
                     response: Response<RecipeResult>
                 ) {
+                    recipeResult.clear()
                     Log.i(TAG, "onResponse $response")
                     val body = response.body()
                     if(body == null){
@@ -127,11 +132,22 @@ class HomeFragment : Fragment() {
                     }
 
                     var count = 0
-                    for(item in body.hits){
-                        recipeResult.add(item)
-                        adapter.notifyItemInserted(count)
-                        count++;
+                    recipeResult.addAll(body.hits)
+                    if(recipeResult.isNotEmpty()){
+                        rvRecipe.isEnabled = true
+                        rvRecipe.isVisible = true
+                        binding.ivRecipeNotFound.isVisible = false
+                        binding.ivRecipeNotFound.isEnabled = false
+                        binding.tvRecipeNotFound.isVisible = false
+                        binding.tvRecipeNotFound.isEnabled = false
                     }
+
+                    adapter.notifyDataSetChanged()
+//                    for(item in body.hits){
+//                        recipeResult.add(item)
+//                        adapter.notifyItemInserted(count)
+//                        count++;
+//                    }
 
 
                 //                    recipeApiResult.addAll(body.hits)

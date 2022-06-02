@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,8 @@ class DailyMealFragment : Fragment() {
     private val binding get() = _binding!!
     private var dateFormated = ""
     private var FILE_NAME = "photo.jpg"
+
+
 
 
     private lateinit var firestoreDb: FirebaseFirestore
@@ -85,7 +88,14 @@ class DailyMealFragment : Fragment() {
         userMealArrayList = arrayListOf<DailyMealPost>()
 
 //        getUserFoodData()
+
+        if(userMealArrayList.isEmpty()){
+            binding.rvDailyFood.isEnabled = false
+            binding.rvDailyFood.isVisible = false
+        }
+
         fetchData()
+
 
     }
 
@@ -135,6 +145,8 @@ class DailyMealFragment : Fragment() {
                 return@addSnapshotListener
             }
 
+
+
             for (dc: DocumentChange in snapshot?.documentChanges!!) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
@@ -155,13 +167,24 @@ class DailyMealFragment : Fragment() {
 
                 }
             }
-            if (userMealArrayList.isEmpty()) {
-                val temp = DailyMealPost(
-                    "", "Example User", 0, 0, 0, 0, "", 0, 0, dateFormated, null
-                )
+//            if (userMealArrayList.isEmpty()) {
+//                val temp = DailyMealPost(
+//                    "", "Example User", 0, 0, 0, 0, "", 0, 0, dateFormated, null
+//                )
+//
+//                userMealArrayList.add(temp)
+//            }
 
-                userMealArrayList.add(temp)
-            }
+             if(userMealArrayList.isNotEmpty()){
+                 binding.ivSalySearch.isVisible = false
+                 binding.ivNoMeals.isVisible = false
+                 binding.ivPleaseAdd.isVisible = false
+                 binding.ivSalySearch.isEnabled = false
+                 binding.ivPleaseAdd.isEnabled = false
+                 binding.ivNoMeals.isEnabled = false
+                 binding.rvDailyFood.isEnabled = true
+                 binding.rvDailyFood.isVisible = true
+             }
             userRecylerView.adapter = UserMealAdapter(userMealArrayList)
 //            binding.tvCurrentCalorieCounter.text = total.toString()
             binding.tvRemainingCaloriesCounter.text = calories.toString()
