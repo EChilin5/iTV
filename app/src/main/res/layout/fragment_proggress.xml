@@ -22,7 +22,7 @@
 
     <com.robinhood.spark.SparkView
         android:id="@+id/sparkView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/lightgrey2"
         android:paddingTop="16dp"
@@ -37,13 +37,14 @@
         android:id="@+id/radioGroupTimeSelection"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/lightgrey2"
         android:gravity="center"
+
         android:orientation="horizontal"
         android:paddingBottom="8dp"
-        android:background="@color/lightgrey2"
-
-        app:layout_constraintBottom_toTopOf="@+id/tvDateLabel"
+        app:layout_constraintBottom_toTopOf="@+id/tickerView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <RadioButton
@@ -69,11 +70,11 @@
         android:id="@+id/tvDateLabel"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="28dp"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupTimeSelection"
         tools:text="May 24,2022" />
 
     <com.robinhood.ticker.TickerView
@@ -82,10 +83,31 @@
         android:layout_height="80dp"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/rvWeight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvDateLabel"
         tools:text="4,354" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvWeight"
+        android:layout_width="0dp"
+        android:layout_height="349dp"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/flBtnAddWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:src="@drawable/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

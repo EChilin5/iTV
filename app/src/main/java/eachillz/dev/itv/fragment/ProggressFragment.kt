@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,9 +28,12 @@ import eachillz.dev.itv.R
 import eachillz.dev.itv.adapter.CalorieSparkAdapter
 import eachillz.dev.itv.adapter.Metric
 import eachillz.dev.itv.adapter.TimeScale
-import eachillz.dev.itv.api.CovidData
+import eachillz.dev.itv.adapter.WeightAdapter
 import eachillz.dev.itv.firestore.DailyMealChartData
 import eachillz.dev.itv.firestore.DailyMealPost
+import eachillz.dev.itv.model.WeightWatcherModal
+import eachillz.dev.itv.overlay.AddWeightOverlay
+import eachillz.dev.itv.overlay.overlayfood
 
 import java.text.*
 import java.time.LocalDate
@@ -39,18 +45,19 @@ private const val TAG = "ProggressFragment"
 private const val BASE_URL = "https://covidtracking.com/api/v1/"
 class ProggressFragment : Fragment() {
 
-    private lateinit var userCalorieListener: ListenerRegistration
-    private lateinit var dateFormated: String
+    private lateinit var weightListener: ListenerRegistration
+   // private lateinit var userCalorieListener: ListenerRegistration
     private lateinit var currentlyShownData: List<DailyMealChartData>
     private lateinit var adapter: CalorieSparkAdapter
-    private lateinit var perStateDailyData: Map<String, List<CovidData>>
-    private lateinit var nationalDailyData: List<CovidData>
     private  var calorieDailyData =  mutableListOf<DailyMealChartData>()
+    private var weightInformation = mutableListOf<WeightWatcherModal>()
     private var _binding: FragmentProggressBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var mealsArray :MutableList<UserDailyMealPost>
     private lateinit var firestoreDb: FirebaseFirestore
+    private var adapterWeight = WeightAdapter(weightInformation)
+    private lateinit var rvWeights : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,158 +78,124 @@ class ProggressFragment : Fragment() {
 
         mealsArray = mutableListOf()
         firestoreDb = FirebaseFirestore.getInstance()
-        fetchData()
+        rvWeights = binding.rvWeight
+        rvWeights.adapter = adapterWeight
+        rvWeights.layoutManager = LinearLayoutManager(context)
 
+        binding.flBtnAddWeight.setOnClickListener {
+            openAddWeightItem()
+        }
+
+        //fetchData()
+        fetchWeightData()
     }
 
 
-    @SuppressLint("SimpleDateFormat", "NewApi")
-    private fun fetchData() {
-        calorieDailyData.clear()
-        var hashSet = HashMap<String, Int>()
-        var currentUserName = getUserEmail()
+//    @SuppressLint("SimpleDateFormat", "NewApi")
+//    private fun fetchData() {
+//        calorieDailyData.clear()
+//        var hashSet = HashMap<String, Int>()
+//        var currentUserName = getUserEmail()
+//
+//        var calories = 10000
+//        var total = 0
+//
+//        var mealReference = firestoreDb.collection("userDailyMeal")
+//            .orderBy("date", Query.Direction.DESCENDING)
+//        mealReference = mealReference.whereEqualTo("user.email", currentUserName)
+//
+//        userCalorieListener = mealReference.addSnapshotListener { snapshot, exception ->
+//            if (exception != null || snapshot == null) {
+//                Log.e(TAG, "exception occurred", exception)
+//                return@addSnapshotListener
+//            }
+//
+//            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+//                if (dc.type == DocumentChange.Type.ADDED) {
+//
+//                    val mealItem: DailyMealPost =
+//                        dc.document.toObject(DailyMealPost::class.java)
+//
+//                        if(hashSet.containsKey(mealItem.date)){
+//                            hashSet.put(mealItem.date,
+//                                hashSet.get(mealItem.date)?.plus(mealItem.calories.toInt())!!
+//                            )
+//                        }else{
+//                            hashSet.put(mealItem.date, mealItem.calories.toInt())
+//                        }
+//                }
+//            }
+//
+//            for((key, value ) in hashSet){
+//                var day = LocalDate.parse(key, DateTimeFormatter.ofPattern("yyyyMMdd"))
+//              //  var item = DailyMealChartData(day, value)
+//               // Log.e(TAG, "$item")
+//               // calorieDailyData.add(item)
+//            }
+//            setUpEventListeners()
+//            updateDisplayWithData(calorieDailyData)
+//
+//            val progress1 = ((total).toDouble() / 10000) *100
+//
+//        }
+//    }
 
-        var calories = 10000
-        var total = 0
-
-        var mealReference = firestoreDb.collection("userDailyMeal")
-            .orderBy("date", Query.Direction.DESCENDING)
-        mealReference = mealReference.whereEqualTo("user.email", currentUserName)
-
-        userCalorieListener = mealReference.addSnapshotListener { snapshot, exception ->
-            if (exception != null || snapshot == null) {
+    private fun fetchWeightData(){
+        val email = getUserEmail()
+        Toast.makeText(context, email, Toast.LENGTH_SHORT).show()
+        var weightTracker = firestoreDb.collection("weightWatcher").whereEqualTo("user.email", email )
+        weightListener = weightTracker.addSnapshotListener { snapshot, exception ->
+            if(exception != null || snapshot == null){
                 Log.e(TAG, "exception occurred", exception)
                 return@addSnapshotListener
             }
-
-
-
+            weightInformation.clear()
             for (dc: DocumentChange in snapshot?.documentChanges!!) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
-                    val mealItem: DailyMealPost =
-                        dc.document.toObject(DailyMealPost::class.java)
-
-                        if(hashSet.containsKey(mealItem.date)){
-                            hashSet.put(mealItem.date,
-                                hashSet.get(mealItem.date)?.plus(mealItem.calories.toInt())!!
-                            )
-                        }else{
-                            hashSet.put(mealItem.date, mealItem.calories.toInt())
-                        }
-
-
+                    val reviewItem: WeightWatcherModal = dc.document.toObject(WeightWatcherModal::class.java)
+                    weightInformation.add(reviewItem)
+                    var item = DailyMealChartData(reviewItem.date, reviewItem.weight)
+                    calorieDailyData.add(item)
                 }
-
-
             }
-
-
-            for((key, value ) in hashSet){
-
-//                val formatter = SimpleDateFormat("yyyyMMdd")
-//                var localDate = formatter.parse(key)
-//
-                var day = LocalDate.parse(key, DateTimeFormatter.ofPattern("yyyyMMdd"))
-                var item = DailyMealChartData(day, value)
-                Log.e(TAG, "$item")
-                calorieDailyData.add(item)
-            }
+            adapterWeight.notifyDataSetChanged()
 
             setUpEventListeners()
             updateDisplayWithData(calorieDailyData)
 
-
-            val progress1 = ((total).toDouble() / 10000) *100
-            val progress2 = 100 - progress1
-
-//            binding.progressBar.progress = progress1.toInt()
-
-
-
         }
+    }
+
+
+    private fun openAddWeightItem() {
+//        val args = Bundle()
+//        args.putString("Image", takenImage)
+        val newFragment = AddWeightOverlay()
+//        newFragment.arguments = args
+        newFragment.show(childFragmentManager, "TAG")
 
     }
 
 
     private fun getUserEmail():String{
         val userName = Firebase.auth.currentUser
-        var currentUserName = ""
-        userName?.let {
-            for (profile in it.providerData) {
+        var currentUserName = userName?.email.toString()
 
-                currentUserName = profile.email.toString()
-
-            }
-        }
         return currentUserName
     }
 
     override fun onStop() {
         super.onStop()
-        userCalorieListener.remove()
+        weightListener.remove()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        userCalorieListener.remove()
+        weightListener.remove()
     }
 
 
-//    private fun covidFetchData(){
-//        val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create()
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl(BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create(gson))
-//            .build()
-//        val covidService = retrofit.create(CovidService::class.java)
-//
-//        //fetch the national data
-//        covidService.getNationalData().enqueue(object: Callback<List<CovidData>>{
-//            override fun onResponse(
-//                call: Call<List<CovidData>>,
-//                response: Response<List<CovidData>>
-//            ) {
-//                Log.i(TAG, "onResponse $response")
-//                val nationalData = response.body()
-//                if(nationalData == null){
-//                    Log.w(TAG, "Did not recieve valid response ")
-//                    return
-//                }
-//                setUpEventListeners()
-//                nationalDailyData = nationalData.reversed()
-//                Log.i(TAG, "update graph with national data  ")
-//                //updateDisplayWithData(nationalDailyData)
-//            }
-//
-//            override fun onFailure(call: Call<List<CovidData>>, t: Throwable) {
-//                Log.e(TAG, "failed to fetch data $t")
-//            }
-//
-//        })
-//
-//        // fetch the state data
-//        covidService.getStatesData().enqueue(object: Callback<List<CovidData>>{
-//            override fun onResponse(
-//                call: Call<List<CovidData>>,
-//                response: Response<List<CovidData>>
-//            ) {
-//                Log.i(TAG, "onResponse $response")
-//                val statesData = response.body()
-//                if(statesData == null){
-//                    Log.w(TAG, "Did not recieve valid response ")
-//                    return
-//                }
-//                perStateDailyData = statesData.reversed().groupBy { it.state }
-//                Log.i(TAG, "update sippnner with state data  ")
-//            }
-//
-//            override fun onFailure(call: Call<List<CovidData>>, t: Throwable) {
-//                Log.e(TAG, "failed to fetch data $t")
-//            }
-//
-//        })
-//    }
 
     private fun setUpEventListeners() {
         binding.tickerView.setCharacterLists(TickerUtils.provideNumberList())
@@ -288,7 +261,7 @@ class ProggressFragment : Fragment() {
         }
         binding.tickerView.text =  NumberFormat.getInstance().format(numCases)
         val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
-        binding.tvDateLabel.text = calorieIntake.dataChecked.toString()
+        binding.tvDateLabel.text = outputDateFormat.format(calorieIntake.dataChecked)
     }
 
 
