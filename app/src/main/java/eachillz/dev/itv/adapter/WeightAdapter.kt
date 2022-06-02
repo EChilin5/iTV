@@ -28,15 +28,14 @@ class WeightAdapter(private var weightModals: MutableList<WeightWatcherModal>) :
         val weightItem = weightModals[position]
         var weightProgressText = "First Record"
         var isWeightDecreased = true
-        if(position != 0){
-            var original : Int = weightModals[position-1].weight
-            var newWeight: Int = weightModals[position].weight
+        if(position < weightModals.size-1){
+            var original : Int = weightModals[position].weight
+            var newWeight: Int = weightModals[position+1].weight
              var weightResult = original - newWeight
 
-            if(weightResult > 0){
-                weightProgressText = "Loss ${weightResult} lbs"
+            if(weightResult < 0){
+                weightProgressText = "Loss ${weightResult.absoluteValue} lbs"
             }else{
-                weightResult = weightResult.absoluteValue
                 weightProgressText = "Gained ${weightResult} lbs"
                 isWeightDecreased = false
 

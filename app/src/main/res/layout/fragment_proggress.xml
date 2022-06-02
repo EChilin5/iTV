@@ -14,9 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/progress"
+        android:text="Weight Progress"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,6 +23,7 @@
         android:id="@+id/sparkView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="4dp"
         android:background="@color/lightgrey2"
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
@@ -69,10 +69,11 @@
     <TextView
         android:id="@+id/tvDateLabel"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="40dp"
         android:layout_marginStart="28dp"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroupTimeSelection"
         tools:text="May 24,2022" />
@@ -80,10 +81,10 @@
     <com.robinhood.ticker.TickerView
         android:id="@+id/tickerView"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="40dp"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toTopOf="@+id/rvWeight"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvDateLabel"
         tools:text="4,354" />
@@ -91,11 +92,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvWeight"
         android:layout_width="0dp"
-        android:layout_height="349dp"
+        android:layout_height="0dp"
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/flBtnAddWeight"
@@ -108,6 +110,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weight Tracker"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintBottom_toTopOf="@+id/glProgressH3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glProgressH3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.6" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

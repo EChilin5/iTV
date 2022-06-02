@@ -7,11 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
@@ -45,6 +48,7 @@ private const val TAG = "ProggressFragment"
 private const val BASE_URL = "https://covidtracking.com/api/v1/"
 class ProggressFragment : Fragment() {
 
+    private lateinit var  flBtnAddWeight: FloatingActionButton
     private lateinit var weightListener: ListenerRegistration
    // private lateinit var userCalorieListener: ListenerRegistration
     private lateinit var currentlyShownData: List<DailyMealChartData>
@@ -82,7 +86,9 @@ class ProggressFragment : Fragment() {
         rvWeights.adapter = adapterWeight
         rvWeights.layoutManager = LinearLayoutManager(context)
 
-        binding.flBtnAddWeight.setOnClickListener {
+        flBtnAddWeight = binding.flBtnAddWeight
+
+        flBtnAddWeight.setOnClickListener {
             openAddWeightItem()
         }
 
@@ -142,13 +148,17 @@ class ProggressFragment : Fragment() {
 
     private fun fetchWeightData(){
         val email = getUserEmail()
+        val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
+        var today = outputDateFormat.format(Date())
         Toast.makeText(context, email, Toast.LENGTH_SHORT).show()
         var weightTracker = firestoreDb.collection("weightWatcher").whereEqualTo("user.email", email )
+            .orderBy("date", Query.Direction.ASCENDING)
         weightListener = weightTracker.addSnapshotListener { snapshot, exception ->
             if(exception != null || snapshot == null){
                 Log.e(TAG, "exception occurred", exception)
                 return@addSnapshotListener
             }
+            calorieDailyData.clear()
             weightInformation.clear()
             for (dc: DocumentChange in snapshot?.documentChanges!!) {
                 if (dc.type == DocumentChange.Type.ADDED) {
@@ -157,8 +167,17 @@ class ProggressFragment : Fragment() {
                     weightInformation.add(reviewItem)
                     var item = DailyMealChartData(reviewItem.date, reviewItem.weight)
                     calorieDailyData.add(item)
+                    Log.e(TAG, " ${reviewItem.date} ++ ${Date()}")
+                    var date = outputDateFormat.format(reviewItem.date)
+
+                    if(date == today){
+                        flBtnAddWeight.isVisible = false
+                        flBtnAddWeight.isEnabled = false
+                    }
+
                 }
             }
+            weightInformation.reverse()
             adapterWeight.notifyDataSetChanged()
 
             setUpEventListeners()
