@@ -3,14 +3,13 @@ package eachillz.dev.itv.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 import eachillz.dev.itv.R
 import eachillz.dev.itv.api.Hint
 import eachillz.dev.itv.databinding.ItemFoodResultBinding
-import eachillz.dev.itv.databinding.UserFoodItemBinding
 import eachillz.dev.itv.firestore.DailyMealPost
 import eachillz.dev.itv.user.User
+import java.util.*
 
 class FoodResultAdapter(
     private var foodResult: MutableList<Hint>,
@@ -60,7 +59,7 @@ class FoodResultAdapter(
                 .placeholder(R.drawable.bacground_myfood)
                 .into(binding.ivFoodResultImage)
             val user: User = User("","")
-            var meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, dateInString, user )
+            var meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, Date(), user )
 
 
             binding.clFoodResult.setOnClickListener {

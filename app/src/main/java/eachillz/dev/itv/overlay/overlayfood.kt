@@ -152,9 +152,6 @@ class overlayfood : DialogFragment() {
 
         val user : User = User("", emailName )
         dailyMeal.user = user
-        var date = getCurrentDateTime()
-        val dateInString = date.toString("yyyyMMdd")
-        dailyMeal.date = dateInString
         addMealDB(dailyMeal)
     }
 

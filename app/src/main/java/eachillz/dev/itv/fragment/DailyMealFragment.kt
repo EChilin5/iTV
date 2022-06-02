@@ -129,6 +129,9 @@ class DailyMealFragment : Fragment() {
         var hashSet = HashSet<String>()
         var currentUserName = getUserEmail()
         userMealArrayList.clear()
+        val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
+        var currentDay = outputDateFormat.format(Date())
+
         var calories = 10000
         var proteinCount = 0
         var fatCount = 0
@@ -152,8 +155,8 @@ class DailyMealFragment : Fragment() {
 
                     val mealItem: DailyMealPost =
                         dc.document.toObject(DailyMealPost::class.java)
-
-                    if (mealItem?.date!!.contains(dateFormated)) {
+                        var date = outputDateFormat.format(mealItem.date)
+                    if (date == currentDay) {
                         calories -= Integer.parseInt(mealItem.calories.toString())
                         total += Integer.parseInt(mealItem.calories.toString())
                         proteinCount += mealItem.protein.toInt()

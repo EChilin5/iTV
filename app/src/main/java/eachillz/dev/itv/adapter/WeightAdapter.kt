@@ -64,7 +64,7 @@ class WeightAdapter(private var weightModals: MutableList<WeightWatcherModal>) :
             var tvWeight : TextView = binding.tvWeightl
             var tvWeightChange : TextView = binding.tvPercentageWeight
             val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
-
+            binding.tvWeightItemCalories.text = "Total Calories: ${weightItem.calories}"
             tvdate.text =  outputDateFormat.format(weightItem.date)
             tvWeight.text = "${ weightItem.weight } lb"
             tvWeightChange.text = weightProgressText

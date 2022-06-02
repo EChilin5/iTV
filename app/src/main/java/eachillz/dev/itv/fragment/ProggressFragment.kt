@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
@@ -22,7 +21,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
 import eachillz.dev.itv.databinding.FragmentProggressBinding
-import eachillz.dev.itv.user.UserDailyMealPost
+import eachillz.dev.itv.model.UserDailyMealPost
 import java.util.*
 
 
@@ -36,7 +35,6 @@ import eachillz.dev.itv.firestore.DailyMealChartData
 import eachillz.dev.itv.firestore.DailyMealPost
 import eachillz.dev.itv.model.WeightWatcherModal
 import eachillz.dev.itv.overlay.AddWeightOverlay
-import eachillz.dev.itv.overlay.overlayfood
 
 import java.text.*
 import java.time.LocalDate
@@ -48,6 +46,8 @@ private const val TAG = "ProggressFragment"
 private const val BASE_URL = "https://covidtracking.com/api/v1/"
 class ProggressFragment : Fragment() {
 
+    private lateinit var CalorieHashMap: HashMap<String, Int>
+    private lateinit var userCalorieListener: ListenerRegistration
     private lateinit var  flBtnAddWeight: FloatingActionButton
     private lateinit var weightListener: ListenerRegistration
    // private lateinit var userCalorieListener: ListenerRegistration
@@ -97,54 +97,51 @@ class ProggressFragment : Fragment() {
     }
 
 
-//    @SuppressLint("SimpleDateFormat", "NewApi")
-//    private fun fetchData() {
-//        calorieDailyData.clear()
-//        var hashSet = HashMap<String, Int>()
-//        var currentUserName = getUserEmail()
-//
-//        var calories = 10000
-//        var total = 0
-//
-//        var mealReference = firestoreDb.collection("userDailyMeal")
-//            .orderBy("date", Query.Direction.DESCENDING)
-//        mealReference = mealReference.whereEqualTo("user.email", currentUserName)
-//
-//        userCalorieListener = mealReference.addSnapshotListener { snapshot, exception ->
-//            if (exception != null || snapshot == null) {
-//                Log.e(TAG, "exception occurred", exception)
-//                return@addSnapshotListener
-//            }
-//
-//            for (dc: DocumentChange in snapshot?.documentChanges!!) {
-//                if (dc.type == DocumentChange.Type.ADDED) {
-//
-//                    val mealItem: DailyMealPost =
-//                        dc.document.toObject(DailyMealPost::class.java)
-//
-//                        if(hashSet.containsKey(mealItem.date)){
-//                            hashSet.put(mealItem.date,
-//                                hashSet.get(mealItem.date)?.plus(mealItem.calories.toInt())!!
-//                            )
-//                        }else{
-//                            hashSet.put(mealItem.date, mealItem.calories.toInt())
-//                        }
-//                }
-//            }
-//
+    @SuppressLint("SimpleDateFormat", "NewApi")
+    private fun fetchCalorieData() {
+        CalorieHashMap = HashMap<String, Int>()
+        var currentUserName = getUserEmail()
+        val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
+        var currentDay = outputDateFormat.format(Date())
+
+
+        var mealReference = firestoreDb.collection("userDailyMeal").whereEqualTo("user.email", currentUserName)
+            .whereEqualTo("date.Date", currentDay)
+            .orderBy("date", Query.Direction.DESCENDING)
+
+        userCalorieListener = mealReference.addSnapshotListener { snapshot, exception ->
+            if (exception != null || snapshot == null) {
+                Log.e(TAG, "exception occurred", exception)
+                return@addSnapshotListener
+            }
+
+            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+                if (dc.type == DocumentChange.Type.ADDED) {
+
+                    val mealItem: DailyMealPost =
+                        dc.document.toObject(DailyMealPost::class.java)
+
+                    if(CalorieHashMap.containsKey(currentDay)){
+                        CalorieHashMap.put(currentDay,
+                            CalorieHashMap.get(currentDay)?.plus(mealItem.calories.toInt())!!
+                            )
+                        }else{
+                        CalorieHashMap.put(currentDay, mealItem.calories.toInt())
+                        }
+                }
+            }
+
+
 //            for((key, value ) in hashSet){
-//                var day = LocalDate.parse(key, DateTimeFormatter.ofPattern("yyyyMMdd"))
-//              //  var item = DailyMealChartData(day, value)
-//               // Log.e(TAG, "$item")
-//               // calorieDailyData.add(item)
+//                var item = DailyMealChartData(key, value)
+//                Log.e(TAG, "$item")
+//                calorieDailyData.add(item)
 //            }
-//            setUpEventListeners()
-//            updateDisplayWithData(calorieDailyData)
-//
-//            val progress1 = ((total).toDouble() / 10000) *100
-//
-//        }
-//    }
+
+
+        }
+
+    }
 
     private fun fetchWeightData(){
         val email = getUserEmail()
@@ -165,12 +162,12 @@ class ProggressFragment : Fragment() {
 
                     val reviewItem: WeightWatcherModal = dc.document.toObject(WeightWatcherModal::class.java)
                     weightInformation.add(reviewItem)
-                    var item = DailyMealChartData(reviewItem.date, reviewItem.weight)
+                    var day = outputDateFormat.format(reviewItem.date)
+                    var item = DailyMealChartData(day, reviewItem.weight)
                     calorieDailyData.add(item)
                     Log.e(TAG, " ${reviewItem.date} ++ ${Date()}")
-                    var date = outputDateFormat.format(reviewItem.date)
 
-                    if(date == today){
+                    if(day == today){
                         flBtnAddWeight.isVisible = false
                         flBtnAddWeight.isEnabled = false
                     }
@@ -279,8 +276,7 @@ class ProggressFragment : Fragment() {
 
         }
         binding.tickerView.text =  NumberFormat.getInstance().format(numCases)
-        val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
-        binding.tvDateLabel.text = outputDateFormat.format(calorieIntake.dataChecked)
+        binding.tvDateLabel.text = calorieIntake.dataChecked
     }
 
 

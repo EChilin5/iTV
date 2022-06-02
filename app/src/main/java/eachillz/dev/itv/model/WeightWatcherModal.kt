@@ -9,6 +9,7 @@ data class WeightWatcherModal (
     @DocumentId
     val id: String? = null,
     var weight:Int = 0,
+    var calories:Int = 0,
     var date: Date = Date(),
     var user: User? = null
         ):Serializable
