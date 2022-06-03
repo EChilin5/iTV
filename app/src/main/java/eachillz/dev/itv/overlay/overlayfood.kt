@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 import android.util.Log
+import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -48,6 +49,13 @@ class overlayfood : DialogFragment() {
     private  var foodResult = mutableListOf<Hint>()
     private var adapter = FoodResultAdapter(foodResult, ::insertItem)
     private lateinit var rvFoodResult :RecyclerView
+
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.getWindow()?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

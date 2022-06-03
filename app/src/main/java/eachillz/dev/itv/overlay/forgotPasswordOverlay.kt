@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import eachillz.dev.itv.databinding.FragmentForgotPasswordOverlayBinding
@@ -26,6 +27,12 @@ class forgotPasswordOverlay : DialogFragment() {
 
     private var _binding: FragmentForgotPasswordOverlayBinding? = null
     private val binding get() = _binding!!
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.getWindow()?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
