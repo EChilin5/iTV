@@ -176,9 +176,11 @@ class ProggressFragment : Fragment() {
             }
             calorieDailyData.reverse()
             adapterWeight.notifyDataSetChanged()
+            if(calorieDailyData.isNotEmpty()){
+                setUpEventListeners()
+                updateDisplayWithData(calorieDailyData)
+            }
 
-            setUpEventListeners()
-            updateDisplayWithData(calorieDailyData)
 
         }
     }

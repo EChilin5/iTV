@@ -39,26 +39,25 @@ class setUpProfileActivity : AppCompatActivity() {
 
         btnSubmit.setOnClickListener {
 
-            if(etEmail.text.isEmpty() || etConfirmPassword.text.isEmpty() || etConfirmPassword.text.isEmpty()){
+            val email: String = etEmail.text.toString().trim()
+            val password: String = etPassword.text.toString().trim()
+            val confirm: String = etConfirmPassword.text.toString().trim()
+            btnSubmit.isEnabled = false
+
+            if(email.isEmpty() || password.isEmpty() || confirm.isEmpty()){
                 Toast.makeText(this, "Missing Infromation", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            btnSubmit.isEnabled = false
 
-            if(etConfirmPassword.text.toString() == etPassword.text.toString() && etEmail.text.contains("@")){
-                var isNewUser: Boolean = checkForValidEmail(etEmail.text.toString())
 
-                if(isNewUser){
-                    createUserAccount(etEmail.text.toString(), etPassword.text.toString())
-                }else{
-                    Toast.makeText(this, "Email already exist, Please use a different email", Toast.LENGTH_LONG).show()
-                }
+            if(confirm == password && email.contains("@")){
+                checkForValidEmail(email, password)
 
             }else{
-                btnSubmit.isEnabled = true
+
                 Toast.makeText(this, "Invalid email or password do not match", Toast.LENGTH_LONG).show()
             }
-
+            btnSubmit.isEnabled = true
         }
     }
 
@@ -88,18 +87,24 @@ class setUpProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun  checkForValidEmail(email:String) :Boolean{
+    private fun  checkForValidEmail(email:String, password: String) {
         var isValidUser: Boolean = false
         val auth = FirebaseAuth.getInstance()
         auth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task->
-            var isNewUser:Boolean = task.result.signInMethods?.isEmpty() == true;
+
+
+
+            var isNewUser:Boolean = task.result.signInMethods!!.isEmpty()
 
             if(isNewUser){
-                isValidUser = true
+                createUserAccount(email, password)
+            }else{
+
             }
+
         }
 
-        return isValidUser
+
 
     }
 

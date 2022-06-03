@@ -18,7 +18,7 @@
         android:ems="10"
         android:hint="@string/email"
         android:importantForAutofill="no"
-        android:inputType="textWebEmailAddress|textPersonName"
+        android:inputType="textWebEmailAddress"
         android:minHeight="48dp" />
 
     <EditText
