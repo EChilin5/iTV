@@ -1,5 +1,6 @@
 package eachillz.dev.itv.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import eachillz.dev.itv.adapter.UserMealAdapter
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
 import com.google.firebase.ktx.Firebase
+import eachillz.dev.itv.R
 import eachillz.dev.itv.firestore.DailyMealPost
 import java.io.File
 import java.text.SimpleDateFormat
@@ -67,6 +69,7 @@ class DailyMealFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
@@ -88,7 +91,11 @@ class DailyMealFragment : Fragment() {
         userMealArrayList = arrayListOf<DailyMealPost>()
 
 //        getUserFoodData()
+        val outputDateFormat = SimpleDateFormat("MM/dd", Locale.US)
+        var currentDay = outputDateFormat.format(Date())
 
+
+        binding.tvFoodLogTitle.text = currentDay + " "+getString(R.string.food_log)
         if(userMealArrayList.isEmpty()){
             binding.rvDailyFood.isEnabled = false
             binding.rvDailyFood.isVisible = false

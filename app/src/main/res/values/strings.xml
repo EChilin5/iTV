@@ -85,4 +85,5 @@
     <string name="cereal">Cereal</string>
     <string name="sample_recipe_image">Sample Recipe Image</string>
     <string name="recipe">Recipe</string>
+    <string name="food_log"> Food Log</string>
 </resources>
