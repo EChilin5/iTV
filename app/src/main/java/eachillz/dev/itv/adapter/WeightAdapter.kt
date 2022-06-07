@@ -52,6 +52,15 @@ class WeightAdapter(private var weightModals: MutableList<WeightWatcherModal>) :
         return weightModals.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+
     class WeightViewHolder(itemView: WeightItemBinding) : RecyclerView.ViewHolder(itemView.root) {
         @SuppressLint("SetTextI18n")
         fun bind(

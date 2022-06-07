@@ -32,6 +32,15 @@ class RecipeAdapter(private var recipe : MutableList<Hit>) : RecyclerView.Adapte
         return recipe.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+
     class RecipeViewHolder(itemView: ItemRecipeResultBinding) : RecyclerView.ViewHolder(itemView.root) {
         fun bind(hit: Hit, binding: ItemRecipeResultBinding) {
             binding.tvRecipeFoodName.text = hit.recipe.label

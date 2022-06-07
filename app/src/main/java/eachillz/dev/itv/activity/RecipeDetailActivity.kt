@@ -47,7 +47,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         tvTimeAmt.text = recipeInfo.recipe.totalTime.roundToInt().toString()
         tvCalorieAmt.text = recipeInfo.recipe.calories.roundToInt().toString()
 
-        tvRecipeProtien.text = recipeInfo.recipe.totalDaily.PROCNT.quantity.roundToInt().toString()
+        tvRecipeProtien.text = recipeInfo.recipe.totalNutrients.PROCNT.toString()
         tvRecipeCarbs.text = recipeInfo.recipe.totalDaily.CA.quantity.roundToInt().toString()
         tvRecipeFat.text = recipeInfo.recipe.totalDaily.FAT.quantity.roundToInt().toString()
 

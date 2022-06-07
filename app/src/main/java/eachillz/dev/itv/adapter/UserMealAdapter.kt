@@ -80,4 +80,13 @@ class UserMealAdapter(private val userList:ArrayList<DailyMealPost>): RecyclerVi
     override fun getItemCount(): Int {
         return userList.size
     }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
 }

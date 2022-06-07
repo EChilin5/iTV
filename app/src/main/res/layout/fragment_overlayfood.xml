@@ -12,15 +12,17 @@
 
     <EditText
         android:id="@+id/etName"
-        android:layout_width="223dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
         android:autofillHints="name"
         android:ems="10"
-        android:hint="@string/name"
+        android:hint="Search Meal : example Pizza"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/GLFoodOverlayV1"
         app:layout_constraintStart_toStartOf="@id/GLFoodOverlayV0"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -50,15 +52,15 @@
         android:id="@+id/clFoodResult"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="@id/GLFoodOverlayVEnd"
         app:layout_constraintStart_toStartOf="@id/GLFoodOverlayV0"
-        app:layout_constraintTop_toBottomOf="@+id/etName">
+        app:layout_constraintTop_toBottomOf="@+id/btnPost">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvResults"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:background="@color/item_background"
             app:layout_constraintBottom_toBottomOf="@id/clFoodResultGL1"
             app:layout_constraintEnd_toEndOf="@id/clFoodResultGLv1"
@@ -74,28 +76,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.0"/>
+            app:layout_constraintGuide_percent="0.0" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/clFoodResultGLv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="1.0"/>
+            app:layout_constraintGuide_percent="1.0" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/clFoodResultGL0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="0.0"/>
+            app:layout_constraintGuide_percent="0.0" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/clFoodResultGL1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="20dp"
-            app:layout_constraintGuide_percent="1.0"/>
+            app:layout_constraintGuide_percent="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -116,7 +121,6 @@
         app:layout_constraintGuide_percent="1.0" />
 
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/GLFoodOverlayVEnd"
         android:layout_width="wrap_content"
@@ -125,22 +129,33 @@
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="1.0" />
 
-    <ImageButton
-        android:id="@+id/btnPost"
-        android:layout_width="61dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/grey"
-        android:src="@drawable/search"
-        app:layout_constraintBottom_toTopOf="@+id/clFoodResult"
+    <EditText
+        android:id="@+id/etServingSize"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="10dp"
+        android:ems="10"
+        android:hint="Your Serving Size: ex 2"
+        android:inputType="number"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/etName"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintStart_toStartOf="@+id/GLFoodOverlayV0"
+        app:layout_constraintTop_toBottomOf="@+id/etName" />
+
+    <Button
+        android:id="@+id/btnPost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:text="Search Meal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etServingSize" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

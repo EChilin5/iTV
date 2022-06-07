@@ -23,7 +23,7 @@ import eachillz.dev.itv.R
 import eachillz.dev.itv.adapter.FoodResultAdapter
 import eachillz.dev.itv.api.FoodSearchResult
 import eachillz.dev.itv.api.FoodService
-import eachillz.dev.itv.api.Hint
+import eachillz.dev.itv.api.ServingSize
 import eachillz.dev.itv.firestore.DailyMealPost
 import eachillz.dev.itv.user.User
 import retrofit2.Call
@@ -46,9 +46,10 @@ class overlayfood : DialogFragment() {
 
 //    private lateinit var database: DatabaseReference
 
-    private  var foodResult = mutableListOf<Hint>()
+    private  var foodResult = mutableListOf<DailyMealPost>()
     private var adapter = FoodResultAdapter(foodResult, ::insertItem)
     private lateinit var rvFoodResult :RecyclerView
+
 
 
     override fun onStart() {
@@ -92,16 +93,21 @@ class overlayfood : DialogFragment() {
 
 
         binding.btnPost.setOnClickListener {
-            var text = binding.etName.text.toString()
-            if(text.isNotEmpty()){
-                retrieveEdamanFoodInformation(text)
+            var search = binding.etName.text.toString()
+            var size = binding.etServingSize.text.toString()
+
+            if(size.isEmpty() && search.isEmpty()){
+                return@setOnClickListener
+            }else{
+                retrieveEdamanFoodInformation(search, size.toInt())
             }
+
 
         }
     }
 
 
-    private fun retrieveEdamanFoodInformation(ingr:String){
+    private fun retrieveEdamanFoodInformation(ingr: String, servingSize: Int){
         var nutrition_type = "cooking"
         var retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
         val edamanService = retrofit.create(FoodService::class.java)
@@ -119,7 +125,30 @@ class overlayfood : DialogFragment() {
                         return
                     }
                     Log.i(TAG, "${response.body()}")
-                    foodResult.addAll(body.hints)
+
+                    val user: User = User("","")
+                    for(item in body.hints){
+                        var name = item.food.label
+                        var protein = item.food.nutrients.PROCNT.toLong().times(servingSize)
+                        var calories = item.food.nutrients.ENERC_KCAL.toLong().times(servingSize)
+                        var fat = item.food.nutrients.FAT.toLong().times(servingSize)
+                        var carbs = item.food.nutrients.CHOCDF.toLong().times(servingSize)
+                        var image = item.food.image
+                        var time = System.currentTimeMillis()
+                        val dateInString = ""
+                        var serving = servingSize
+
+
+                        if(image.isNullOrEmpty()){
+                            image = "https://firebasestorage.googleapis.com/v0/b/textdemo-9e9b1.appspot.com/o/posts%2FFri%20Sep%2010%2015%3A52%3A09%20PDT%202021.png?alt=media&token=a774304d-da5b-4cb9-8fbc-853f8ff6a78f"
+                        }
+
+                        var meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, Date(), user )
+
+                        foodResult.add(meal)
+
+                    }
+
                     adapter?.notifyDataSetChanged()
                     return
 
@@ -163,59 +192,7 @@ class overlayfood : DialogFragment() {
         addMealDB(dailyMeal)
     }
 
-    private fun takePhoto(){
-        val name = binding.etName.text.toString()
-//        val calories = binding.etCalories.text.toString()
-//            val carbs = binding.etCarbs.text.toString()
-//            val protein = binding.etProtein.text.toString()
-//        if(name.isNotEmpty() && calories.toIntOrNull() != null) {
-//            uploadImage(name, calories, dateInString, imgPath)
-//            Toast.makeText(context, "Post is Saved", Toast.LENGTH_LONG).show()
-//        }else{
-//            Toast.makeText(context, "Incorrect Information was provided", Toast.LENGTH_LONG).show()
-//
-//        }
-    }
 
-//    private fun uploadImage(name: String, calories: String?,  dateInString: String,imgPath: String?) {
-//        val photoReference =
-//            storageReference.child("images/"+imgPath.toString())
-//        val file = Uri.fromFile(File(imgPath.toString()))
-//
-//        photoReference.putFile( file)
-//            .continueWithTask { photoUploadTask ->
-//                Log.i(TAG, "upload bytes: ${photoUploadTask.result.bytesTransferred}")
-//                // retrieve image url of upload image
-//                photoReference.downloadUrl
-//
-//            }.continueWithTask { downloadUrlTask ->
-//
-//                    val userName = Firebase.auth.currentUser
-//                    var currentUserName = ""
-//                    userName?.let {
-//                        for (profile in it.providerData) {
-//                            // Id of the provider (ex: google.com)
-//                            currentUserName = profile.email.toString()
-//                        }
-//                    }
-//                    val email = currentUserName
-//                    currentUserName = currentUserName.dropLast(10)
-//                    val dateNow = Calendar.getInstance().time
-//
-//                    val user : User = User("", email, currentUserName )
-//                    val mealInfo: UserDailyMealPost = UserDailyMealPost("", name, downloadUrlTask.result.toString(), dateInString,System.currentTimeMillis(), calories!!.toLong(),user )
-//                firestoreDb.collection("userDailyMeal").add(mealInfo)
-//
-//            }.addOnCompleteListener { postCreationTask ->
-////                btnSubmitPost.isEnabled = true
-//
-//                if (!postCreationTask.isSuccessful) {
-////                    Toast.makeText(context, "UPLOADED failed", Toast.LENGTH_SHORT).show()
-//                    Log.e(TAG, "failed", postCreationTask.exception)
-//                }
-//
-//            }
-//    }
 
 
 

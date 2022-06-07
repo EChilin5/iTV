@@ -32,6 +32,7 @@ class FoodItemDetailActivity : AppCompatActivity() {
         binding.tvCarbsAmnt.text = mealInfo.carbs.toString()
         binding.tvProteinAmnt.text = mealInfo.protein.toString()
         binding.tvFatAmnt.text = mealInfo.fat.toString()
+        binding.tvServingAmnt.text = mealInfo.serving.toString()
 
 
         Picasso.get()
