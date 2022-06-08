@@ -77,7 +77,7 @@ class WeightAdapter(
             val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
             binding.tvWeightItemCalories.text = "Total Calories: ${weightItem.calories}"
             tvDate.text =  outputDateFormat.format(weightItem.date)
-            tvWeight.text = "${ weightItem.weight } lb"
+            tvWeight.text = "${ weightItem.weight } lbs"
             tvWeightChange.text = weightProgressText
 
             if(isWeightDecreased){
