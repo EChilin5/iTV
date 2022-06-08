@@ -74,6 +74,8 @@ class HomeFragment : Fragment() {
         binding.ivbtnSearch.setOnClickListener {
             var text = binding.etFoodSearch.text.toString()
             Toast.makeText(context, "$text has changed", Toast.LENGTH_SHORT).show()
+            rvRecipe.removeAllViews()
+            rvRecipe.adapter = adapter
             threadBlockCouritinApiFetch(text)
         }
 

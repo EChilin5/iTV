@@ -15,7 +15,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.absoluteValue
 
-class WeightAdapter(private var weightModals: MutableList<WeightWatcherModal>) : RecyclerView.Adapter<WeightAdapter.WeightViewHolder>() {
+class WeightAdapter(
+    private var weightModals: MutableList<WeightWatcherModal>,
+) : RecyclerView.Adapter<WeightAdapter.WeightViewHolder>() {
 
     private var _binding: WeightItemBinding?=null
     private val binding get() = _binding!!

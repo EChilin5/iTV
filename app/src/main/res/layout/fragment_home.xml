@@ -14,11 +14,11 @@
         android:layout_height="0dp"
         android:background="@color/item_background"
         android:elevation="12dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/HomeGLEnd"
         app:layout_constraintEnd_toEndOf="@id/HomeGLvEnd"
         app:layout_constraintStart_toStartOf="@id/HomeGLv1"
         app:layout_constraintTop_toTopOf="@+id/HomeGL2"
-        android:visibility="invisible"
         tools:listitem="@layout/user_food_item" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -28,14 +28,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="0.0" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/HomeGLv2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp"
-        app:layout_constraintGuide_percent="0.82" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/HomeGLvEnd"
@@ -95,7 +87,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="110dp"
         android:background="@color/grey"
         android:elevation="12dp"
         android:padding="4dp"
@@ -108,20 +100,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="-8dp"
-            app:layout_constraintGuide_percent="0.04" />
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glBlockV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"
+            app:layout_constraintGuide_percent="0.82" />
 
         <TextView
             android:id="@+id/tvRecipeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:fontFamily="sans-serif"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Recipes"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/HomeGL1.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -129,10 +130,10 @@
         <EditText
             android:id="@+id/etFoodSearch"
             android:layout_width="0dp"
-            android:layout_height="59dp"
+            android:layout_height="50dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="1dp"
             android:layout_marginBottom="5dp"
             android:background="@color/white"
             android:ems="10"
@@ -140,15 +141,15 @@
             android:inputType="textPersonName"
             android:paddingStart="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivbtnSearch"
+            app:layout_constraintEnd_toStartOf="@id/glBlockV2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecipeLabel"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@id/HomeGL1.5"
+            app:layout_constraintVertical_bias="0.47000003" />
 
         <ImageButton
             android:id="@+id/ivbtnSearch"
-            android:layout_width="48dp"
-            android:layout_height="55dp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
             android:layout_margin="8dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="4dp"
@@ -158,7 +159,8 @@
             android:src="@drawable/search"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecipeLabel"
+            app:layout_constraintStart_toStartOf="@+id/glBlockV2"
+            app:layout_constraintTop_toBottomOf="@id/HomeGL1.5"
             tools:ignore="SpeakableTextPresentCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

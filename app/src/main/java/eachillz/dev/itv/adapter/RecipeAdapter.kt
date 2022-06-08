@@ -43,9 +43,14 @@ class RecipeAdapter(private var recipe : MutableList<Hit>) : RecyclerView.Adapte
 
     class RecipeViewHolder(itemView: ItemRecipeResultBinding) : RecyclerView.ViewHolder(itemView.root) {
         fun bind(hit: Hit, binding: ItemRecipeResultBinding) {
+
+            var calories = hit.recipe.calories.roundToInt()
+            var serving  = hit.recipe.yield
+            calories = calories.div(serving).toInt()
+
             binding.tvRecipeFoodName.text = hit.recipe.label
-            binding.tvRecipeCalorieCount.text = hit.recipe.calories.roundToInt().toString()
-            var time = hit.recipe.totalTime.roundToInt()
+            binding.tvRecipeCalorieCount.text = "$calories kcal"
+            var time = "${hit.recipe.totalTime.roundToInt()} mins"
 
             binding.tvRecipeTimeAmt.text = time.toString()
 

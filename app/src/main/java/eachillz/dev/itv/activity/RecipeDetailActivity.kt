@@ -1,5 +1,6 @@
 package eachillz.dev.itv.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,14 +43,21 @@ class RecipeDetailActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun assignValue() {
         tvRecipeName.text = recipeInfo.recipe.label
-        tvTimeAmt.text = recipeInfo.recipe.totalTime.roundToInt().toString()
-        tvCalorieAmt.text = recipeInfo.recipe.calories.roundToInt().toString()
+        var calories = recipeInfo.recipe.calories.roundToInt()
+        var serving  = recipeInfo.recipe.yield
 
-        tvRecipeProtien.text = recipeInfo.recipe.totalNutrients.PROCNT.toString()
-        tvRecipeCarbs.text = recipeInfo.recipe.totalDaily.CA.quantity.roundToInt().toString()
-        tvRecipeFat.text = recipeInfo.recipe.totalDaily.FAT.quantity.roundToInt().toString()
+        calories = calories.div(serving).roundToInt()
+
+        tvTimeAmt.text = "${recipeInfo.recipe.totalTime.roundToInt()} min"
+        tvCalorieAmt.text = "$calories per person"
+
+        tvRecipeProtien.text = "${recipeInfo.recipe.totalNutrients.PROCNT.quantity.roundToInt()} g"
+        tvRecipeCarbs.text = "${recipeInfo.recipe.totalNutrients.cho.quantity.roundToInt()} g"
+        tvRecipeFat.text = "${recipeInfo.recipe.totalNutrients.FAT.quantity.roundToInt()} g"
+        tvServing.text = "$serving servings"
 
 
         var IngredientText = ""
@@ -79,7 +87,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         btnBack = binding.ivRecipeBack
         tvRecipeProtien = binding.tvRdProteinAmt
         tvRecipeCarbs = binding.tvRDCarbsAmt
-        tvRecipeFat = binding.tvRDCarbsAmt
+        tvRecipeFat = binding.tvRDFatAmt
         tvServing = binding.tvRDServingAmt
 
 

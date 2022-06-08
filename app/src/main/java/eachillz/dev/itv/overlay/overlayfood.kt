@@ -99,6 +99,8 @@ class overlayfood : DialogFragment() {
             if(size.isEmpty() && search.isEmpty()){
                 return@setOnClickListener
             }else{
+                rvFoodResult.removeAllViews()
+                rvFoodResult.adapter = adapter
                 retrieveEdamanFoodInformation(search, size.toInt())
             }
 
@@ -108,6 +110,8 @@ class overlayfood : DialogFragment() {
 
 
     private fun retrieveEdamanFoodInformation(ingr: String, servingSize: Int){
+        foodResult.clear()
+        adapter.notifyDataSetChanged()
         var nutrition_type = "cooking"
         var retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
         val edamanService = retrofit.create(FoodService::class.java)
@@ -117,6 +121,7 @@ class overlayfood : DialogFragment() {
                     call: Call<FoodSearchResult>,
                     response: Response<FoodSearchResult>
                 ) {
+                    foodResult.clear()
                     binding.clFoodResult.isVisible = true
                     Log.i(TAG, "onResponse $response")
                     val body = response.body()

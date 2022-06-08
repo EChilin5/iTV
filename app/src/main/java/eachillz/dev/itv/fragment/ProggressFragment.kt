@@ -37,8 +37,6 @@ import eachillz.dev.itv.model.WeightWatcherModal
 import eachillz.dev.itv.overlay.AddWeightOverlay
 
 import java.text.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import kotlin.collections.HashMap
 
 
@@ -80,22 +78,30 @@ class ProggressFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mealsArray = mutableListOf()
-        firestoreDb = FirebaseFirestore.getInstance()
+
         rvWeights = binding.rvWeight
         rvWeights.adapter = adapterWeight
         rvWeights.layoutManager = LinearLayoutManager(context)
-
+        mealsArray = mutableListOf()
+        firestoreDb = FirebaseFirestore.getInstance()
         flBtnAddWeight = binding.flBtnAddWeight
 
         flBtnAddWeight.setOnClickListener {
+            weightListener.remove()
             openAddWeightItem()
+
         }
 
         //fetchData()
         fetchWeightData()
     }
 
+
+    fun onUpdateComplete(){
+        rvWeights.removeAllViews()
+        rvWeights.adapter = adapterWeight
+        fetchWeightData()
+    }
 
     @SuppressLint("SimpleDateFormat", "NewApi")
     private fun fetchCalorieData() {
@@ -144,6 +150,10 @@ class ProggressFragment : Fragment() {
     }
 
     private fun fetchWeightData(){
+        calorieDailyData.clear()
+        weightInformation.clear()
+        adapterWeight.notifyDataSetChanged()
+
         val email = getUserEmail()
         val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
         var today = outputDateFormat.format(Date())
@@ -157,6 +167,7 @@ class ProggressFragment : Fragment() {
             }
             calorieDailyData.clear()
             weightInformation.clear()
+
             for (dc: DocumentChange in snapshot?.documentChanges!!) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
@@ -189,7 +200,7 @@ class ProggressFragment : Fragment() {
     private fun openAddWeightItem() {
 //        val args = Bundle()
 //        args.putString("Image", takenImage)
-        val newFragment = AddWeightOverlay()
+        val newFragment = AddWeightOverlay(::onUpdateComplete)
 //        newFragment.arguments = args
         newFragment.show(childFragmentManager, "TAG")
 
@@ -277,7 +288,7 @@ class ProggressFragment : Fragment() {
             Metric.DEATH->calorieIntake.calorieTrend
 
         }
-        binding.tickerView.text =  NumberFormat.getInstance().format(numCases)
+        binding.tickerView.text =  NumberFormat.getInstance().format(numCases) + " lbs"
         binding.tvDateLabel.text = calorieIntake.dataChecked
     }
 

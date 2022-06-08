@@ -12,7 +12,6 @@ import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import eachillz.dev.itv.databinding.FragmentAddWeightOverlayBinding
 import eachillz.dev.itv.firestore.DailyMealPost
 import eachillz.dev.itv.model.WeightWatcherModal
@@ -21,7 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 private const val TAG = "AddWeightOverlay"
-class AddWeightOverlay : DialogFragment() {
+class AddWeightOverlay(var onUpdate: () -> Unit) : DialogFragment() {
 
     private  var _binding: FragmentAddWeightOverlayBinding? = null
     private val binding get() = _binding!!
@@ -113,6 +112,7 @@ class AddWeightOverlay : DialogFragment() {
             if(it.isSuccessful){
                 Log.e(TAG, "added new weight")
                 this.dismiss()
+                onUpdate()
             }
         }
     }
