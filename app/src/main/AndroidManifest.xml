@@ -36,7 +36,7 @@
         </provider>
 
         <activity
-            android:name=".activity.setUpProfileActivity"
+            android:name=".activity.SetUpProfileActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

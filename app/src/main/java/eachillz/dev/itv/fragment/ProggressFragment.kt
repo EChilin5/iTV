@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
@@ -34,6 +35,7 @@ import eachillz.dev.itv.adapter.WeightAdapter
 import eachillz.dev.itv.firestore.DailyMealChartData
 import eachillz.dev.itv.model.WeightWatcherModal
 import eachillz.dev.itv.overlay.AddWeightOverlay
+import org.w3c.dom.Text
 
 import java.text.*
 
@@ -56,6 +58,8 @@ class ProggressFragment : Fragment() {
     private lateinit var rvWeights : RecyclerView
 
 
+    private lateinit var tvWeightTitle: TextView
+    private lateinit var tvWeigthDescNotFound :TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +80,8 @@ class ProggressFragment : Fragment() {
         mealsArray = mutableListOf()
         firestoreDb = FirebaseFirestore.getInstance()
         flBtnAddWeight = binding.flBtnAddWeight
+        tvWeightTitle = binding.tvWeightRecordTitle
+        tvWeigthDescNotFound = binding.tvWeigthDescNotFound
 
         flBtnAddWeight.setOnClickListener {
             weightListener.remove()
@@ -105,7 +111,6 @@ class ProggressFragment : Fragment() {
         val email = getUserEmail()
         val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
         val today = outputDateFormat.format(Date())
-        Toast.makeText(context, email, Toast.LENGTH_SHORT).show()
         val weightTracker = firestoreDb.collection("weightWatcher").whereEqualTo("user.email", email )
             .orderBy("date", Query.Direction.DESCENDING)
         weightListener = weightTracker.addSnapshotListener { snapshot, exception ->
@@ -113,8 +118,7 @@ class ProggressFragment : Fragment() {
                 Log.e(TAG, "exception occurred", exception)
                 return@addSnapshotListener
             }
-            calorieDailyData.clear()
-            weightInformation.clear()
+
 
             for (dc: DocumentChange in snapshot.documentChanges) {
                 if (dc.type == DocumentChange.Type.ADDED) {
@@ -133,6 +137,14 @@ class ProggressFragment : Fragment() {
 
                 }
             }
+
+            if(weightInformation.isNotEmpty() || calorieDailyData.isNotEmpty()){
+                tvWeightTitle.isEnabled = false
+                tvWeightTitle.isVisible = false
+                tvWeigthDescNotFound.isEnabled = false
+                tvWeigthDescNotFound.isVisible = false
+            }
+
             calorieDailyData.reverse()
             adapterWeight.notifyDataSetChanged()
             if(calorieDailyData.isNotEmpty()){

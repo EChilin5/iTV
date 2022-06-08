@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,7 +65,6 @@ class HomeFragment : Fragment() {
 
         binding.ivbtnSearch.setOnClickListener {
             val text = binding.etFoodSearch.text.toString()
-            Toast.makeText(context, "$text has changed", Toast.LENGTH_SHORT).show()
             rvRecipe.removeAllViews()
             rvRecipe.adapter = adapter
             threadBlockCouritinApiFetch(text)

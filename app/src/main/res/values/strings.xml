@@ -32,7 +32,6 @@
     <string name="fiber">Fiber</string>
     <string name="_2_5g">2.5g</string>
     <string name="_31g">31g</string>
-    <string name="protein">Protein</string>
     <string name="save_image_to_db">save image to db</string>
     <string name="name">Name</string>
     <string name="post">Post</string>
@@ -110,4 +109,11 @@
     <string name="_130_lbs">130 lbs</string>
     <string name="gained_10_lbs">Gained 10 lbs</string>
     <string name="_500_calories">500 calories</string>
+    <string name="please_add_a_meal_by_selecting_the_green_button_so_we_can_record_your_meals">Please add a meal by selecting the green button.So we can record your meals.</string>
+    <string name="_5_26_food_log">5/26 Food Log</string>
+    <string name="protein">Protein</string>
+    <string name="carbs_c">Carbs</string>
+    <string name="cal_left">Cal Left</string>
+    <string name="unable_to_find_image">unable to find image</string>
+    <string name="no_meal_found">No Meal Found</string>
 </resources>
