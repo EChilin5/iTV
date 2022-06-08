@@ -20,7 +20,7 @@ class UserMealAdapter(private val userList:ArrayList<DailyMealPost>): RecyclerVi
             binding.tvFoodName.text = currentItem.name
             binding.tvCalorieCount.text = currentItem.calories.toString()
 
-            if(currentItem.image.isNullOrEmpty()){
+            if(currentItem.image.isEmpty()){
                 Picasso.get()
                     .load(R.drawable.bacground_myfood)
                     .placeholder(R.drawable.bacground_myfood)
@@ -43,16 +43,6 @@ class UserMealAdapter(private val userList:ArrayList<DailyMealPost>): RecyclerVi
                 itemView.context.startActivity(intent)
             }
 
-
-
-
-
-            var response: String
-            if(currentItem.name == "Temp User"){
-                response = "A preview of nutrition facts or description once a food item is added to the list"
-            }else{
-                response = "No current description has been found"
-            }
         }
 
     }

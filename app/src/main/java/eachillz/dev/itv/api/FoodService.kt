@@ -11,7 +11,7 @@ import retrofit2.http.Query
 // &ingr=pizza
 // &nutrition-type=cooking"
 
-public interface FoodService {
+ interface FoodService {
     @GET("parser?")
     fun foodInfo(
         @Query("app_id") app_id:String,

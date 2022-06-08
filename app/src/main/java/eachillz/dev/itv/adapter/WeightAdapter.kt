@@ -32,14 +32,14 @@ class WeightAdapter(
         var weightProgressText = "First Record"
         var isWeightDecreased = true
         if(position < weightModals.size-1){
-            var original : Int = weightModals[position].weight
-            var newWeight: Int = weightModals[position+1].weight
-             var weightResult = original - newWeight
+            val original : Int = weightModals[position].weight
+            val newWeight: Int = weightModals[position+1].weight
+             val weightResult = original - newWeight
 
             if(weightResult < 0){
                 weightProgressText = "Loss ${weightResult.absoluteValue} lbs"
             }else{
-                weightProgressText = "Gained ${weightResult} lbs"
+                weightProgressText = "Gained $weightResult lbs"
                 isWeightDecreased = false
 
             }
@@ -71,12 +71,12 @@ class WeightAdapter(
             weightProgressText: String,
             isWeightDecreased: Boolean
         ) {
-            var tvdate:TextView = binding.tvDateValue
-            var tvWeight : TextView = binding.tvWeightl
-            var tvWeightChange : TextView = binding.tvPercentageWeight
+            val tvDate:TextView = binding.tvDateValue
+            val tvWeight : TextView = binding.tvWeightl
+            val tvWeightChange : TextView = binding.tvPercentageWeight
             val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
             binding.tvWeightItemCalories.text = "Total Calories: ${weightItem.calories}"
-            tvdate.text =  outputDateFormat.format(weightItem.date)
+            tvDate.text =  outputDateFormat.format(weightItem.date)
             tvWeight.text = "${ weightItem.weight } lb"
             tvWeightChange.text = weightProgressText
 

@@ -1,5 +1,6 @@
 package eachillz.dev.itv.overlay
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,6 @@ import eachillz.dev.itv.R
 import eachillz.dev.itv.adapter.FoodResultAdapter
 import eachillz.dev.itv.api.FoodSearchResult
 import eachillz.dev.itv.api.FoodService
-import eachillz.dev.itv.api.ServingSize
 import eachillz.dev.itv.firestore.DailyMealPost
 import eachillz.dev.itv.user.User
 import retrofit2.Call
@@ -54,7 +54,7 @@ class overlayfood : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        dialog?.getWindow()?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog?.getWindow()?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
 
     }
 
@@ -88,13 +88,11 @@ class overlayfood : DialogFragment() {
         binding.clFoodResult.isVisible = false
 
 
-        val date = getCurrentDateTime()
-        val dateInString = date.toString("MM/dd/yyyy")
 
 
         binding.btnPost.setOnClickListener {
-            var search = binding.etName.text.toString()
-            var size = binding.etServingSize.text.toString()
+            val search = binding.etName.text.toString()
+            val size = binding.etServingSize.text.toString()
 
             if(size.isEmpty() && search.isEmpty()){
                 return@setOnClickListener
@@ -109,11 +107,12 @@ class overlayfood : DialogFragment() {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun retrieveEdamanFoodInformation(ingr: String, servingSize: Int){
         foodResult.clear()
         adapter.notifyDataSetChanged()
-        var nutrition_type = "cooking"
-        var retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
+        val nutrition_type = "cooking"
+        val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
         val edamanService = retrofit.create(FoodService::class.java)
         edamanService.foodInfo( getString(R.string.app_id_food_db), getString(R.string.app_key_food_db), ingr, nutrition_type)
             .enqueue(object : Callback<FoodSearchResult> {
@@ -131,30 +130,29 @@ class overlayfood : DialogFragment() {
                     }
                     Log.i(TAG, "${response.body()}")
 
-                    val user: User = User("","")
+                    val user = User("","")
                     for(item in body.hints){
-                        var name = item.food.label
-                        var protein = item.food.nutrients.PROCNT.toLong().times(servingSize)
-                        var calories = item.food.nutrients.ENERC_KCAL.toLong().times(servingSize)
-                        var fat = item.food.nutrients.FAT.toLong().times(servingSize)
-                        var carbs = item.food.nutrients.CHOCDF.toLong().times(servingSize)
+                        val name = item.food.label
+                        val protein = item.food.nutrients.PROCNT.toLong().times(servingSize)
+                        val calories = item.food.nutrients.ENERC_KCAL.toLong().times(servingSize)
+                        val fat = item.food.nutrients.FAT.toLong().times(servingSize)
+                        val carbs = item.food.nutrients.CHOCDF.toLong().times(servingSize)
                         var image = item.food.image
-                        var time = System.currentTimeMillis()
-                        val dateInString = ""
-                        var serving = servingSize
+                        val time = System.currentTimeMillis()
+                        val serving = servingSize
 
 
-                        if(image.isNullOrEmpty()){
+                        if(image.isEmpty()){
                             image = "https://firebasestorage.googleapis.com/v0/b/textdemo-9e9b1.appspot.com/o/posts%2FFri%20Sep%2010%2015%3A52%3A09%20PDT%202021.png?alt=media&token=a774304d-da5b-4cb9-8fbc-853f8ff6a78f"
                         }
 
-                        var meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, Date(), user )
+                        val meal = DailyMealPost("",name, protein, calories, fat, carbs, image, serving, time, Date(), user )
 
                         foodResult.add(meal)
 
                     }
 
-                    adapter?.notifyDataSetChanged()
+                    adapter.notifyDataSetChanged()
                     return
 
                 }
@@ -168,7 +166,7 @@ class overlayfood : DialogFragment() {
     }
 
     private fun addMealDB(mealPost: DailyMealPost){
-        var addMeal = firestoreDb.collection("userDailyMeal")
+        val addMeal = firestoreDb.collection("userDailyMeal")
             addMeal.add(mealPost).addOnCompleteListener {
             if(it.isSuccessful){
                 this.dismiss()
@@ -190,36 +188,11 @@ class overlayfood : DialogFragment() {
     }
 
     private fun insertItem(dailyMeal : DailyMealPost){
-        var emailName = getEmailName()
+        val emailName = getEmailName()
 
-        val user : User = User("", emailName )
+        val user = User("", emailName )
         dailyMeal.user = user
         addMealDB(dailyMeal)
     }
 
-
-
-
-
-    private fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
-        val formatter = SimpleDateFormat(format, locale)
-        return formatter.format(this)
-    }
-
-    private fun getCurrentDateTime(): Date {
-        return Calendar.getInstance().time
-    }
-
-
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance() =
-            overlayfood().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
 }

@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,23 +18,12 @@ import com.google.firebase.firestore.*
 import com.google.firebase.ktx.Firebase
 import eachillz.dev.itv.R
 import eachillz.dev.itv.firestore.DailyMealPost
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashSet
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DailyMealFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-
 private const val TAG = "DailyMealFragment"
-private const val PICK_PHOTO_CODE = 1234
-private lateinit var photFile: File
-
-
 class DailyMealFragment : Fragment() {
 
 
@@ -43,7 +31,6 @@ class DailyMealFragment : Fragment() {
     private var _binding: FragmentDailyMealBinding? = null
     private val binding get() = _binding!!
     private var dateFormated = ""
-    private var FILE_NAME = "photo.jpg"
 
 
 
@@ -78,10 +65,8 @@ class DailyMealFragment : Fragment() {
 
         val date = getCurrentDateTime()
         dateFormated = date.toString("yyyyMMdd")
-//        binding.tvCurrentDate.text = dateFormated
 
         binding.fabSave.setOnClickListener {
-//            takePhoto()
             openFoodItem()
         }
 
@@ -90,9 +75,8 @@ class DailyMealFragment : Fragment() {
 
         userMealArrayList = arrayListOf<DailyMealPost>()
 
-//        getUserFoodData()
         val outputDateFormat = SimpleDateFormat("MM/dd", Locale.US)
-        var currentDay = outputDateFormat.format(Date())
+        val currentDay = outputDateFormat.format(Date())
 
 
         binding.tvFoodLogTitle.text = currentDay + " "+getString(R.string.food_log)
@@ -133,11 +117,11 @@ class DailyMealFragment : Fragment() {
     }
 
     private fun fetchData() {
-        var hashSet = HashSet<String>()
-        var currentUserName = getUserEmail()
+        val hashSet = HashSet<String>()
+        val currentUserName = getUserEmail()
         userMealArrayList.clear()
         val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
-        var currentDay = outputDateFormat.format(Date())
+        val currentDay = outputDateFormat.format(Date())
 
         var calories = 10000
         var proteinCount = 0
@@ -157,12 +141,12 @@ class DailyMealFragment : Fragment() {
 
 
 
-            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+            for (dc: DocumentChange in snapshot.documentChanges) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
                     val mealItem: DailyMealPost =
                         dc.document.toObject(DailyMealPost::class.java)
-                        var date = outputDateFormat.format(mealItem.date)
+                        val date = outputDateFormat.format(mealItem.date)
                     if (date == currentDay) {
                         calories -= Integer.parseInt(mealItem.calories.toString())
                         total += Integer.parseInt(mealItem.calories.toString())
@@ -171,7 +155,7 @@ class DailyMealFragment : Fragment() {
                         fatCount += mealItem.fat.toInt()
                         if (!hashSet.contains(mealItem.name)) {
                             userMealArrayList.add(mealItem)
-                            hashSet.add(mealItem.name.toString())
+                            hashSet.add(mealItem.name)
                         }
                     }
 
@@ -217,9 +201,7 @@ class DailyMealFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        if(mealListener != null){
-            mealListener.remove()
-        }
+        mealListener.remove()
 
         Log.e(TAG, "item removed ")
     }

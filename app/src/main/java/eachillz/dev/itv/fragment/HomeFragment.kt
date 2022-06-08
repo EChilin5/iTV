@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,12 +22,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
+
 
 private const val BASE_URL = "https://api.edamam.com/api/recipes/"
 private const val TAG = "HomeFragment"
@@ -72,7 +65,7 @@ class HomeFragment : Fragment() {
         //var text ="chicken"
 
         binding.ivbtnSearch.setOnClickListener {
-            var text = binding.etFoodSearch.text.toString()
+            val text = binding.etFoodSearch.text.toString()
             Toast.makeText(context, "$text has changed", Toast.LENGTH_SHORT).show()
             rvRecipe.removeAllViews()
             rvRecipe.adapter = adapter
@@ -90,6 +83,7 @@ class HomeFragment : Fragment() {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun clearRecyclerView() :Boolean{
         var size = recipeResult.size-1
         while(size >=0){
@@ -105,15 +99,15 @@ class HomeFragment : Fragment() {
     }
 
     fun threadBlockCouritinApiFetch(text:String) = runBlocking {
-        var clear = async { clearRecyclerView() }
+        val clear = async { clearRecyclerView() }
         if( clear.await()){
             Log.e(TAG, "$clear is called running second thread")
-            async { retrieveEdamanFoodInformation(text) }
+           retrieveEdamanFoodInformation(text)
         }
 
     }
 
-    private suspend fun retrieveEdamanFoodInformation (foodSearch :String) {
+    private fun retrieveEdamanFoodInformation (foodSearch :String) {
         Log.e(TAG, "api is called retrieveEdamanFoodInformation" + System.currentTimeMillis())
         val type = "public"
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build()
@@ -133,7 +127,6 @@ class HomeFragment : Fragment() {
                         return
                     }
 
-                    var count = 0
                     recipeResult.addAll(body.hits)
                     if(recipeResult.isNotEmpty()){
                         rvRecipe.isEnabled = true
@@ -145,18 +138,6 @@ class HomeFragment : Fragment() {
                     }
 
                     adapter.notifyDataSetChanged()
-//                    for(item in body.hits){
-//                        recipeResult.add(item)
-//                        adapter.notifyItemInserted(count)
-//                        count++;
-//                    }
-
-
-                //                    recipeApiResult.addAll(body.hits)
-//
-//
-//                    Log.i(TAG, "${recipeApiResult.size}")
-            //        adapter.notifyItemRangeInserted(0, recipeResult.size)
 
                 }
 
@@ -168,17 +149,4 @@ class HomeFragment : Fragment() {
 
     }
 
-
-
-
-    companion object {
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance() =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
 }

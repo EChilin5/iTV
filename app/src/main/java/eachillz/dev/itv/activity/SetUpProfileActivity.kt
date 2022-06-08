@@ -9,13 +9,11 @@ import android.widget.EditText
 import android.widget.Toast
 import eachillz.dev.itv.databinding.ActivitySetUpProfileBinding
 import com.google.firebase.auth.FirebaseAuth
-import eachillz.dev.itv.activity.MainActivity
 
 private const val TAG ="setUpProfileActivity"
-class setUpProfileActivity : AppCompatActivity() {
+class SetUpProfileActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivitySetUpProfileBinding
-    private lateinit var etName : EditText
     private lateinit var etEmail : EditText
     private lateinit var etPassword : EditText
     private lateinit var etConfirmPassword : EditText
@@ -88,18 +86,17 @@ class setUpProfileActivity : AppCompatActivity() {
     }
 
     private fun  checkForValidEmail(email:String, password: String) {
-        var isValidUser: Boolean = false
         val auth = FirebaseAuth.getInstance()
         auth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task->
 
 
 
-            var isNewUser:Boolean = task.result.signInMethods!!.isEmpty()
+            val isNewUser:Boolean = task.result.signInMethods!!.isEmpty()
 
             if(isNewUser){
                 createUserAccount(email, password)
             }else{
-
+                Toast.makeText(this, "Can not create account", Toast.LENGTH_SHORT).show()
             }
 
         }

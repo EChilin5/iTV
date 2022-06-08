@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import eachillz.dev.itv.databinding.FragmentAddWeightOverlayBinding
 import eachillz.dev.itv.firestore.DailyMealPost
 import eachillz.dev.itv.model.WeightWatcherModal
@@ -22,6 +23,7 @@ import java.util.*
 private const val TAG = "AddWeightOverlay"
 class AddWeightOverlay(var onUpdate: () -> Unit) : DialogFragment() {
 
+    private lateinit var userCalorieListener: ListenerRegistration
     private  var _binding: FragmentAddWeightOverlayBinding? = null
     private val binding get() = _binding!!
     private lateinit var firestoreDB :FirebaseFirestore
@@ -31,18 +33,15 @@ class AddWeightOverlay(var onUpdate: () -> Unit) : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        dialog?.getWindow()?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAddWeightOverlayBinding.inflate(inflater, container, false)
         return binding.root
@@ -61,17 +60,16 @@ class AddWeightOverlay(var onUpdate: () -> Unit) : DialogFragment() {
     }
 
     private fun fetchCalorieData() {
-        var CalorieHashMap = HashMap<String, Int>()
-        var currentUserName = getEmail()
+        val currentUserName = getEmail()
         val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
-        var currentDay = outputDateFormat.format(Date())
+        val currentDay = outputDateFormat.format(Date())
 
 
-        var mealReference =
+        val mealReference =
             firestoreDB.collection("userDailyMeal").whereEqualTo("user.email", currentUserName)
 
 
-        var userCalorieListener = mealReference.addSnapshotListener { snapshot, exception ->
+        userCalorieListener = mealReference.addSnapshotListener { snapshot, exception ->
             if (exception != null || snapshot == null) {
                 Log.e(TAG, "exception occurred", exception)
                 return@addSnapshotListener
@@ -79,7 +77,7 @@ class AddWeightOverlay(var onUpdate: () -> Unit) : DialogFragment() {
 
             Log.e(TAG, "${snapshot.size()}")
             var total = 0
-            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+            for (dc: DocumentChange in snapshot.documentChanges) {
                 val mealItem: DailyMealPost = dc.document.toObject(DailyMealPost::class.java)
                 if(currentDay == outputDateFormat.format(mealItem.date)){
                     total+= mealItem.calories.toInt()
@@ -105,9 +103,9 @@ class AddWeightOverlay(var onUpdate: () -> Unit) : DialogFragment() {
     }
 
     private fun addNewWeight(weight:String, calories:Int){
-        var email = getEmail()
+        val email = getEmail()
         val user = User("", email )
-        var newWeight = WeightWatcherModal("", weight.toInt(), calories, Date(), user )
+        val newWeight = WeightWatcherModal("", weight.toInt(), calories, Date(), user )
         firestoreDB.collection("weightWatcher").add(newWeight).addOnCompleteListener {
             if(it.isSuccessful){
                 Log.e(TAG, "added new weight")
@@ -115,6 +113,16 @@ class AddWeightOverlay(var onUpdate: () -> Unit) : DialogFragment() {
                 onUpdate()
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        userCalorieListener.remove()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        userCalorieListener.remove()
     }
 
     private fun getEmail():String{

@@ -1,5 +1,6 @@
 package eachillz.dev.itv.adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,9 +10,7 @@ import eachillz.dev.itv.R
 import eachillz.dev.itv.activity.RecipeDetailActivity
 import eachillz.dev.itv.api.Hit
 import eachillz.dev.itv.databinding.ItemRecipeResultBinding
-import eachillz.dev.itv.databinding.UserFoodItemBinding
 import kotlin.math.roundToInt
-import kotlin.math.roundToLong
 
 class RecipeAdapter(private var recipe : MutableList<Hit>) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
@@ -42,20 +41,21 @@ class RecipeAdapter(private var recipe : MutableList<Hit>) : RecyclerView.Adapte
 
 
     class RecipeViewHolder(itemView: ItemRecipeResultBinding) : RecyclerView.ViewHolder(itemView.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(hit: Hit, binding: ItemRecipeResultBinding) {
 
             var calories = hit.recipe.calories.roundToInt()
-            var serving  = hit.recipe.yield
+            val serving  = hit.recipe.yield
             calories = calories.div(serving).toInt()
 
             binding.tvRecipeFoodName.text = hit.recipe.label
             binding.tvRecipeCalorieCount.text = "$calories kcal"
-            var time = "${hit.recipe.totalTime.roundToInt()} mins"
+            val time = "${hit.recipe.totalTime.roundToInt()} mins"
 
-            binding.tvRecipeTimeAmt.text = time.toString()
+            binding.tvRecipeTimeAmt.text = time
 
-            var image_url = hit.recipe.image
-            if(image_url.isNullOrEmpty()){
+            val imageUrl = hit.recipe.image
+            if(imageUrl.isEmpty()){
                 Picasso.get()
                     .load(R.drawable.bacground_myfood)
                     .placeholder(R.drawable.bacground_myfood)
@@ -64,7 +64,7 @@ class RecipeAdapter(private var recipe : MutableList<Hit>) : RecyclerView.Adapte
                     .into(binding.ivRecipeFoodImage)
             }else{
                 Picasso.get()
-                    .load(image_url)
+                    .load(imageUrl)
                     .placeholder(R.drawable.bacground_myfood)
                     .error(R.drawable.bacground_myfood)
                     .resize(150, 150)         //optional

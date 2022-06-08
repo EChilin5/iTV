@@ -1,6 +1,5 @@
 package eachillz.dev.itv.user
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import eachillz.dev.itv.databinding.UserFoodItemBinding
 import eachillz.dev.itv.user.UserAdapter.*
 import com.squareup.picasso.Picasso
 import eachillz.dev.itv.R
-import eachillz.dev.itv.activity.FoodItemDetailActivity
 import eachillz.dev.itv.api.FoodSearchResult
 
 private const val TAG = "UserAdapter"
@@ -24,12 +22,12 @@ class UserAdapter(private val userList: MutableList<FoodSearchResult>): Recycler
 
             Log.i(TAG, "${currentItem.parsed}")
 
-            var parsed = currentItem.parsed
-            var calorie = parsed[0].food.nutrients.ENERC_KCAL
-            var image_url = parsed[0].food.image
+            val parsed = currentItem.parsed
+            val calorie = parsed[0].food.nutrients.ENERC_KCAL
+            val imageLink = parsed[0].food.image
             binding.tvCalorieCount.text = calorie.toString()
 
-            if(image_url.isNullOrEmpty()){
+            if(imageLink.isEmpty()){
                 Picasso.get()
                     .load(R.drawable.bacground_myfood)
                     .placeholder(R.drawable.bacground_myfood)
@@ -38,7 +36,7 @@ class UserAdapter(private val userList: MutableList<FoodSearchResult>): Recycler
                     .into(binding.ivUserFoodImage)
             }else{
                 Picasso.get()
-                    .load(image_url)
+                    .load(imageLink)
                     .placeholder(R.drawable.bacground_myfood)
                     .error(R.drawable.bacground_myfood)
                     .resize(150, 150)         //optional

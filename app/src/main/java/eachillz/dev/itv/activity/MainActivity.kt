@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         val progressFragment = ProggressFragment()
         val settingFragment = SettingsFragment()
 
-        binding.bottomNavBar.setOnItemSelectedListener { it->
+        binding.bottomNavBar.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.ic_home_daily-> {
                     openFragment(dailyMealFragment)

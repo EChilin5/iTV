@@ -32,23 +32,17 @@ import eachillz.dev.itv.adapter.Metric
 import eachillz.dev.itv.adapter.TimeScale
 import eachillz.dev.itv.adapter.WeightAdapter
 import eachillz.dev.itv.firestore.DailyMealChartData
-import eachillz.dev.itv.firestore.DailyMealPost
 import eachillz.dev.itv.model.WeightWatcherModal
 import eachillz.dev.itv.overlay.AddWeightOverlay
 
 import java.text.*
-import kotlin.collections.HashMap
 
 
 private const val TAG = "ProggressFragment"
-private const val BASE_URL = "https://covidtracking.com/api/v1/"
 class ProggressFragment : Fragment() {
 
-    private lateinit var CalorieHashMap: HashMap<String, Int>
-    private lateinit var userCalorieListener: ListenerRegistration
     private lateinit var  flBtnAddWeight: FloatingActionButton
     private lateinit var weightListener: ListenerRegistration
-   // private lateinit var userCalorieListener: ListenerRegistration
     private lateinit var currentlyShownData: List<DailyMealChartData>
     private lateinit var adapter: CalorieSparkAdapter
     private  var calorieDailyData =  mutableListOf<DailyMealChartData>()
@@ -61,15 +55,12 @@ class ProggressFragment : Fragment() {
     private var adapterWeight = WeightAdapter(weightInformation)
     private lateinit var rvWeights : RecyclerView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentProggressBinding.inflate(inflater, container, false)
         return binding.root
@@ -103,52 +94,9 @@ class ProggressFragment : Fragment() {
         fetchWeightData()
     }
 
-    @SuppressLint("SimpleDateFormat", "NewApi")
-    private fun fetchCalorieData() {
-        CalorieHashMap = HashMap<String, Int>()
-        var currentUserName = getUserEmail()
-        val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
-        var currentDay = outputDateFormat.format(Date())
 
 
-        var mealReference = firestoreDb.collection("userDailyMeal").whereEqualTo("user.email", currentUserName)
-            .whereEqualTo("date.Date", currentDay)
-            .orderBy("date", Query.Direction.DESCENDING)
-
-        userCalorieListener = mealReference.addSnapshotListener { snapshot, exception ->
-            if (exception != null || snapshot == null) {
-                Log.e(TAG, "exception occurred", exception)
-                return@addSnapshotListener
-            }
-
-            for (dc: DocumentChange in snapshot?.documentChanges!!) {
-                if (dc.type == DocumentChange.Type.ADDED) {
-
-                    val mealItem: DailyMealPost =
-                        dc.document.toObject(DailyMealPost::class.java)
-
-                    if(CalorieHashMap.containsKey(currentDay)){
-                        CalorieHashMap.put(currentDay,
-                            CalorieHashMap.get(currentDay)?.plus(mealItem.calories.toInt())!!
-                            )
-                        }else{
-                        CalorieHashMap.put(currentDay, mealItem.calories.toInt())
-                        }
-                }
-            }
-
-
-//            for((key, value ) in hashSet){
-//                var item = DailyMealChartData(key, value)
-//                Log.e(TAG, "$item")
-//                calorieDailyData.add(item)
-//            }
-
-
-        }
-
-    }
-
+    @SuppressLint("NotifyDataSetChanged")
     private fun fetchWeightData(){
         calorieDailyData.clear()
         weightInformation.clear()
@@ -156,9 +104,9 @@ class ProggressFragment : Fragment() {
 
         val email = getUserEmail()
         val outputDateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
-        var today = outputDateFormat.format(Date())
+        val today = outputDateFormat.format(Date())
         Toast.makeText(context, email, Toast.LENGTH_SHORT).show()
-        var weightTracker = firestoreDb.collection("weightWatcher").whereEqualTo("user.email", email )
+        val weightTracker = firestoreDb.collection("weightWatcher").whereEqualTo("user.email", email )
             .orderBy("date", Query.Direction.DESCENDING)
         weightListener = weightTracker.addSnapshotListener { snapshot, exception ->
             if(exception != null || snapshot == null){
@@ -168,13 +116,13 @@ class ProggressFragment : Fragment() {
             calorieDailyData.clear()
             weightInformation.clear()
 
-            for (dc: DocumentChange in snapshot?.documentChanges!!) {
+            for (dc: DocumentChange in snapshot.documentChanges) {
                 if (dc.type == DocumentChange.Type.ADDED) {
 
                     val reviewItem: WeightWatcherModal = dc.document.toObject(WeightWatcherModal::class.java)
                     weightInformation.add(reviewItem)
-                    var day = outputDateFormat.format(reviewItem.date)
-                    var item = DailyMealChartData(day, reviewItem.weight)
+                    val day = outputDateFormat.format(reviewItem.date)
+                    val item = DailyMealChartData(day, reviewItem.weight)
                     calorieDailyData.add(item)
                     Log.e(TAG, " ${reviewItem.date} ++ ${Date()}")
 
@@ -207,11 +155,9 @@ class ProggressFragment : Fragment() {
     }
 
 
-    private fun getUserEmail():String{
+    private fun getUserEmail(): String {
         val userName = Firebase.auth.currentUser
-        var currentUserName = userName?.email.toString()
-
-        return currentUserName
+        return userName?.email.toString()
     }
 
     override fun onStop() {
@@ -249,20 +195,21 @@ class ProggressFragment : Fragment() {
 
     }
 
-    private fun updateDiplayMetric(metric: Metric) {
+    private fun updateDiplayMetric() {
 // update the color of the chart
-        val colorRes = when(metric){
-            Metric.DEATH ->R.color.ap_charcoal
-            Metric.NEGATIVE-> R.color.fusia
-            Metric.POSITIVE-> R.color.teal_200
-        }
+        val colorRes = R.color.teal_200
+//            when(metric){
+//            Metric.DEATH ->R.color.ap_charcoal
+//            Metric.NEGATIVE-> R.color.fusia
+//            Metric.POSITIVE-> R.color.teal_200
+//        }
        @ColorInt val colorInt = ContextCompat.getColor(requireContext(), colorRes)
         binding.sparkView.lineColor = colorInt
         binding.tickerView.textColor = colorInt
 
         // update the metric on the adapter
 
-        adapter.metric = metric
+        adapter.metric = Metric.POSITIVE
         adapter.notifyDataSetChanged()
 
         // reset the number and the date showin in the bottom text view
@@ -278,7 +225,7 @@ class ProggressFragment : Fragment() {
 
         binding.radioButtonMax.isChecked = true
         //display metric for the most recent date
-        updateDiplayMetric(Metric.POSITIVE)
+        updateDiplayMetric()
     }
 
     private fun updateInfoForDate(calorieIntake: DailyMealChartData) {

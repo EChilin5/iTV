@@ -47,7 +47,7 @@ class RecipeDetailActivity : AppCompatActivity() {
     private fun assignValue() {
         tvRecipeName.text = recipeInfo.recipe.label
         var calories = recipeInfo.recipe.calories.roundToInt()
-        var serving  = recipeInfo.recipe.yield
+        val serving  = recipeInfo.recipe.yield
 
         calories = calories.div(serving).roundToInt()
 
@@ -60,18 +60,18 @@ class RecipeDetailActivity : AppCompatActivity() {
         tvServing.text = "$serving servings"
 
 
-        var IngredientText = ""
+        var ingredientText = ""
         for(item in recipeInfo.recipe.ingredientLines){
-            IngredientText += item +"\n"
+            ingredientText += item +"\n"
         }
-        tvIngredient.text = IngredientText
-        var image_url = recipeInfo.recipe.image
+        tvIngredient.text = ingredientText
+        val image_url = recipeInfo.recipe.image
         Glide.with(this)
             .load(image_url)
             .into(ivRecipe)
 
         btnBack.setOnClickListener {
-            var intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }

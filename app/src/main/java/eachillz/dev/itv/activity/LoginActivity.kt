@@ -95,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
 
         btnSignUp.setOnClickListener {
 
-            val intent = Intent(this, setUpProfileActivity::class.java)
+            val intent = Intent(this, SetUpProfileActivity::class.java)
         startActivity(intent)
         finish()
         //btnSignUp.isEnabled = false
@@ -108,20 +108,4 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun createUserAccount(email: String, password: String) {
-        val auth = FirebaseAuth.getInstance()
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task->
-                btnSignUp.isEnabled = true
-                if(task.isSuccessful){
-                    Log.i(TAG, "created user Successfully")
-                    goToMain()
-
-                }else{
-                    Log.e(TAG,"failed to create user", task.exception)
-                    Toast.makeText(this,"Unable to login", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-    }
 }
