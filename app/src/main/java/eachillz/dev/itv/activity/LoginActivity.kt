@@ -69,8 +69,8 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             btnLogin.isEnabled = false
 
-            val email = binding.etUserName.text.toString()
-            val password = binding.etPasword.text.toString()
+            val email = binding.etUserName.text.toString().trim()
+            val password = binding.etPasword.text.toString().trim()
 
 
             if(binding.etUserName.text.isBlank() || binding.etPasword.text.isBlank()) {

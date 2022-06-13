@@ -1,11 +1,12 @@
 package eachillz.dev.itv.firestore
 
+import android.support.annotation.Keep
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.PropertyName
 import eachillz.dev.itv.user.User
 import java.io.Serializable
 import java.util.*
-
+@Keep
 data class DailyMealPost(
     @DocumentId
     val id: String?=null,

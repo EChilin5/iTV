@@ -3,6 +3,7 @@ package eachillz.dev.itv.api
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+
 data class FoodSearchResult(
     var _links: Links,
     var hints: List<Hint>,
